@@ -1,0 +1,33 @@
+.navigation {
+  display: flex;
+  justify-content: space-around;
+  border: 2px solid green;
+}
+
+ul {
+  list-style: none;
+}
+
+.menu > li {
+  float: left;
+}
+.menu button {
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+.menu button:hover,
+.menu button:focus {
+  outline: 0;
+  text-decoration: underline;
+}
+
+.submenu {
+  display: none;
+  position: absolute;
+  padding: 10px;
+}
+.menu button:focus + .submenu,
+.submenu:hover {
+  display: block;
+}
