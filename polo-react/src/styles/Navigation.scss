@@ -1,33 +1,46 @@
 .navigation {
   display: flex;
+  flex-direction: row;
+  background-color: rgb(73, 73, 91);
+  color: whitesmoke;
   justify-content: space-around;
-  border: 2px solid green;
+  text-size-adjust: 30px;
+  .home {
+    margin: 1em;
+    border: none;
+    background-color: transparent;
+    color: white;
+  }
 }
 
 ul {
   list-style: none;
+  display: flex;
+  justify-content: space-around;
 }
 
-.menu > li {
-  float: left;
+li {
+  list-style: none;
+  margin: 0.25em;
+  padding: 0.25em;
+  color: white;
 }
+
 .menu button {
   border: 0;
   background: transparent;
   cursor: pointer;
-}
-.menu button:hover,
-.menu button:focus {
-  outline: 0;
-  text-decoration: underline;
 }
 
 .submenu {
   display: none;
   position: absolute;
   padding: 10px;
+  z-index: 5;
+  background-color: white;
 }
 .menu button:focus + .submenu,
 .submenu:hover {
   display: block;
+  z-index: 10;
 }
