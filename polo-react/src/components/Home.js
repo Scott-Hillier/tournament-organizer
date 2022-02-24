@@ -4,8 +4,6 @@ import "../styles/Home.scss";
 import { getAllTournaments } from "../helpers/apiHelpers";
 
 const Home = () => {
-  const search = (string) => {};
-
   return (
     <main>
       <section className="search">

@@ -1,15 +1,18 @@
 .navigation {
   display: flex;
   flex-direction: row;
-  background-color: rgb(73, 73, 91);
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 1.5em;
+  padding-right: 1.5em;
+  background-color: rgb(136, 123, 50);
   color: whitesmoke;
-  justify-content: space-around;
   text-size-adjust: 30px;
-  .home {
-    margin: 1em;
-    border: none;
-    background-color: transparent;
-    color: white;
+  height: 3em;
+  .sidebar {
+    border: 2px solid blue;
+    display: flex;
+    width: 10em;
   }
 }
 
@@ -27,6 +30,7 @@ li {
 }
 
 .menu button {
+  color: whitesmoke;
   border: 0;
   background: transparent;
   cursor: pointer;
