@@ -1,19 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "../styles/Home.scss";
-import { getAllTournaments } from "../helpers/apiHelpers";
+import { getAllTournaments, searchTournaments } from "../helpers/apiHelpers";
 
 const Home = () => {
+  const [searchState, setSearchState] = useState("");
+
   return (
     <main>
-      <section className="search">
+      <form
+        className="search"
+        onSubmit={(event) => {
+          searchTournaments(searchState);
+        }}
+      >
         <input
           className="search-bar"
           placeholder="Search by tournament"
-          size={"25"}
+          onChange={(event) => {
+            event.preventDefault();
+            setSearchState(event.target.value);
+            console.log(event.target.value);
+          }}
         ></input>
         <button className="search-button">Find!</button>
-      </section>
+      </form>
       <section className="organize">
         <h2>Want to organize a tournament now?</h2>
         <Link to={`/organize`} type="button" className="organize-button">
@@ -22,7 +33,13 @@ const Home = () => {
       </section>
       <section className="upcoming-tournaments">
         <h2>Tournaments happening soon!</h2>
-        <button onClick={getAllTournaments()}>Find one near you!</button>
+        <button
+          onClick={() => {
+            getAllTournaments();
+          }}
+        >
+          Find one near you!
+        </button>
       </section>
     </main>
   );

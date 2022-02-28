@@ -1,6 +1,6 @@
 .search {
   display: flex;
-  background-image: url("../styles/images/polo-image-1.png");
+  // background-image: url("../styles/images/polo-image-1.png");
   background-size: cover;
   backdrop-filter: blur(20px);
   // border: 2px solid blue;
@@ -8,12 +8,10 @@
   align-items: center;
   padding-top: 10em;
   padding-bottom: 10em;
-  color: whitesmoke;
   .search-bar {
     border: none;
     border-bottom: 2px solid black;
     background-color: transparent;
-    color: whitesmoke;
     text-align: center;
     margin: 1em;
     outline: none;
