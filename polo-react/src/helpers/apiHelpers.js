@@ -8,3 +8,7 @@ export function getAllTournaments() {
 export function searchTournaments(word) {
   return axios.get("api/tournaments/search");
 }
+
+export function createTournament() {
+  return axios.put("api/tournament/create");
+}
