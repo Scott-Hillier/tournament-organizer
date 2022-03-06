@@ -1,0 +1,21 @@
+.sidemenu {
+  border: 2px solid red;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  z-index: 100;
+  width: 20%;
+  height: 100vh;
+  position: fixed;
+  margin-bottom: 200%;
+}
+
+@keyframes slidein {
+  from {
+    margin-right: 100%;
+  }
+
+  to {
+    margin-right: 0%;
+  }
+}

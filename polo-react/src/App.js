@@ -5,10 +5,12 @@ import Home from "./components/Home";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Organize from "./components/Organize";
+import Sidemenu from "./components/Sidemenu";
 
 function App() {
   return (
     <BrowserRouter>
+      <Sidemenu />
       <Navigation />
       <Routes>
         <Route path="/" element={<Home />}></Route>

@@ -1,25 +1,12 @@
-.container {
-  display: flex;
-  flex-direction: row;
-}
-
 .navigation {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding-left: 1.5em;
-  padding-right: 1.5em;
-  background-color: rgb(136, 123, 50);
-  color: whitesmoke;
-  text-size-adjust: 30px;
-  height: 3em;
-  width: 100%;
-  .sidebar {
-    border: 2px solid blue;
-    display: flex;
-    width: 10em;
-  }
+  background-color: rgb(130, 199, 130);
+  padding: 0.5em;
+  border: 2px solid blue;
+  color: black;
 }
 
 ul {

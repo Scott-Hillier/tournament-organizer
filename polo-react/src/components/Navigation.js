@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import "../styles/Navigation.scss";
-import Menu from "./Menu";
+import Sidemenu from "./Sidemenu";
 
 const Navigation = () => {
   const close = () => {
@@ -8,8 +8,7 @@ const Navigation = () => {
   };
 
   return (
-    <main className="container">
-      <Menu />
+    <main>
       <section className="navigation">
         <i className="fa-solid fa-bars"></i>
         <li className="menu">
