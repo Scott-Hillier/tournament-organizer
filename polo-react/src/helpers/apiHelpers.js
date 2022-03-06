@@ -16,3 +16,7 @@ export function createTournament(user_id) {
 export function createTeam(team_name) {
   return axios.put("api/teams/create");
 }
+
+export function updateTeam(team_name) {
+  return axios.put("api/teams/update");
+}
