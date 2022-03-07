@@ -17,6 +17,9 @@ export function createTeam(team_name) {
   return axios.put("api/teams/create");
 }
 
-export function updateTeam(team_name) {
-  return axios.put("api/teams/update");
+export function updateTeamName(team_name) {
+  return axios.put("api/teams/update/name");
+}
+export function updateTeamRoster(old_player, new_player) {
+  return axios.put("api/teams/update/roster");
 }
