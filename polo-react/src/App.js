@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import "./App.css";
-import Navigation from "./components/Navigation";
+import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import Login from "./components/Login";
 import Register from "./components/Register";
@@ -10,8 +10,8 @@ import Sidemenu from "./components/Sidemenu";
 function App() {
   return (
     <BrowserRouter>
-      <Sidemenu />
-      <Navigation />
+      {/* <Sidemenu /> */}
+      <Navbar />
       <Routes>
         <Route path="/" element={<Home />}></Route>
         <Route path="/register" element={<Register />}></Route>
