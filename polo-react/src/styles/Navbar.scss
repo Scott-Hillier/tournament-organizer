@@ -2,8 +2,15 @@
   background-color: #060b26;
   height: 80px;
   display: flex;
-  justify-content: start;
+  justify-content: space-between;
   align-items: center;
+  color: whitesmoke;
+  .nav-icon {
+    padding: 2em;
+  }
+  .nav-account {
+    padding: 2em;
+  }
 }
 
 .menu-bars {

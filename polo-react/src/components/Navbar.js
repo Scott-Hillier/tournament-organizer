@@ -14,12 +14,14 @@ function Navbar() {
         <Link to="#" className="menu-bars">
           <i class="fa fa-bars" aria-hidden="true" onClick={showSidebar}></i>
         </Link>
+        <div className="nav-icon">HOME</div>
+        <div className="nav-account">ACCOUNT</div>
       </div>
       <nav className={sidebar ? "nav-menu active" : "nav-menu"}>
         <ul className="nav-menu-items" onClick={showSidebar}>
           <li className="navbar-toggle">
             <Link to="#" className="menu-bars">
-              <i class="fa fa-address-book" aria-hidden="true"></i>
+              <i class="fa fa-times" aria-hidden="true"></i>
             </Link>
           </li>
           {SidebarData.map((item, index) => {
