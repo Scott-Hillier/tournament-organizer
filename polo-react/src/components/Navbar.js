@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { SidebarData } from "./SidebarData";
 import "../styles/Navbar.scss";
 
 function Navbar() {
@@ -24,16 +23,26 @@ function Navbar() {
               <i class="fa fa-times" aria-hidden="true"></i>
             </Link>
           </li>
-          {SidebarData.map((item, index) => {
-            return (
-              <li key={index} className={item.cName}>
-                <Link to={item.path}>
-                  {item.icon}
-                  <span>{item.title}</span>
-                </Link>
-              </li>
-            );
-          })}
+          <li>
+            <Link to="/" className="nav-text a">
+              <span>Home</span>
+            </Link>
+          </li>
+          <li>
+            <Link to="/tournaments" className="nav-text">
+              <span>Tournaments</span>
+            </Link>
+          </li>
+          <li>
+            <Link to="/organize" className="nav-text">
+              <span>Organize</span>
+            </Link>
+          </li>
+          <li>
+            <Link to="/teams" className="nav-text">
+              <span>Teams</span>
+            </Link>
+          </li>
         </ul>
       </nav>
     </>
