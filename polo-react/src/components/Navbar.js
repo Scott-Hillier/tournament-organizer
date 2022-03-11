@@ -11,7 +11,11 @@ function Navbar() {
     <>
       <div className="navbar">
         <Link to="#" className="menu-bars">
-          <i class="fa fa-bars" aria-hidden="true" onClick={showSidebar}></i>
+          <i
+            className="fa fa-bars"
+            aria-hidden="true"
+            onClick={showSidebar}
+          ></i>
         </Link>
         <div className="nav-icon">HOME</div>
         <div className="nav-account">ACCOUNT</div>
@@ -20,7 +24,7 @@ function Navbar() {
         <ul className="nav-menu-items" onClick={showSidebar}>
           <li className="navbar-toggle">
             <Link to="#" className="menu-bars">
-              <i class="fa fa-times" aria-hidden="true"></i>
+              <i className="fa fa-times" aria-hidden="true"></i>
             </Link>
           </li>
           <li>
@@ -41,6 +45,11 @@ function Navbar() {
           <li>
             <Link to="/teams" className="nav-text">
               <span>Teams</span>
+            </Link>
+          </li>
+          <li>
+            <Link to="/register" className="nav-text">
+              <span>Register</span>
             </Link>
           </li>
         </ul>

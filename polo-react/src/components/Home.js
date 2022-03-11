@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "../styles/Home.scss";
-import { getAllTournaments, searchTournaments } from "../helpers/apiHelpers";
+import { searchTournaments } from "../helpers/apiHelpers";
 
 const Home = () => {
   const [searchState, setSearchState] = useState("");
@@ -33,13 +33,7 @@ const Home = () => {
       </section>
       <section className="upcoming-tournaments">
         <h2>Tournaments happening soon!</h2>
-        <button
-          onClick={() => {
-            getAllTournaments();
-          }}
-        >
-          Find one near you!
-        </button>
+        <button>Find one near you!</button>
       </section>
     </main>
   );
