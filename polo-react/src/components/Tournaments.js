@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { getUpcomingTournaments } from "../helpers/apiHelpers";
+import { getAllTournaments } from "../helpers/apiHelpers";
 
 const Tournaments = () => {
   // useEffect(() => {
@@ -9,8 +9,8 @@ const Tournaments = () => {
   // }, []);
 
   useEffect(() => {
-    getUpcomingTournaments().then((res) => console.log(res));
-  });
+    getAllTournaments().then((res) => console.log(res));
+  }, []);
 
   return (
     <main>

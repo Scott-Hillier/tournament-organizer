@@ -1,8 +1,8 @@
 import axios from "axios";
 
-export function getUpcomingTournaments() {
-  console.log("getUpcomingTournaments");
-  return axios.get("/tournaments/upcoming");
+export function getAllTournaments() {
+  console.log("getAllTournaments");
+  return axios.get("/tournaments/all");
 }
 
 export function searchTournaments(word) {

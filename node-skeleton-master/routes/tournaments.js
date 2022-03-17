@@ -1,44 +1,18 @@
 const express = require("express");
-const { query } = require("express");
-const axios = require("axios");
 const router = express.Router();
 
-const getUpcomingTournaments = (db) => {
-  console.log("THIS IS THE FUNCTION");
-  const query = `SELECT * FROM tournaments;`;
-  return db.query(query);
-};
-
 module.exports = (db) => {
-  router.get("/upcoming", (req, res) => {
-    console.log("HIT2");
-    getUpcomingTournaments(db)
+  console.log("loading");
+  router.get("/all", (req, res) => {
+    console.log("router.get");
+    db.query(`SELECT * FROM tournaments`)
       .then((data) => {
-        console.log("DATA: ", data);
+        console.log(data.rows);
         res.send(data.rows);
       })
       .catch((err) => {
         res.status(500).json({ error: err.message });
       });
   });
-
   return router;
 };
-
-// module.exports = (db) => {
-//   router.get("/", (req, res) => {
-//     let query = `SELECT * FROM widgets`;
-//     console.log(query);
-//     db.query(query)
-//       .then(data => {
-//         const widgets = data.rows;
-//         res.json({ widgets });
-//       })
-//       .catch(err => {
-//         res
-//           .status(500)
-//           .json({ error: err.message });
-//       });
-//   });
-//   return router;
-// };
