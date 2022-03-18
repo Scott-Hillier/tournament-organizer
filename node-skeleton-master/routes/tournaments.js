@@ -1,13 +1,15 @@
 const express = require("express");
 const router = express.Router();
 
+const getAllTournaments = (db) => {
+  const query = `SELECT * FROM tournaments;`;
+  return db.query(query);
+};
+
 module.exports = (db) => {
-  console.log("loading");
   router.get("/all", (req, res) => {
-    console.log("router.get");
-    db.query(`SELECT * FROM tournaments`)
+    getAllTournaments(db)
       .then((data) => {
-        console.log(data.rows);
         res.send(data.rows);
       })
       .catch((err) => {

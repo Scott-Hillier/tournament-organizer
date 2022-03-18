@@ -5,7 +5,7 @@ import Home from "./components/Home";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Organize from "./components/Organize";
-import Tournaments from "./components/Tournaments";
+import Tournaments from "./components/Tournaments/Tournaments";
 
 function App() {
   return (
