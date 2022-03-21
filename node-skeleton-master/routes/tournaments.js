@@ -25,10 +25,8 @@ module.exports = (db) => {
   });
 
   router.get("/:tournament_id", (req, res) => {
-    console.log("req.params", req.params);
     getTournamentInfo(db, req.params.tournament_id)
       .then((data) => {
-        console.log(data.rows);
         res.send(data.rows);
       })
       .catch((err) => {
