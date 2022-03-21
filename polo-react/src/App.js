@@ -6,6 +6,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import Organize from "./components/Organize";
 import Tournaments from "./components/Tournaments/Tournaments";
+import TournamentPage from "./components/Tournaments/TournamentPage";
 
 function App() {
   return (
@@ -17,6 +18,10 @@ function App() {
         <Route path="/login" element={<Login />}></Route>
         <Route path="/organize" element={<Organize />}></Route>
         <Route path="/tournaments" element={<Tournaments />}></Route>
+        <Route
+          path="/tournaments/:tournament_id"
+          element={<TournamentPage />}
+        ></Route>
       </Routes>
     </BrowserRouter>
   );
