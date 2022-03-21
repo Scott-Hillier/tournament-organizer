@@ -4,6 +4,10 @@ export function getAllTournaments() {
   return axios.get("/tournaments/all");
 }
 
+export function getTournamentInfo(tournament_id) {
+  return axios.get(`/tournaments/${tournament_id}`);
+}
+
 export function searchTournaments(word) {
   return axios.get("/api/tournaments/search");
 }
