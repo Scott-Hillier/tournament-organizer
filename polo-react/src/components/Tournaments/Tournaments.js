@@ -1,26 +1,26 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getAllTournaments } from "../../helpers/apiHelpers";
 import TournamentCards from "./TournamentCards";
+import "../../styles/Tournaments/Tournaments.scss";
 
 const Tournaments = () => {
-  const allTournamentsArray = [];
+  const [tournamentsState, setTournamentsState] = useState([]);
 
   useEffect(() => {
     getAllTournaments().then((res) => {
-      console.log(res.data);
-      for (const tournament in res.data) {
-        console.log(tournament);
-        allTournamentsArray.push(tournament);
-      }
-      console.log(allTournamentsArray);
+      setTournamentsState(res.data);
     });
   }, []);
 
   return (
-    <main>
-      <section>
-        <h1>THIS IS THE TOURNAMENT PAGE</h1>
-        <TournamentCards />
+    <main className="tournaments-page">
+      <h1>THIS IS THE TOURNAMENT PAGE</h1>
+      <section className="tournaments-list">
+        {tournamentsState.map((tournament) => {
+          return (
+            <TournamentCards key={tournament.id} tournament={tournament} />
+          );
+        })}
       </section>
     </main>
   );
