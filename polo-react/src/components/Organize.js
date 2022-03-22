@@ -25,7 +25,6 @@ const Organize = () => {
             setNewTournamentState((prev) => {
               return { ...prev, name: e.target.value };
             });
-            console.log(newTournamentState);
           }}
         ></input>
         <br />
@@ -36,7 +35,6 @@ const Organize = () => {
             setNewTournamentState((prev) => {
               return { ...prev, location: e.target.value };
             });
-            console.log(newTournamentState);
           }}
         ></input>
         <br />
@@ -47,7 +45,6 @@ const Organize = () => {
             setNewTournamentState((prev) => {
               return { ...prev, description: e.target.value };
             });
-            console.log(newTournamentState);
           }}
         ></input>
         <br />
@@ -58,7 +55,6 @@ const Organize = () => {
             setNewTournamentState((prev) => {
               return { ...prev, numberOfTeams: e.target.value };
             });
-            console.log(newTournamentState);
           }}
         ></input>
         <br />
@@ -70,7 +66,6 @@ const Organize = () => {
             setNewTournamentState((prev) => {
               return { ...prev, startDate: e.target.value };
             });
-            console.log(newTournamentState);
           }}
         ></input>
         <br />
@@ -82,7 +77,6 @@ const Organize = () => {
             setNewTournamentState((prev) => {
               return { ...prev, endDate: e.target.value };
             });
-            console.log(newTournamentState);
           }}
         ></input>
         <br />
@@ -90,9 +84,16 @@ const Organize = () => {
           className="organize-button"
           onClick={(e) => {
             e.preventDefault();
-            createTournament().then((res) => {
-              console.log(res);
-              navigate(`/planning/general/edit/${res.data.trip_id}`);
+            createTournament(
+              newTournamentState.name,
+              newTournamentState.location,
+              newTournamentState.description,
+              newTournamentState.numberOfTeams,
+              newTournamentState.startDate,
+              newTournamentState.endDate
+            ).then((res) => {
+              console.log("res", res);
+              // navigate(`/planning/general/edit/${res.data.trip_id}`);
             });
           }}
         >

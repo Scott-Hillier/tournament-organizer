@@ -8,12 +8,7 @@ const Home = () => {
 
   return (
     <main>
-      <form
-        className="search"
-        onSubmit={(event) => {
-          searchTournaments(searchState);
-        }}
-      >
+      <form className="search">
         <input
           className="search-bar"
           placeholder="Search by tournament"

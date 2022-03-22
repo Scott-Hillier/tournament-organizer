@@ -8,13 +8,22 @@ export function getTournamentInfo(tournament_id) {
   return axios.get(`/tournaments/${tournament_id}`);
 }
 
-export function searchTournaments(word) {
-  console.log("HIT");
-  return axios.get("/api/tournaments/search");
-}
-
-export function createTournament(user_id) {
-  return axios.put("/tournament/create");
+export function createTournament(
+  tournament_name,
+  location,
+  description,
+  number_of_teams,
+  start_date,
+  end_date
+) {
+  return axios.post(`/tournaments/create`, {
+    tournament_name: tournament_name,
+    location: location,
+    description: description,
+    number_of_teams: number_of_teams,
+    start_date: start_date,
+    end_date: end_date,
+  });
 }
 
 export function createTeam(team_name) {
