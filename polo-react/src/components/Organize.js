@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { createTournament } from "../helpers/apiHelpers";
+import { createTournament, getTournamentId } from "../helpers/apiHelpers";
 import "../styles/Organize/Organize.scss";
 
 const Organize = () => {
@@ -16,9 +16,29 @@ const Organize = () => {
 
   return (
     <main className="organize-page">
-      <form className="organize-form">
+      <form
+        className="organize-form"
+        onSubmit={(event) => {
+          event.preventDefault();
+          createTournament(
+            newTournamentState.name,
+            newTournamentState.location,
+            newTournamentState.description,
+            newTournamentState.numberOfTeams,
+            newTournamentState.startDate,
+            newTournamentState.endDate
+          ).then(() => {
+            console.log(".THEN");
+            getTournamentId(
+              newTournamentState.name,
+              newTournamentState.startDate
+            );
+          });
+        }}
+      >
         <br />
         <input
+          required
           placeholder="Tournament Name"
           className="organize-field"
           onChange={(e) => {
@@ -26,7 +46,7 @@ const Organize = () => {
               return { ...prev, name: e.target.value };
             });
           }}
-        ></input>
+        />
         <br />
         <input
           placeholder="Location"
@@ -36,7 +56,8 @@ const Organize = () => {
               return { ...prev, location: e.target.value };
             });
           }}
-        ></input>
+          required
+        />
         <br />
         <input
           placeholder="Description"
@@ -46,16 +67,18 @@ const Organize = () => {
               return { ...prev, description: e.target.value };
             });
           }}
-        ></input>
+        />
         <br />
         <input
           placeholder="Number of Teams"
+          type={"number"}
           className="organize-field"
           onChange={(e) => {
             setNewTournamentState((prev) => {
               return { ...prev, numberOfTeams: e.target.value };
             });
           }}
+          required
         ></input>
         <br />
         <input
@@ -67,7 +90,8 @@ const Organize = () => {
               return { ...prev, startDate: e.target.value };
             });
           }}
-        ></input>
+          required
+        />
         <br />
         <input
           placeholder="End Date"
@@ -78,27 +102,10 @@ const Organize = () => {
               return { ...prev, endDate: e.target.value };
             });
           }}
-        ></input>
+          required
+        />
         <br />
-        <button
-          className="organize-button"
-          onClick={(e) => {
-            e.preventDefault();
-            createTournament(
-              newTournamentState.name,
-              newTournamentState.location,
-              newTournamentState.description,
-              newTournamentState.numberOfTeams,
-              newTournamentState.startDate,
-              newTournamentState.endDate
-            ).then((res) => {
-              console.log("res", res);
-              // navigate(`/planning/general/edit/${res.data.trip_id}`);
-            });
-          }}
-        >
-          Create Tournament
-        </button>
+        <button className="organize-button">Create Tournament</button>
       </form>
     </main>
   );
