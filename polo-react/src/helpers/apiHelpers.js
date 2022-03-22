@@ -9,11 +9,12 @@ export function getTournamentInfo(tournament_id) {
 }
 
 export function searchTournaments(word) {
+  console.log("HIT");
   return axios.get("/api/tournaments/search");
 }
 
 export function createTournament(user_id) {
-  return axios.put("/api/tournament/create");
+  return axios.put("/tournament/create");
 }
 
 export function createTeam(team_name) {
