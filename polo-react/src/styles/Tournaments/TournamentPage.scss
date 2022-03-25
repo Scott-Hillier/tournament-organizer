@@ -4,3 +4,19 @@
   justify-content: center;
   align-items: center;
 }
+
+.tournament-page-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.tournament-page-teams {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  border: 2px solid blue;
+}
