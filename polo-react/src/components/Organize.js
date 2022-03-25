@@ -32,7 +32,10 @@ const Organize = () => {
             getTournamentId(
               newTournamentState.name,
               newTournamentState.startDate
-            );
+            ).then((res) => {
+              console.log(res);
+              navigate(`/tournaments/${res.data[0].id}`);
+            });
           });
         }}
       >

@@ -86,10 +86,11 @@ module.exports = (db) => {
       });
   });
 
-  router.get("/:tournament_id", (req, res) => {
-    console.log("ROUTER.GET");
-    getTournamentId(db, req.body.tournament_name, req.body.start_date)
+  router.get("/:tournament_name/:start_date", (req, res) => {
+    console.log("req.params", req.params);
+    getTournamentId(db, req.params.tournament_name, req.params.start_date)
       .then((data) => {
+        console.log(data.rows);
         res.send(data.rows);
       })
       .catch((err) => {
