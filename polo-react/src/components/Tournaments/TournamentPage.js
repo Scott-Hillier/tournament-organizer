@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import {
   getTournamentInfo,
   getTournamentTeams,
 } from "../../helpers/apiHelpers";
 import TournamentTeams from "./TournamentTeams";
+import TournamentGroups from "./TournamentGroups";
+import RoundRobin from "../../helpers/Logic/RoundRobin";
 import "../../styles/Tournaments/TournamentPage.scss";
 
 const TournamentPage = () => {
@@ -24,7 +26,8 @@ const TournamentPage = () => {
 
   const startDate = new Date(tournamentState?.start_date);
   const endDate = new Date(tournamentState?.end_date);
-  const teams = tournamentState?.teams || [];
+  const teamsArray = tournamentState?.teams || [];
+  const groupsArray = RoundRobin(teamsArray, 2);
 
   return (
     <main className="tournament-page">
@@ -36,10 +39,37 @@ const TournamentPage = () => {
         <h3>{tournamentState?.description}</h3>
         <h3>{startDate.toDateString()}</h3>
         <h3>{endDate.toDateString()}</h3>
+        <h3>{tournamentState?.format}</h3>
+        <br />
+        <Link
+          to={{
+            pathname: `/tournaments/${tournamentState.id}/schedule`,
+            props: { tournament_id: tournament_id },
+          }}
+          type={"button"}
+          className="organize-button"
+        >
+          Schedule
+        </Link>
         <br />
       </section>
+      {tournamentState?.format === "Round Robin" && (
+        <section className="tournament-page-teams">
+          {groupsArray.map((group) => {
+            return <TournamentGroups key={group.id} group={group} />;
+          })}
+        </section>
+      )}
+      {tournamentState?.format === "Swiss Rounds" && (
+        <section className="tournament-page-teams">
+          {teamsArray.map((team) => {
+            return <TournamentTeams key={team.id} team={team} />;
+          })}
+        </section>
+      )}
+      <br />
       <section className="tournament-page-teams">
-        {teams.map((team) => {
+        {teamsArray.map((team) => {
           return <TournamentTeams key={team.id} team={team} />;
         })}
       </section>

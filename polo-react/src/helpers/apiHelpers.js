@@ -9,7 +9,6 @@ export function getTournamentInfo(tournament_id) {
 }
 
 export function getTournamentId(tournament_name, start_date) {
-  console.log("APIHELPER:", tournament_name, start_date);
   return axios.get(`/tournaments/${tournament_name}/${start_date}`);
 }
 
@@ -19,7 +18,8 @@ export function createTournament(
   description,
   number_of_teams,
   start_date,
-  end_date
+  end_date,
+  format
 ) {
   return axios.post(`/tournaments/create`, {
     tournament_name: tournament_name,
@@ -28,6 +28,7 @@ export function createTournament(
     number_of_teams: number_of_teams,
     start_date: start_date,
     end_date: end_date,
+    format: format,
   });
 }
 

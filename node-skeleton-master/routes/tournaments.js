@@ -19,11 +19,12 @@ const createTournament = (
   description,
   number_of_teams,
   start_date,
-  end_date
+  end_date,
+  format
 ) => {
   const query = `INSERT INTO tournaments
-    (tournament_name, location, description, number_of_teams, start_date, end_date)
-    VALUES ($1, $2, $3, $4, $5, $6);`;
+    (tournament_name, location, description, number_of_teams, start_date, end_date, format)
+    VALUES ($1, $2, $3, $4, $5, $6, $7);`;
   const values = [
     tournament_name,
     location,
@@ -31,13 +32,12 @@ const createTournament = (
     number_of_teams,
     start_date,
     end_date,
+    format,
   ];
-
   return db.query(query, values);
 };
 
 const getTournamentId = (db, tournament_name, start_date) => {
-  console.log("getTournamentId: ", tournament_name);
   const query = `SELECT id
     FROM tournaments
     WHERE tournament_name = $1
@@ -75,7 +75,8 @@ module.exports = (db) => {
       req.body.description,
       req.body.number_of_teams,
       req.body.start_date,
-      req.body.end_date
+      req.body.end_date,
+      req.body.format
     )
       .then((data) => {
         console.log("Tournament added!");
@@ -87,10 +88,8 @@ module.exports = (db) => {
   });
 
   router.get("/:tournament_name/:start_date", (req, res) => {
-    console.log("req.params", req.params);
     getTournamentId(db, req.params.tournament_name, req.params.start_date)
       .then((data) => {
-        console.log(data.rows);
         res.send(data.rows);
       })
       .catch((err) => {

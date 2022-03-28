@@ -15,7 +15,6 @@ const Home = () => {
           onChange={(event) => {
             event.preventDefault();
             setSearchState(event.target.value);
-            console.log(event.target.value);
           }}
         ></input>
         <button className="search-button">Find!</button>

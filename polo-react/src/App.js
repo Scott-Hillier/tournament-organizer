@@ -7,6 +7,7 @@ import Register from "./components/Register";
 import Organize from "./components/Organize";
 import Tournaments from "./components/Tournaments/Tournaments";
 import TournamentPage from "./components/Tournaments/TournamentPage";
+import TournamentSchedule from "./components/Tournaments/TournamentSchedule";
 
 function App() {
   return (
@@ -21,6 +22,10 @@ function App() {
         <Route
           path="/tournaments/:tournament_id"
           element={<TournamentPage />}
+        ></Route>
+        <Route
+          path="/tournaments/:tournament_id/schedule"
+          element={<TournamentSchedule />}
         ></Route>
       </Routes>
     </BrowserRouter>

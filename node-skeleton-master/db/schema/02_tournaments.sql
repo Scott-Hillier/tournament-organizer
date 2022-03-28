@@ -6,5 +6,6 @@ CREATE TABLE tournaments (
   description VARCHAR(255),
   number_of_teams INTEGER NOT NULL,
   start_date DATE NOT NULL,
-  end_date DATE NOT NULL
+  end_date DATE NOT NULL,
+  format VARCHAR(255)
 );

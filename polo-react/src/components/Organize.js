@@ -12,6 +12,8 @@ const Organize = () => {
     numberOfTeams: 0,
     startDate: "",
     endDate: "",
+    format: "",
+    numberOfTeams: 0,
   });
 
   return (
@@ -26,14 +28,13 @@ const Organize = () => {
             newTournamentState.description,
             newTournamentState.numberOfTeams,
             newTournamentState.startDate,
-            newTournamentState.endDate
+            newTournamentState.endDate,
+            newTournamentState.format
           ).then(() => {
-            console.log(".THEN");
             getTournamentId(
               newTournamentState.name,
               newTournamentState.startDate
             ).then((res) => {
-              console.log(res);
               navigate(`/tournaments/${res.data[0].id}`);
             });
           });
@@ -108,6 +109,37 @@ const Organize = () => {
           required
         />
         <br />
+        <select
+          name="Format"
+          className="organize-field"
+          onChange={(e) => {
+            setNewTournamentState((prev) => {
+              return { ...prev, format: e.target.value };
+            });
+          }}
+          required
+        >
+          <option value={"none"}>Select an Option</option>
+          <option value={"Round Robin"}>Round Robin</option>
+          <option value={"Swiss Rounds"}>Swiss Rounds</option>
+        </select>
+        <br />
+        {newTournamentState.format === "Round Robin" && (
+          <>
+            <input
+              placeholder="Number of Groups"
+              type={"number"}
+              className="organize-field"
+              onChange={(e) => {
+                setNewTournamentState((prev) => {
+                  return { ...prev, numberOfGroups: e.target.value };
+                });
+              }}
+              required
+            />
+            <br />
+          </>
+        )}
         <button className="organize-button">Create Tournament</button>
       </form>
     </main>
