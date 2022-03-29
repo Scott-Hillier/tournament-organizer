@@ -22,11 +22,7 @@ const TournamentSchedule = () => {
   }, []);
 
   const teams = tournamentState?.teams || [];
-
-  const groupsArray = RoundRobin(teams, 2);
-
-  console.log(groupsArray);
-
+  console.log(teams);
   return (
     <section>
       <h1>TOURNAMENT SCHEDULE</h1>

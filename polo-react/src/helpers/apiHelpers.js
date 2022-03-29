@@ -19,8 +19,10 @@ export function createTournament(
   number_of_teams,
   start_date,
   end_date,
-  format
+  format,
+  number_of_groups
 ) {
+  console.log("api", number_of_groups);
   return axios.post(`/tournaments/create`, {
     tournament_name: tournament_name,
     location: location,
@@ -29,6 +31,7 @@ export function createTournament(
     start_date: start_date,
     end_date: end_date,
     format: format,
+    number_of_groups: number_of_groups,
   });
 }
 

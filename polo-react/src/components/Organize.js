@@ -9,11 +9,11 @@ const Organize = () => {
     name: "",
     location: "",
     description: "",
-    numberOfTeams: 0,
+    numberOfTeams: "",
     startDate: "",
     endDate: "",
     format: "",
-    numberOfTeams: 0,
+    numberOfGroups: "0",
   });
 
   return (
@@ -29,7 +29,8 @@ const Organize = () => {
             newTournamentState.numberOfTeams,
             newTournamentState.startDate,
             newTournamentState.endDate,
-            newTournamentState.format
+            newTournamentState.format,
+            newTournamentState.numberOfGroups
           ).then(() => {
             getTournamentId(
               newTournamentState.name,
@@ -119,7 +120,7 @@ const Organize = () => {
           }}
           required
         >
-          <option value={"none"}>Select an Option</option>
+          <option value={"none"}>Select a Format</option>
           <option value={"Round Robin"}>Round Robin</option>
           <option value={"Swiss Rounds"}>Swiss Rounds</option>
         </select>

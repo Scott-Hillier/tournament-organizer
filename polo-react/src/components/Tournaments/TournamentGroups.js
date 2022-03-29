@@ -1,15 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import {
-  getTournamentInfo,
-  getTournamentTeams,
-} from "../../helpers/apiHelpers";
-import RoundRobin from "../../helpers/Logic/RoundRobin";
+import React from "react";
 
-const TournamentGroups = () => {
+const TournamentGroups = ({ group }) => {
+  console.log("child", group);
   return (
     <section>
-      <h1>TOURNAMENT SCHEDULE</h1>
+      <h1>Group</h1>
     </section>
   );
 };

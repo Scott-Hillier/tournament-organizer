@@ -20,11 +20,12 @@ const createTournament = (
   number_of_teams,
   start_date,
   end_date,
-  format
+  format,
+  number_of_groups
 ) => {
   const query = `INSERT INTO tournaments
-    (tournament_name, location, description, number_of_teams, start_date, end_date, format)
-    VALUES ($1, $2, $3, $4, $5, $6, $7);`;
+    (tournament_name, location, description, number_of_teams, start_date, end_date, format, number_of_groups)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8);`;
   const values = [
     tournament_name,
     location,
@@ -33,6 +34,7 @@ const createTournament = (
     start_date,
     end_date,
     format,
+    number_of_groups,
   ];
   return db.query(query, values);
 };
@@ -68,6 +70,7 @@ module.exports = (db) => {
   });
 
   router.post("/create", (req, res) => {
+    console.log("HIT");
     createTournament(
       db,
       req.body.tournament_name,
@@ -76,7 +79,8 @@ module.exports = (db) => {
       req.body.number_of_teams,
       req.body.start_date,
       req.body.end_date,
-      req.body.format
+      req.body.format,
+      req.body.number_of_groups
     )
       .then((data) => {
         console.log("Tournament added!");

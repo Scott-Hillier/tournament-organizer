@@ -1,15 +1,14 @@
-const RoundRobin = (teamsArray, numberOfGroups) => {
-  let counter = 1;
-  const newTeamsArray = [];
-  for (const team of teamsArray) {
-    const teamObject = { team: team, group: counter };
-    newTeamsArray.push(teamObject);
-    counter++;
-    if (counter > numberOfGroups) {
-      counter = 1;
-    }
+const RoundRobin = (teams, groupsNumber, random) => {
+  const grouped = [];
+  if (random) {
+    teams = teams.sort(() => Math.random() - 0.5);
   }
-  return newTeamsArray;
+
+  for (let i = groupsNumber; i > 0; i--) {
+    grouped.push(teams.splice(0, Math.ceil(teams.length / i)));
+  }
+
+  return grouped;
 };
 
 export default RoundRobin;

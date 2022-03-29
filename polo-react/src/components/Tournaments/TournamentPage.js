@@ -27,7 +27,11 @@ const TournamentPage = () => {
   const startDate = new Date(tournamentState?.start_date);
   const endDate = new Date(tournamentState?.end_date);
   const teamsArray = tournamentState?.teams || [];
-  const groupsArray = RoundRobin(teamsArray, 2);
+  const groupsArray = RoundRobin(
+    teamsArray,
+    tournamentState?.number_of_groups,
+    true
+  );
 
   return (
     <main className="tournament-page">
@@ -40,6 +44,7 @@ const TournamentPage = () => {
         <h3>{startDate.toDateString()}</h3>
         <h3>{endDate.toDateString()}</h3>
         <h3>{tournamentState?.format}</h3>
+        <h3>{tournamentState?.number_of_groups}</h3>
         <br />
         <Link
           to={{
@@ -54,9 +59,10 @@ const TournamentPage = () => {
         <br />
       </section>
       {tournamentState?.format === "Round Robin" && (
-        <section className="tournament-page-teams">
-          {groupsArray.map((group) => {
-            return <TournamentGroups key={group.id} group={group} />;
+        <section>
+          {groupsArray.map((group, i) => {
+            console.log(".map", group);
+            return <TournamentGroups key={i} group={group} />;
           })}
         </section>
       )}
@@ -68,11 +74,6 @@ const TournamentPage = () => {
         </section>
       )}
       <br />
-      <section className="tournament-page-teams">
-        {teamsArray.map((team) => {
-          return <TournamentTeams key={team.id} team={team} />;
-        })}
-      </section>
     </main>
   );
 };
