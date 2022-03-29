@@ -1,7 +1,7 @@
-const RoundRobin = (teams, groupsNumber, random) => {
+const roundRobin = (teams, groupsNumber, random) => {
   const grouped = [];
   if (random) {
-    teams = teams.sort(() => Math.random() - 0.5);
+    teams = teams?.sort(() => Math.random() - 0.5);
   }
 
   for (let i = groupsNumber; i > 0; i--) {
@@ -11,4 +11,4 @@ const RoundRobin = (teams, groupsNumber, random) => {
   return grouped;
 };
 
-export default RoundRobin;
+export default roundRobin;

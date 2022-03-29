@@ -6,11 +6,13 @@ import {
 } from "../../helpers/apiHelpers";
 import TournamentTeams from "./TournamentTeams";
 import TournamentGroups from "./TournamentGroups";
-import RoundRobin from "../../helpers/Logic/RoundRobin";
+import roundRobin from "../../helpers/Logic/RoundRobin";
 import "../../styles/Tournaments/TournamentPage.scss";
 
 const TournamentPage = () => {
   const [tournamentState, setTournamentState] = useState({});
+  const [tournamentTeamsState, setTournamentTeamsState] = useState([]);
+
   const { tournament_id } = useParams();
 
   useEffect(() => {
@@ -18,20 +20,14 @@ const TournamentPage = () => {
       setTournamentState(res.data[0]);
     });
     getTournamentTeams(tournament_id).then((res) => {
-      setTournamentState((prev) => {
-        return { ...prev, teams: res.data };
-      });
+      setTournamentTeamsState(res.data);
     });
   }, []);
 
   const startDate = new Date(tournamentState?.start_date);
   const endDate = new Date(tournamentState?.end_date);
-  const teamsArray = tournamentState?.teams || [];
-  const groupsArray = RoundRobin(
-    teamsArray,
-    tournamentState?.number_of_groups,
-    true
-  );
+
+  console.log("tournamentState", tournamentState);
 
   return (
     <main className="tournament-page">
@@ -58,17 +54,18 @@ const TournamentPage = () => {
         </Link>
         <br />
       </section>
-      {tournamentState?.format === "Round Robin" && (
-        <section>
-          {groupsArray.map((group, i) => {
-            console.log(".map", group);
-            return <TournamentGroups key={i} group={group} />;
-          })}
+      {tournamentState.format === "Round Robin" && (
+        <section className="tournament-page-groups">
+          <TournamentGroups
+            key={tournamentState.id}
+            tournament={tournamentState}
+            teams={tournamentTeamsState}
+          />
         </section>
       )}
       {tournamentState?.format === "Swiss Rounds" && (
         <section className="tournament-page-teams">
-          {teamsArray.map((team) => {
+          {tournamentTeamsState.map((team) => {
             return <TournamentTeams key={team.id} team={team} />;
           })}
         </section>
