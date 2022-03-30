@@ -13,19 +13,17 @@ import "../../styles/Tournaments/TournamentPage.scss";
 const TournamentPage = () => {
   const [tournamentState, setTournamentState] = useState({});
   const [tournamentTeamsState, setTournamentTeamsState] = useState([]);
-  const [tournamentGroupState, setTournamentGroupState] = useState([]);
 
   const { tournament_id } = useParams();
 
   useEffect(() => {
     getTournamentInfo(tournament_id).then((res) => {
+      console.log(res.data[0]);
       setTournamentState(res.data[0]);
     });
     getTournamentTeams(tournament_id).then((res) => {
+      console.log(res.data);
       setTournamentTeamsState(res.data);
-    });
-    getTournamentGroups(tournament_id).then((res) => {
-      setTournamentGroupState(res.data);
     });
   }, []);
 
@@ -60,15 +58,7 @@ const TournamentPage = () => {
       {tournamentState.format === "Round Robin" && (
         <>
           <section className="tournament-page-groups">
-            {tournamentGroupState.map((group) => {
-              return (
-                <TournamentGroups
-                  key={group.id}
-                  group={group}
-                  tournamentTeamsState={tournamentTeamsState}
-                />
-              );
-            })}
+            <h1>Groups</h1>
           </section>
           <button>Randomize Groups</button>
         </>

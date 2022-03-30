@@ -10,26 +10,9 @@ const getTournamentTeams = (db, tournament_id) => {
   return db.query(query, values);
 };
 
-const getTournamentGroups = (db, tournament_id) => {
-  const query = `SELECT * FROM groups
-  WHERE tournament_id = $1;`;
-  const values = [tournament_id];
-  return db.query(query, values);
-};
-
 module.exports = (db) => {
   router.get("/:tournament_id", (req, res) => {
     getTournamentTeams(db, req.params.tournament_id)
-      .then((data) => {
-        res.send(data.rows);
-      })
-      .catch((err) => {
-        res.status(500).json({ error: err.message });
-      });
-  });
-
-  router.get("/:tournament_id/groups", (req, res) => {
-    getTournamentGroups(db, req.params.tournament_id)
       .then((data) => {
         res.send(data.rows);
       })

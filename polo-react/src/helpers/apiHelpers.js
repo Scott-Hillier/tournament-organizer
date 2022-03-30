@@ -37,7 +37,3 @@ export function createTournament(
 export function getTournamentTeams(tournament_id) {
   return axios.get(`/teams/${tournament_id}`);
 }
-
-export function getTournamentGroups(tournament_id) {
-  return axios.get(`/teams/${tournament_id}/groups`);
-}
