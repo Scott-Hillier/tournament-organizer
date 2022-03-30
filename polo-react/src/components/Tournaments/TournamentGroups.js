@@ -18,7 +18,7 @@ const TournamentGroups = ({ tournament, teams }) => {
         {
           console.log("GREE", group[0]?.team_name);
         }
-        return <h1>JEW: {group[0]?.team_name}</h1>;
+        return <h1> {group[0]?.team_name}</h1>;
       })}
     </div>
   );
