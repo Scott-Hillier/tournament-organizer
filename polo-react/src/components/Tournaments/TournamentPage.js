@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import {
+  addTeam,
   getTournamentGroups,
   getTournamentInfo,
   getTournamentTeams,
@@ -10,10 +11,13 @@ import TournamentGroups from "./TournamentGroups";
 import roundRobin from "../../helpers/Logic/RoundRobin";
 import "../../styles/Tournaments/TournamentPage.scss";
 
+const DEFAULT = "DEFAULT";
+const ADD = "ADD";
+
 const TournamentPage = () => {
   const [tournamentState, setTournamentState] = useState({});
   const [tournamentTeamsState, setTournamentTeamsState] = useState([]);
-  const [groupState, setGroupState] = useState([]);
+  const [pageState, setPageState] = useState(DEFAULT);
 
   const { tournament_id } = useParams();
 
@@ -55,13 +59,11 @@ const TournamentPage = () => {
         <br />
       </section>
       {tournamentState.format === "Round Robin" && (
-        <>
-          <TournamentGroups
-            teamsArray={tournamentTeamsState}
-            numberOfGroups={tournamentState.number_of_groups}
-          />
-          <button>Randomize Groups</button>
-        </>
+        <section className="tournament-page-teams">
+          {tournamentTeamsState.map((team) => {
+            return <TournamentTeams key={team.id} team={team} />;
+          })}
+        </section>
       )}
       {tournamentState?.format === "Swiss Rounds" && (
         <section className="tournament-page-teams">
@@ -71,6 +73,26 @@ const TournamentPage = () => {
         </section>
       )}
       <br />
+      {pageState === DEFAULT && (
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            console.log("click");
+            setPageState(ADD);
+          }}
+        >
+          Add Team
+        </button>
+      )}
+      {pageState === ADD && (
+        <form>
+          <input placeholder="Team Name" />
+          <input placeholder="Player 1" />
+          <input placeholder="Player 2" />
+          <input placeholder="Player 3" />
+          <button type="Submit"></button>
+        </form>
+      )}
     </main>
   );
 };

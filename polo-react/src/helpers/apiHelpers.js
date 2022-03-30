@@ -37,3 +37,7 @@ export function createTournament(
 export function getTournamentTeams(tournament_id) {
   return axios.get(`/teams/${tournament_id}`);
 }
+
+export function addTeam(tournament_id, team) {
+  console.log("API");
+}
