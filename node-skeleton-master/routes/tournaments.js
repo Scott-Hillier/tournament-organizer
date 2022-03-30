@@ -70,7 +70,6 @@ module.exports = (db) => {
   });
 
   router.post("/create", (req, res) => {
-    console.log("HIT");
     createTournament(
       db,
       req.body.tournament_name,

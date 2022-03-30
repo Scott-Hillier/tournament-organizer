@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import {
+  getTournamentGroups,
   getTournamentInfo,
   getTournamentTeams,
 } from "../../helpers/apiHelpers";
@@ -12,6 +13,7 @@ import "../../styles/Tournaments/TournamentPage.scss";
 const TournamentPage = () => {
   const [tournamentState, setTournamentState] = useState({});
   const [tournamentTeamsState, setTournamentTeamsState] = useState([]);
+  const [tournamentGroupState, setTournamentGroupState] = useState([]);
 
   const { tournament_id } = useParams();
 
@@ -22,12 +24,13 @@ const TournamentPage = () => {
     getTournamentTeams(tournament_id).then((res) => {
       setTournamentTeamsState(res.data);
     });
+    getTournamentGroups(tournament_id).then((res) => {
+      setTournamentGroupState(res.data);
+    });
   }, []);
 
   const startDate = new Date(tournamentState?.start_date);
   const endDate = new Date(tournamentState?.end_date);
-
-  console.log("tournamentState", tournamentState);
 
   return (
     <main className="tournament-page">
@@ -55,13 +58,20 @@ const TournamentPage = () => {
         <br />
       </section>
       {tournamentState.format === "Round Robin" && (
-        <section className="tournament-page-groups">
-          <TournamentGroups
-            key={tournamentState.id}
-            tournament={tournamentState}
-            teams={tournamentTeamsState}
-          />
-        </section>
+        <>
+          <section className="tournament-page-groups">
+            {tournamentGroupState.map((group) => {
+              return (
+                <TournamentGroups
+                  key={group.id}
+                  group={group}
+                  tournamentTeamsState={tournamentTeamsState}
+                />
+              );
+            })}
+          </section>
+          <button>Randomize Groups</button>
+        </>
       )}
       {tournamentState?.format === "Swiss Rounds" && (
         <section className="tournament-page-teams">

@@ -1,26 +1,27 @@
 import React, { useEffect, useState } from "react";
+import { getTournamentGroups } from "../../helpers/apiHelpers";
 import roundRobin from "../../helpers/Logic/RoundRobin";
 
-const TournamentGroups = ({ tournament, teams }) => {
-  const [groupsState, setGroupsState] = useState([]);
+const TournamentGroups = ({ group, tournamentTeamsState }) => {
+  // const [groupsState, setGroupsState] = useState([]);
 
-  console.log("hi", teams);
+  // useEffect(() => {
+  //   getTournamentGroups(tournament.id);
+  // }, []);
 
-  useEffect(() => {
-    setGroupsState(roundRobin(teams, tournament.number_of_groups, true));
-  }, []);
-
-  console.log("TITS", groupsState);
+  console.log("teams", tournamentTeamsState);
+  console.log("group", group);
 
   return (
     <div>
-      {groupsState.map((group, i) => {
-        {
-          console.log("GREE", group[0]?.team_name);
-        }
-        return <h1> {group[0]?.team_name}</h1>;
-      })}
+      <h1>Group</h1>
+      <h3>{group.team_1}</h3>
     </div>
+    // <div>
+    //   {groupsState.map((group, i) => {
+    //     return <h1> {group[0]?.team_name}</h1>;
+    //   })}
+    // </div>
   );
 };
 
