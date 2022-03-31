@@ -17,6 +17,12 @@ const ADD = "ADD";
 const TournamentPage = () => {
   const [tournamentState, setTournamentState] = useState({});
   const [tournamentTeamsState, setTournamentTeamsState] = useState([]);
+  const [newTeamState, setNewTeamState] = useState({
+    teamName: "",
+    player1: "",
+    player2: "",
+    player3: "",
+  });
   const [pageState, setPageState] = useState(DEFAULT);
 
   const { tournament_id } = useParams();
@@ -86,10 +92,46 @@ const TournamentPage = () => {
       )}
       {pageState === ADD && (
         <form>
-          <input placeholder="Team Name" />
-          <input placeholder="Player 1" />
-          <input placeholder="Player 2" />
-          <input placeholder="Player 3" />
+          <input
+            placeholder="Team Name"
+            className="add-team"
+            onChange={(e) => {
+              setNewTeamState((prev) => {
+                return { ...prev, teamName: e.target.value };
+              });
+            }}
+            required
+          />
+          <input
+            placeholder="Player 1"
+            className="add-team"
+            onChange={(e) => {
+              setNewTeamState((prev) => {
+                return { ...prev, teamName: e.target.value };
+              });
+            }}
+            required
+          />
+          <input
+            placeholder="Player 2"
+            className="add-team"
+            onChange={(e) => {
+              setNewTeamState((prev) => {
+                return { ...prev, teamName: e.target.value };
+              });
+            }}
+            required
+          />
+          <input
+            placeholder="Player 3"
+            className="add-team"
+            onChange={(e) => {
+              setNewTeamState((prev) => {
+                return { ...prev, teamName: e.target.value };
+              });
+            }}
+            required
+          />
           <button type="Submit"></button>
         </form>
       )}
