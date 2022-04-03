@@ -64,7 +64,7 @@ const TournamentPage = () => {
         </Link>
         <br />
       </section>
-      {tournamentState.format === "Round Robin" && (
+      {tournamentState?.format === "Round Robin" && (
         <section className="tournament-page-teams">
           {tournamentTeamsState.map((team) => {
             return <TournamentTeams key={team.id} team={team} />;
@@ -96,6 +96,7 @@ const TournamentPage = () => {
             placeholder="Team Name"
             className="add-team"
             onChange={(e) => {
+              console.log("newTeamState", newTeamState);
               setNewTeamState((prev) => {
                 return { ...prev, teamName: e.target.value };
               });
@@ -107,7 +108,7 @@ const TournamentPage = () => {
             className="add-team"
             onChange={(e) => {
               setNewTeamState((prev) => {
-                return { ...prev, teamName: e.target.value };
+                return { ...prev, player1: e.target.value };
               });
             }}
             required
@@ -117,7 +118,7 @@ const TournamentPage = () => {
             className="add-team"
             onChange={(e) => {
               setNewTeamState((prev) => {
-                return { ...prev, teamName: e.target.value };
+                return { ...prev, player2: e.target.value };
               });
             }}
             required
@@ -127,7 +128,7 @@ const TournamentPage = () => {
             className="add-team"
             onChange={(e) => {
               setNewTeamState((prev) => {
-                return { ...prev, teamName: e.target.value };
+                return { ...prev, player3: e.target.value };
               });
             }}
             required
