@@ -10,6 +10,12 @@ const getTournamentTeams = (db, tournament_id) => {
   return db.query(query, values);
 };
 
+const addTeam = (db, tournament_id, team) => {
+  const query = `INSERT INTO teams (team_name, player1, player2, player3)
+  VALUES ($1, $2, $3, $4);`;
+  const values = [team.name, team.player1, team.player2, team.player3];
+};
+
 module.exports = (db) => {
   router.get("/:tournament_id", (req, res) => {
     getTournamentTeams(db, req.params.tournament_id)
