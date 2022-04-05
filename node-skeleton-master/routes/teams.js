@@ -27,5 +27,21 @@ module.exports = (db) => {
       });
   });
 
+  router.post("/:tournament_id/add", (req, res) => {
+    getTournamentTeams(
+      db,
+      req.body.team.team_name,
+      req.body.team.player1,
+      req.body.team.player2,
+      req.body.team.player3
+    )
+      .then((data) => {
+        res.send(data.rows);
+      })
+      .catch((err) => {
+        res.status(500).json({ error: err.message });
+      });
+  });
+
   return router;
 };
