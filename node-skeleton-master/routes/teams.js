@@ -10,10 +10,29 @@ const getTournamentTeams = (db, tournament_id) => {
   return db.query(query, values);
 };
 
-const addTeam = (db, tournament_id, team) => {
+const addTeam = (db, team) => {
   const query = `INSERT INTO teams (team_name, player1, player2, player3)
   VALUES ($1, $2, $3, $4);`;
-  const values = [team.name, team.player1, team.player2, team.player3];
+  const values = [team.teamName, team.player1, team.player2, team.player3];
+  return db.query(query, values);
+};
+
+const getTeamID = (db, team) => {
+  const query = `SELECT id
+  FROM teams
+  WHERE team_name = $1
+  AND player1 = $2
+  AND player2 = $3
+  AND player3 = $4;`;
+  values = [team.teamName, team.player1, team.player2, team.player3];
+  return db.query(query, values);
+};
+
+const addTeamToTournament = (db, tournament_id, team_id) => {
+  const query = `INSERT INTO tournament_teams (tournament_id, team_id)
+  VALUES ($1, $2)`;
+  const values = [tournament_id, team_id];
+  return db.query(query, values);
 };
 
 module.exports = (db) => {
@@ -28,14 +47,16 @@ module.exports = (db) => {
   });
 
   router.post("/:tournament_id/add", (req, res) => {
-    getTournamentTeams(
-      db,
-      req.body.team.team_name,
-      req.body.team.player1,
-      req.body.team.player2,
-      req.body.team.player3
-    )
+    addTeam(db, req.body)
       .then((data) => {
+        getTeamID(db, req.body).then((ID) => {
+          console.log(ID.rows[ID.rows.length - 1].id);
+          addTeamToTournament(
+            db,
+            req.params.tournament_id,
+            ID.rows[ID.rows.length - 1].id
+          );
+        });
         res.send(data.rows);
       })
       .catch((err) => {

@@ -91,12 +91,17 @@ const TournamentPage = () => {
         </button>
       )}
       {pageState === ADD && (
-        <form>
+        <form
+          onSubmit={(event) => {
+            event.preventDefault();
+            addTeam(tournament_id, newTeamState);
+            window.location.reload();
+          }}
+        >
           <input
             placeholder="Team Name"
             className="add-team"
             onChange={(e) => {
-              console.log("newTeamState", newTeamState);
               setNewTeamState((prev) => {
                 return { ...prev, teamName: e.target.value };
               });
@@ -133,7 +138,7 @@ const TournamentPage = () => {
             }}
             required
           />
-          <button type="Submit"></button>
+          <button type="Submit">Add Team</button>
         </form>
       )}
     </main>
