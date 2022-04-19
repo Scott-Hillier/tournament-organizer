@@ -29,8 +29,8 @@ const getTeamID = (db, team) => {
 };
 
 const addTeamToTournament = (db, tournament_id, team_id) => {
-  const query = `INSERT INTO tournament_teams (tournament_id, team_id)
-  VALUES ($1, $2)`;
+  const query = `INSERT INTO tournament_teams (tournament_id, team_id, group_id)
+  VALUES ($1, $2, 0)`;
   const values = [tournament_id, team_id];
   return db.query(query, values);
 };
@@ -50,7 +50,6 @@ module.exports = (db) => {
     addTeam(db, req.body)
       .then((data) => {
         getTeamID(db, req.body).then((ID) => {
-          console.log(ID.rows[ID.rows.length - 1].id);
           addTeamToTournament(
             db,
             req.params.tournament_id,

@@ -13,6 +13,7 @@ import "../../styles/Tournaments/TournamentPage.scss";
 
 const DEFAULT = "DEFAULT";
 const ADD = "ADD";
+const GROUPS = "GROUPS";
 
 const TournamentPage = () => {
   const [tournamentState, setTournamentState] = useState({});
@@ -80,15 +81,24 @@ const TournamentPage = () => {
       )}
       <br />
       {pageState === DEFAULT && (
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            console.log("click");
-            setPageState(ADD);
-          }}
-        >
-          Add Team
-        </button>
+        <section>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              setPageState(ADD);
+            }}
+          >
+            Add Team
+          </button>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              setPageState(GROUPS);
+            }}
+          >
+            Place Teams Into Groups
+          </button>
+        </section>
       )}
       {pageState === ADD && (
         <form
@@ -139,6 +149,21 @@ const TournamentPage = () => {
             required
           />
           <button type="Submit">Add Team</button>
+        </form>
+      )}
+      {pageState === GROUPS && (
+        <form>
+          <input
+            placeholder="Number of Groups"
+            type={"number"}
+            onSubmit={(e) => {
+              e.preventDefault();
+              console.log(e.target.value);
+              // createGroups(e.target.value);
+            }}
+            required
+          />
+          <button>Make Groups</button>
         </form>
       )}
     </main>
