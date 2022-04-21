@@ -26,7 +26,10 @@ const TournamentPage = () => {
     player3: "",
   });
   const [pageState, setPageState] = useState(DEFAULT);
-  const [groupState, setGroupState] = useState(0);
+  const [groupState, setGroupState] = useState({
+    numberOfGroups: 0,
+    random: false,
+  });
 
   const { tournament_id } = useParams();
 
@@ -157,14 +160,21 @@ const TournamentPage = () => {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            createGroups(tournament_id, tournamentTeamsState, groupState, true);
+            createGroups(
+              tournament_id,
+              tournamentTeamsState,
+              groupState.numberOfGroups,
+              groupState.random
+            );
           }}
         >
           <input
             placeholder="Number of Groups"
             type={"number"}
             onChange={(e) => {
-              setGroupState(e.target.value);
+              setGroupState((prev) => {
+                return { ...prev, numberOfGroups: e.target.value };
+              });
             }}
             required
           />
@@ -172,10 +182,15 @@ const TournamentPage = () => {
           <input
             type={"checkbox"}
             onChange={(e) => {
-              console.log(e.target.value);
-              // setGroupState((prev) => {
-              //   return { ...prev, random: e.target.value };
-              // });
+              if (groupState.random === false) {
+                setGroupState((prev) => {
+                  return { ...prev, random: true };
+                });
+              } else {
+                setGroupState((prev) => {
+                  return { ...prev, random: false };
+                });
+              }
             }}
           ></input>
           <button>Make Groups</button>
