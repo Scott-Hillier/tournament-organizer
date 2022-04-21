@@ -5,6 +5,7 @@ import {
   getTournamentGroups,
   getTournamentInfo,
   getTournamentTeams,
+  createGroups,
 } from "../../helpers/apiHelpers";
 import TournamentTeams from "./TournamentTeams";
 import TournamentGroups from "./TournamentGroups";
@@ -25,6 +26,7 @@ const TournamentPage = () => {
     player3: "",
   });
   const [pageState, setPageState] = useState(DEFAULT);
+  const [groupState, setGroupState] = useState(0);
 
   const { tournament_id } = useParams();
 
@@ -152,17 +154,30 @@ const TournamentPage = () => {
         </form>
       )}
       {pageState === GROUPS && (
-        <form>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            createGroups(tournament_id, tournamentTeamsState, groupState, true);
+          }}
+        >
           <input
             placeholder="Number of Groups"
             type={"number"}
-            onSubmit={(e) => {
-              e.preventDefault();
-              console.log(e.target.value);
-              // createGroups(e.target.value);
+            onChange={(e) => {
+              setGroupState(e.target.value);
             }}
             required
           />
+          <p>Random?</p>
+          <input
+            type={"checkbox"}
+            onChange={(e) => {
+              console.log(e.target.value);
+              // setGroupState((prev) => {
+              //   return { ...prev, random: e.target.value };
+              // });
+            }}
+          ></input>
           <button>Make Groups</button>
         </form>
       )}

@@ -1,4 +1,5 @@
 import axios from "axios";
+import roundRobin from "./Logic/RoundRobin";
 
 export function getAllTournaments() {
   return axios.get("/tournaments/all");
@@ -41,4 +42,13 @@ export function getTournamentTeams(tournament_id) {
 export function addTeam(tournament_id, team) {
   console.log("API", tournament_id, team);
   return axios.post(`/teams/${tournament_id}/add`, team);
+}
+
+export function createGroups(
+  tournament_id,
+  teams_array,
+  number_of_groups,
+  random
+) {
+  return axios.put(`/tournament/${tournament_id}/groups`);
 }
