@@ -1,10 +1,9 @@
 const roundRobin = (teams, groupsNumber, random) => {
-  const grouped = [];
   let groupID = 1;
   if (random) {
     teams = teams?.sort(() => Math.random() - 0.5);
   }
-  console.log(groupsNumber);
+
   for (const team of teams) {
     if (groupID > groupsNumber) {
       groupID = 1;

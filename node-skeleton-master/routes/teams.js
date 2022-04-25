@@ -35,6 +35,12 @@ const addTeamToTournament = (db, tournament_id, team_id) => {
   return db.query(query, values);
 };
 
+const createGroups = (db, tournament_id, teams) => {
+  const query = ``;
+  const values = [];
+  return db.query(query, values);
+};
+
 module.exports = (db) => {
   router.get("/:tournament_id", (req, res) => {
     getTournamentTeams(db, req.params.tournament_id)
