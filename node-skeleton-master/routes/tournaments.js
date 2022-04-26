@@ -48,6 +48,14 @@ const getTournamentId = (db, tournament_name, start_date) => {
   return db.query(query, values);
 };
 
+const updateNumberOfGroups = (db, number_of_groups, tournament_id) => {
+  const query = `UPDATE tournaments
+  SET number_of_groups = $1
+  WHERE id = $2`;
+  const values = [number_of_groups, tournament_id];
+  return db.query(query, values);
+};
+
 module.exports = (db) => {
   router.get("/all", (req, res) => {
     getAllTournaments(db)
@@ -82,7 +90,6 @@ module.exports = (db) => {
       req.body.number_of_groups
     )
       .then((data) => {
-        console.log("Tournament added!");
         res.send(data);
       })
       .catch((err) => {
@@ -92,6 +99,20 @@ module.exports = (db) => {
 
   router.get("/:tournament_name/:start_date", (req, res) => {
     getTournamentId(db, req.params.tournament_name, req.params.start_date)
+      .then((data) => {
+        res.send(data.rows);
+      })
+      .catch((err) => {
+        res.status(500).json({ error: err.message });
+      });
+  });
+
+  router.post("/:tournament_id/numberOfGroups", (req, res) => {
+    updateNumberOfGroups(
+      db,
+      req.body.number_of_groups,
+      req.params.tournament_id
+    )
       .then((data) => {
         res.send(data.rows);
       })

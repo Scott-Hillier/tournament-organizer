@@ -38,6 +38,7 @@ const TournamentPage = () => {
       setTournamentState(res.data[0]);
     });
     getTournamentTeams(tournament_id).then((res) => {
+      console.log("res.data", res.data);
       setTournamentTeamsState(res.data);
     });
   }, []);

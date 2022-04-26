@@ -36,7 +36,6 @@ const addTeamToTournament = (db, tournament_id, team_id) => {
 };
 
 const createGroups = (db, group_id, tournament_id, team_id) => {
-  console.log("createGroups");
   const query = `UPDATE tournament_teams
   SET group_id = $1
   WHERE tournament_id = $2
@@ -74,10 +73,8 @@ module.exports = (db) => {
   });
 
   router.post("/:tournament_id/groups", (req, res) => {
-    console.log("router.post", req.body);
     createGroups(db, req.body.group_id, req.params.tournament_id, req.body.id)
       .then((data) => {
-        console.log("data.rows", data.rows);
         res.send(data.rows);
       })
       .catch((err) => {
