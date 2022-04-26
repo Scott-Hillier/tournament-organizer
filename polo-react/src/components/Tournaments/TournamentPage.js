@@ -166,6 +166,7 @@ const TournamentPage = () => {
               groupState.numberOfGroups,
               groupState.random
             );
+            window.location.reload();
           }}
         >
           <input

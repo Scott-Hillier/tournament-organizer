@@ -35,9 +35,13 @@ const addTeamToTournament = (db, tournament_id, team_id) => {
   return db.query(query, values);
 };
 
-const createGroups = (db, tournament_id, teams) => {
-  const query = ``;
-  const values = [];
+const createGroups = (db, group_id, tournament_id, team_id) => {
+  console.log("createGroups");
+  const query = `UPDATE tournament_teams
+  SET group_id = $1
+  WHERE tournament_id = $2
+  AND team_id = $3;`;
+  const values = [group_id, tournament_id, team_id];
   return db.query(query, values);
 };
 
@@ -62,6 +66,18 @@ module.exports = (db) => {
             ID.rows[ID.rows.length - 1].id
           );
         });
+        res.send(data.rows);
+      })
+      .catch((err) => {
+        res.status(500).json({ error: err.message });
+      });
+  });
+
+  router.post("/:tournament_id/groups", (req, res) => {
+    console.log("router.post", req.body);
+    createGroups(db, req.body.group_id, req.params.tournament_id, req.body.id)
+      .then((data) => {
+        console.log("data.rows", data.rows);
         res.send(data.rows);
       })
       .catch((err) => {
