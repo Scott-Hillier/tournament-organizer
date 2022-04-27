@@ -9,7 +9,7 @@ import {
 } from "../../helpers/apiHelpers";
 import TournamentTeams from "./TournamentTeams";
 import TournamentGroups from "./TournamentGroups";
-import roundRobin from "../../helpers/Logic/RoundRobin";
+import splitGroups from "../../helpers/Logic/splitGroups.js";
 import "../../styles/Tournaments/TournamentPage.scss";
 
 const DEFAULT = "DEFAULT";
@@ -32,19 +32,29 @@ const TournamentPage = () => {
   });
 
   const { tournament_id } = useParams();
+  let teamsArray = [];
 
   useEffect(() => {
-    getTournamentInfo(tournament_id).then((res) => {
-      setTournamentState(res.data[0]);
-    });
-    getTournamentTeams(tournament_id).then((res) => {
-      console.log("res.data", res.data);
-      setTournamentTeamsState(res.data);
-    });
+    getTournamentInfo(tournament_id)
+      .then((res) => {
+        setTournamentState(res.data[0]);
+      })
+      .then(() => {
+        getTournamentTeams(tournament_id).then((response) => {
+          const groupedTeams = splitGroups(
+            tournamentState?.number_of_groups,
+            response.data
+          );
+          console.log(groupedTeams);
+          setTournamentTeamsState(response.data);
+        });
+      });
   }, []);
 
   const startDate = new Date(tournamentState?.start_date);
   const endDate = new Date(tournamentState?.end_date);
+
+  console.log(tournamentTeamsState);
 
   return (
     <main className="tournament-page">

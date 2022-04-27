@@ -54,7 +54,7 @@ export function createGroups(
   for (const team of teams) {
     axios.post(`/teams/${tournament_id}/groups`, team);
   }
-  return axios.post(`/tournaments/${tournament_id}/numberOfGroups`, {
+  axios.post(`/tournaments/${tournament_id}/numberOfGroups`, {
     number_of_groups: number_of_groups,
   });
 }
