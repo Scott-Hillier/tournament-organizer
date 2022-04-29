@@ -40,11 +40,6 @@ const TournamentPage = () => {
         setTournamentState(res.data[0]);
       })
       .then(() => {
-        const groupsArray = [];
-        for (let i = 0; i < tournamentState?.number_of_groups; i++) {
-          groupsArray.push([]);
-        }
-        console.log(groupsArray);
         getTournamentTeams(tournament_id).then((response) => {
           const groupedTeams = splitGroups(
             tournamentState?.number_of_groups,
