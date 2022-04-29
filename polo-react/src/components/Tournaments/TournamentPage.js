@@ -40,12 +40,16 @@ const TournamentPage = () => {
         setTournamentState(res.data[0]);
       })
       .then(() => {
+        const groupsArray = [];
+        for (let i = 0; i < tournamentState?.number_of_groups; i++) {
+          groupsArray.push([]);
+        }
+        console.log(groupsArray);
         getTournamentTeams(tournament_id).then((response) => {
           const groupedTeams = splitGroups(
             tournamentState?.number_of_groups,
             response.data
           );
-          console.log(groupedTeams);
           setTournamentTeamsState(response.data);
         });
       });
@@ -53,8 +57,6 @@ const TournamentPage = () => {
 
   const startDate = new Date(tournamentState?.start_date);
   const endDate = new Date(tournamentState?.end_date);
-
-  console.log(tournamentTeamsState);
 
   return (
     <main className="tournament-page">
