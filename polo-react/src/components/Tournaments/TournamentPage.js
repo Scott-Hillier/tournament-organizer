@@ -38,12 +38,14 @@ const TournamentPage = () => {
     getTournamentInfo(tournament_id)
       .then((res) => {
         setTournamentState(res.data[0]);
+        console.log(res.data[0].number_of_groups);
         for (let i = 0; i < res.data[0].number_of_groups; i++) {
           groupsArray.push([]);
         }
       })
       .then(() => {
         getTournamentTeams(tournament_id).then((response) => {
+          console.log(response.data);
           setTournamentTeamsState(splitGroups(groupsArray, response.data));
         });
       });

@@ -3,7 +3,6 @@ import TournamentTeams from "./TournamentTeams";
 import "../../styles/Tournaments/TournamentGroups.scss";
 
 const TournamentGroups = ({ group }) => {
-  console.log(group);
   return (
     <div className="groups">
       <h1>Group</h1>
