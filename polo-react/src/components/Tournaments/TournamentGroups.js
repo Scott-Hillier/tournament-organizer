@@ -1,23 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { getTournamentGroups } from "../../helpers/apiHelpers";
-import roundRobin from "../../helpers/Logic/RoundRobin";
+import TournamentTeams from "./TournamentTeams";
 
-const TournamentGroups = ({ teamsArray, numberOfGroups }) => {
-  const [groupState, setGroupState] = useState([]);
-
-  console.log(teamsArray);
-  console.log(numberOfGroups);
-
-  useEffect(() => {
-    setGroupState(roundRobin(teamsArray, numberOfGroups, false));
-  }, [teamsArray]);
-
-  const groups = roundRobin(teamsArray, numberOfGroups, false);
-  console.log(groups);
-
+const TournamentGroups = ({ group }) => {
+  console.log(group);
   return (
     <div>
       <h1>Group</h1>
+      {group.map((team) => {
+        return <TournamentTeams key={team.id} team={team} />;
+      })}
     </div>
   );
 };

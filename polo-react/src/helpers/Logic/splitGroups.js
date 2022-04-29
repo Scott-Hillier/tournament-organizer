@@ -1,13 +1,10 @@
-const splitGroups = (numberOfGroups, teamsArray) => {
-  const groupsArray = [];
-
-  for (let i = 0; i < numberOfGroups; i++) {
-    groupsArray.push([]);
+const splitGroups = (groups, teams) => {
+  for (const team of teams) {
+    groups[team.group_id - 1].push(team);
   }
+  console.log(groups);
 
-  console.log("info", numberOfGroups, teamsArray);
-
-  return groupsArray;
+  return groups;
 };
 
 export default splitGroups;

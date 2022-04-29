@@ -32,20 +32,19 @@ const TournamentPage = () => {
   });
 
   const { tournament_id } = useParams();
-  let teamsArray = [];
+  const groupsArray = [];
 
   useEffect(() => {
     getTournamentInfo(tournament_id)
       .then((res) => {
         setTournamentState(res.data[0]);
+        for (let i = 0; i < res.data[0].number_of_groups; i++) {
+          groupsArray.push([]);
+        }
       })
       .then(() => {
         getTournamentTeams(tournament_id).then((response) => {
-          const groupedTeams = splitGroups(
-            tournamentState?.number_of_groups,
-            response.data
-          );
-          setTournamentTeamsState(response.data);
+          setTournamentTeamsState(splitGroups(groupsArray, response.data));
         });
       });
   }, []);
@@ -80,8 +79,8 @@ const TournamentPage = () => {
       </section>
       {tournamentState?.format === "Round Robin" && (
         <section className="tournament-page-teams">
-          {tournamentTeamsState.map((team) => {
-            return <TournamentTeams key={team.id} team={team} />;
+          {tournamentTeamsState.map((group, i) => {
+            return <TournamentGroups key={i} group={group} />;
           })}
         </section>
       )}
