@@ -5,7 +5,8 @@ import {
   getTournamentTeams,
 } from "../../helpers/apiHelpers";
 import splitGroups from "../../helpers/Logic/splitGroups";
-import TournamentGroupsSchedule from "./Schedule/TournamentGroupsSchedule";
+import TournamentGroupsSchedule from "./Schedule/GroupsSchedule";
+import "../../styles/Tournaments/Schedule/SchedulePage.scss";
 
 const TournamentSchedule = () => {
   const [tournamentState, setTournamentState] = useState({});
@@ -32,7 +33,7 @@ const TournamentSchedule = () => {
   }, []);
 
   return (
-    <section>
+    <section className="schedule-page">
       <h1>TOURNAMENT SCHEDULE</h1>
       {tournamentState?.format === "Round Robin" && (
         <section className="tournament-page-teams">

@@ -51,7 +51,6 @@ export function createGroups(
   random
 ) {
   const teams = roundRobin(teams_array, number_of_groups, random);
-  console.log("api teams", teams, number_of_groups, random);
   for (const team of teams) {
     axios.post(`/teams/${tournament_id}/groups`, team);
   }
