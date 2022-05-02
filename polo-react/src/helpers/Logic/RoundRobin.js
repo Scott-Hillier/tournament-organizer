@@ -8,7 +8,6 @@ const roundRobin = (teams, groupsNumber, random) => {
     if (groupID > groupsNumber) {
       groupID = 1;
     }
-    // console.log(team);
     team.group_id = groupID;
     groupID++;
     // grouped.push(teams.splice(0, Math.ceil(teams.length / i)));

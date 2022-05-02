@@ -19,6 +19,7 @@ const GROUPS = "GROUPS";
 const TournamentPage = () => {
   const [tournamentState, setTournamentState] = useState({});
   const [tournamentTeamsState, setTournamentTeamsState] = useState([]);
+  const [tournamentGroupState, setTournamentGroupState] = useState([]);
   const [newTeamState, setNewTeamState] = useState({
     teamName: "",
     player1: "",
@@ -38,15 +39,14 @@ const TournamentPage = () => {
     getTournamentInfo(tournament_id)
       .then((res) => {
         setTournamentState(res.data[0]);
-        console.log(res.data[0].number_of_groups);
         for (let i = 0; i < res.data[0].number_of_groups; i++) {
           groupsArray.push([]);
         }
       })
       .then(() => {
         getTournamentTeams(tournament_id).then((response) => {
-          console.log(response.data);
-          setTournamentTeamsState(splitGroups(groupsArray, response.data));
+          setTournamentTeamsState(response.data);
+          setTournamentGroupState(splitGroups(groupsArray, response.data));
         });
       });
   }, []);
@@ -81,7 +81,7 @@ const TournamentPage = () => {
       </section>
       {tournamentState?.format === "Round Robin" && (
         <section className="tournament-page-teams">
-          {tournamentTeamsState.map((group, i) => {
+          {tournamentGroupState.map((group, i) => {
             return <TournamentGroups key={i} group={group} />;
           })}
         </section>
