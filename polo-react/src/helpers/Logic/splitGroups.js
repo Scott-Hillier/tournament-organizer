@@ -1,6 +1,4 @@
 const splitGroups = (groups, teams) => {
-  console.log(teams);
-  console.log(groups);
   for (const team of teams) {
     if (team.group_id === 0) {
       groups.push([]);
