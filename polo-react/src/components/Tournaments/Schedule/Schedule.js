@@ -3,12 +3,14 @@ import { useParams } from "react-router-dom";
 import {
   getTournamentInfo,
   getTournamentTeams,
-} from "../../helpers/apiHelpers";
-import splitGroups from "../../helpers/Logic/splitGroups";
-import TournamentGroupsSchedule from "./Schedule/GroupsSchedule";
-import "../../styles/Tournaments/Schedule/SchedulePage.scss";
+  createMatches,
+  createSchedule
+} from "../../../helpers/apiHelpers";
+import splitGroups from "../../../helpers/Logic/splitGroups";
+import TournamentGroupsSchedule from "./ScheduleGroups";
+import "../../../styles/Tournaments/Schedule/SchedulePage.scss";
 
-const TournamentSchedule = () => {
+const Schedule = () => {
   const [tournamentState, setTournamentState] = useState({});
   const [tournamentTeamsState, setTournamentTeamsState] = useState([]);
   const [tournamentGroupState, setTournamentGroupState] = useState([]);
@@ -35,15 +37,22 @@ const TournamentSchedule = () => {
   return (
     <section className="schedule-page">
       <h1>TOURNAMENT SCHEDULE</h1>
-      {tournamentState?.format === "Round Robin" && (
-        <section className="tournament-page-teams">
-          {tournamentGroupState.map((group, i) => {
-            return <TournamentGroupsSchedule key={i} group={group} />;
-          })}
-        </section>
-      )}
+
+      <section className="tournament-page-teams">
+        {tournamentGroupState.map((group, i) => {
+          return <TournamentGroupsSchedule key={i} group={group} />;
+        })}
+      </section>
+      <button
+        onClick={(e) => {
+          e.preventDefault();
+          createSchedule(tournament_id, tournamentGroupState);
+        }}
+      >
+        Generate Schedule
+      </button>
     </section>
   );
 };
 
-export default TournamentSchedule;
+export default Schedule;

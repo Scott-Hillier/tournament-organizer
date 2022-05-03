@@ -4,7 +4,11 @@ const GroupsSchedule = (group) => {
 
   for (let i = 0; i <= matchesPerTeam; i++) {
     for (let j = i + 1; j <= matchesPerTeam; j++) {
-      const match = { team1: group[i].team_name, team2: group[j].team_name };
+      const match = {
+        group_id: group[0].group_id,
+        team_1: group[i].team_name,
+        team_2: group[j].team_name,
+      };
       matches.push(match);
     }
   }

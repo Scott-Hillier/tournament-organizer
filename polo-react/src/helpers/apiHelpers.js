@@ -1,5 +1,6 @@
 import axios from "axios";
 import roundRobin from "./Logic/RoundRobin";
+import GroupsSchedule from "./Logic/GroupsSchedule";
 
 export function getAllTournaments() {
   return axios.get("/tournaments/all");
@@ -58,3 +59,14 @@ export function createGroups(
     number_of_groups: number_of_groups,
   });
 }
+
+export function createSchedule(tournament_id, groups) {
+  const groupMatches = [];
+  groups.map((group) => {
+    groupMatches.push(GroupsSchedule(group).sort(() => Math.random() - 0.5));
+    console.log(group[0].group_id)
+  });
+  console.log(groupMatches)
+}
+
+export function createMatches(tournament_id, groups) {}

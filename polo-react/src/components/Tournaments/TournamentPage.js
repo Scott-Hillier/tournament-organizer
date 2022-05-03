@@ -54,8 +54,6 @@ const TournamentPage = () => {
   const startDate = new Date(tournamentState?.start_date);
   const endDate = new Date(tournamentState?.end_date);
 
-  console.log(tournamentTeamsState);
-
   return (
     <main className="tournament-page">
       <section className="tournament-page-info">
