@@ -1,5 +1,4 @@
 const GroupsSchedule = (group) => {
-  // console.log(group);
   const matchesPerTeam = group.length - 1;
   const matchesPerGroup = (group.length * group.length - group.length) / 2;
   const matchesArray = [];

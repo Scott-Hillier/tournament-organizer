@@ -1,7 +1,7 @@
 import React from "react";
 import "../../../styles/Tournaments/Schedule/ScheduleMatches.scss";
 
-const TournamentGroupMatches = ({ match }) => {
+const ScheduleGroupMatches = ({ match }) => {
   return (
     <section className="group-match">
       <div>Match</div>
@@ -12,4 +12,4 @@ const TournamentGroupMatches = ({ match }) => {
   );
 };
 
-export default TournamentGroupMatches;
+export default ScheduleGroupMatches;
