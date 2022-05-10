@@ -64,9 +64,8 @@ export function createSchedule(tournament_id, groups) {
   const groupMatches = [];
   groups.map((group) => {
     groupMatches.push(GroupsSchedule(group).sort(() => Math.random() - 0.5));
-    console.log(group[0].group_id)
+    console.log(group[0].group_id);
   });
-  console.log(groupMatches)
+  console.log(groupMatches);
+  axios.post(`/schedules/${tournament_id}/create`);
 }
-
-export function createMatches(tournament_id, groups) {}
