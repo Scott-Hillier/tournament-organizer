@@ -1,19 +1,17 @@
 const GroupsSchedule = (group) => {
+  // console.log(group);
   const matchesPerTeam = group.length - 1;
-  const matches = [];
+  const matchesPerGroup = (group.length * group.length - group.length) / 2;
+  const matchesArray = [];
 
   for (let i = 0; i <= matchesPerTeam; i++) {
     for (let j = i + 1; j <= matchesPerTeam; j++) {
-      const match = {
-        group_id: group[0].group_id,
-        team_1: group[i].team_name,
-        team_2: group[j].team_name,
-      };
-      matches.push(match);
+      const match = { team1: group[i].team_name, team2: group[j].team_name };
+      matchesArray.push(match);
     }
   }
 
-  return matches;
+  return matchesArray;
 };
 
 export default GroupsSchedule;
