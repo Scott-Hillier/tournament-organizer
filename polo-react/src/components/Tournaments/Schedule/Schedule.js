@@ -4,7 +4,7 @@ import {
   getTournamentInfo,
   getTournamentTeams,
   createMatches,
-  createSchedule
+  createSchedule,
 } from "../../../helpers/apiHelpers";
 import splitGroups from "../../../helpers/Logic/splitGroups";
 import TournamentGroupsSchedule from "./ScheduleGroups";
