@@ -70,3 +70,8 @@ export function createSchedule(tournament_id, groups) {
     axios.post(`/schedules/${tournament_id}/create`, group);
   }
 }
+
+export function getTournamentSchedule(tournament_id) {
+  console.log("apiHelper");
+  return axios.get(`/schedules/${tournament_id}/matches`);
+}

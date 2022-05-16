@@ -11,6 +11,14 @@ const createSchedule = (db, tournament_id, group) => {
   });
 };
 
+const getSchedule = (db, tournament_id) => {
+  const query = `SELECT group_id, team_1, team_2, winner FROM matches
+  WHERE tournament_id = $1
+  ORDER BY id;`;
+  const values = [tournament_id];
+  return db.query(query, values);
+};
+
 module.exports = (db) => {
   router.post("/:tournament_id/create", (req, res) => {
     createSchedule(db, req.params.tournament_id, req.body);
@@ -20,6 +28,16 @@ module.exports = (db) => {
     // .catch((err) => {
     //   res.status(500).json({ error: err.message });
     // });
+  });
+
+  router.get("/:tournament_id/matches", (req, res) => {
+    getSchedule(db, req.params.tournament_id, req.body)
+      .then((data) => {
+        res.send(data.rows);
+      })
+      .catch((err) => {
+        res.status(500).json({ error: err.message });
+      });
   });
 
   return router;
