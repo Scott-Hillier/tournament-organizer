@@ -6,7 +6,7 @@ const ScheduleGroupMatches = ({ match }) => {
     <section className="group-match">
       <div>Match</div>
       <div>
-        {match.team1} VS {match.team2}
+        {match.team_1} VS {match.team_2}
       </div>
     </section>
   );

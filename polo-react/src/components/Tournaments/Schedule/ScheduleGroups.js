@@ -4,11 +4,11 @@ import GroupsSchedule from "../../../helpers/Logic/GroupsSchedule";
 import "../../../styles/Tournaments/Schedule/ScheduleGroups.scss";
 
 const TournamentGroupsSchedule = ({ group }) => {
-  const matches = GroupsSchedule(group).sort(() => Math.random() - 0.5);
+  console.log(group);
   return (
     <section className="schedule-groups">
       <h2>Group Matches</h2>
-      {matches.map((match, i) => {
+      {group.map((match, i) => {
         return <ScheduleGroupMatches key={i} match={match} />;
       })}
       <br />

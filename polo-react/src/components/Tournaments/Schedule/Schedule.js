@@ -3,8 +3,9 @@ import { useParams } from "react-router-dom";
 import {
   getTournamentInfo,
   getTournamentTeams,
+  getTournamentSchedule,
   createMatches,
-  createSchedule
+  createSchedule,
 } from "../../../helpers/apiHelpers";
 import splitGroups from "../../../helpers/Logic/splitGroups";
 import TournamentGroupsSchedule from "./ScheduleGroups";
@@ -14,6 +15,7 @@ const Schedule = () => {
   const [tournamentState, setTournamentState] = useState({});
   const [tournamentTeamsState, setTournamentTeamsState] = useState([]);
   const [tournamentGroupState, setTournamentGroupState] = useState([]);
+  const [tournamentScheduleState, setTournamentScheduleState] = useState([]);
 
   const { tournament_id } = useParams();
   const groupsArray = [];
@@ -27,12 +29,22 @@ const Schedule = () => {
         }
       })
       .then(() => {
-        getTournamentTeams(tournament_id).then((response) => {
-          setTournamentTeamsState(response.data);
-          setTournamentGroupState(splitGroups(groupsArray, response.data));
+        getTournamentSchedule(tournament_id).then((res) => {
+          setTournamentTeamsState(res.data);
+          setTournamentGroupState(splitGroups(groupsArray, res.data));
         });
       });
+    // .then(() => {
+    //   getTournamentSchedule(tournament_id).then((res) => {
+    //     console.log(res.data);
+    //     setTournamentScheduleState(
+    //       formatScheduleGroups(tournamentState.number_of_groups, res.data)
+    //     );
+    //   });
+    // });
   }, []);
+
+  console.log(tournamentGroupState);
 
   return (
     <section className="schedule-page">
