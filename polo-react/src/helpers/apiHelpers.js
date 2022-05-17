@@ -41,7 +41,6 @@ export function getTournamentTeams(tournament_id) {
 }
 
 export function addTeam(tournament_id, team) {
-  console.log("API", tournament_id, team);
   return axios.post(`/teams/${tournament_id}/add`, team);
 }
 
@@ -61,17 +60,16 @@ export function createGroups(
 }
 
 export function createSchedule(tournament_id, groups) {
+  console.log("hit", groups);
   const groupMatches = [];
   groups.map((group) => {
     groupMatches.push(GroupsSchedule(group).sort(() => Math.random() - 0.5));
   });
-  console.log(groupMatches);
   for (const group of groupMatches) {
     axios.post(`/schedules/${tournament_id}/create`, group);
   }
 }
 
 export function getTournamentSchedule(tournament_id) {
-  console.log("apiHelper");
   return axios.get(`/schedules/${tournament_id}/matches`);
 }

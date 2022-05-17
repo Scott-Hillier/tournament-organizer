@@ -3,8 +3,7 @@ import ScheduleGroupMatches from "./ScheduleGroupMatches";
 import GroupsSchedule from "../../../helpers/Logic/GroupsSchedule";
 import "../../../styles/Tournaments/Schedule/ScheduleGroups.scss";
 
-const TournamentGroupsSchedule = ({ group }) => {
-  console.log(group);
+const ScheduleGroup = ({ group }) => {
   return (
     <section className="schedule-groups">
       <h2>Group Matches</h2>
@@ -17,4 +16,4 @@ const TournamentGroupsSchedule = ({ group }) => {
   );
 };
 
-export default TournamentGroupsSchedule;
+export default ScheduleGroup;

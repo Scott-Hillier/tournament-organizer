@@ -8,17 +8,23 @@ import {
   createSchedule,
 } from "../../../helpers/apiHelpers";
 import splitGroups from "../../../helpers/Logic/splitGroups";
-import TournamentGroupsSchedule from "./ScheduleGroups";
+import ScheduleGroups from "./ScheduleGroups";
 import "../../../styles/Tournaments/Schedule/SchedulePage.scss";
+
+const EMPTY = "EMPTY";
+const FULL = "FULL";
 
 const Schedule = () => {
   const [tournamentState, setTournamentState] = useState({});
   const [tournamentTeamsState, setTournamentTeamsState] = useState([]);
-  const [tournamentGroupState, setTournamentGroupState] = useState([]);
+  const [tournamentGroupState, setTournamentGroupsState] = useState([]);
   const [tournamentScheduleState, setTournamentScheduleState] = useState([]);
+  const [tournamentMatchesState, setTournamentMatchesState] = useState([]);
+  const [scheduleState, setScheduleState] = useState(EMPTY);
 
   const { tournament_id } = useParams();
   const groupsArray = [];
+  const matchesArray = [];
 
   useEffect(() => {
     getTournamentInfo(tournament_id)
@@ -26,43 +32,48 @@ const Schedule = () => {
         setTournamentState(res.data[0]);
         for (let i = 0; i < res.data[0].number_of_groups; i++) {
           groupsArray.push([]);
+          matchesArray.push([]);
         }
       })
       .then(() => {
+        getTournamentTeams(tournament_id).then((response) => {
+          setTournamentTeamsState(response.data);
+          setTournamentGroupsState(splitGroups(groupsArray, response.data));
+        });
+      })
+      .then(() => {
         getTournamentSchedule(tournament_id).then((res) => {
-          setTournamentTeamsState(res.data);
-          setTournamentGroupState(splitGroups(groupsArray, res.data));
+          console.log(res.data);
+          res.data.length > 0
+            ? setScheduleState(FULL)
+            : setScheduleState(EMPTY);
+          setTournamentMatchesState(splitGroups(matchesArray, res.data));
         });
       });
-    // .then(() => {
-    //   getTournamentSchedule(tournament_id).then((res) => {
-    //     console.log(res.data);
-    //     setTournamentScheduleState(
-    //       formatScheduleGroups(tournamentState.number_of_groups, res.data)
-    //     );
-    //   });
-    // });
   }, []);
 
-  console.log(tournamentGroupState);
-
+  console.log(tournamentMatchesState);
   return (
     <section className="schedule-page">
       <h1>TOURNAMENT SCHEDULE</h1>
-
-      <section className="tournament-page-teams">
-        {tournamentGroupState.map((group, i) => {
-          return <TournamentGroupsSchedule key={i} group={group} />;
-        })}
-      </section>
-      <button
-        onClick={(e) => {
-          e.preventDefault();
-          createSchedule(tournament_id, tournamentGroupState);
-        }}
-      >
-        Generate Schedule
-      </button>
+      {scheduleState === FULL && (
+        <section className="tournament-page-teams">
+          {tournamentMatchesState.map((group, i) => {
+            return <ScheduleGroups key={i} group={group} />;
+          })}
+        </section>
+      )}
+      {scheduleState === EMPTY && (
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            createSchedule(tournament_id, tournamentGroupState);
+            window.location.reload();
+          }}
+        >
+          Generate Schedule
+        </button>
+      )}
     </section>
   );
 };

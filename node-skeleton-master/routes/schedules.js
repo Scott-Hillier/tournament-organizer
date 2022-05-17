@@ -2,19 +2,25 @@ const express = require("express");
 const router = express.Router();
 
 const createSchedule = (db, tournament_id, group) => {
+  console.log(group);
   group.map((match) => {
-    console.log("match", match.team1);
-    const query = `INSERT INTO matches (tournament_id, group_id, team_1, team_2)
-      VALUES ($1, $2, $3, $4);`;
-    const values = [tournament_id, match.group, match.team1, match.team2];
+    const query = `INSERT INTO matches (tournament_id, group_id, team_1_name, team_1_id, team_2_name, team_2_id)
+      VALUES ($1, $2, $3, $4, $5, $6);`;
+    const values = [
+      tournament_id,
+      match.group,
+      match.team1Name,
+      match.team1ID,
+      match.team2Name,
+      match.team2ID,
+    ];
     return db.query(query, values);
   });
 };
 
 const getSchedule = (db, tournament_id) => {
-  const query = `SELECT group_id, team_1, team_2, winner FROM matches
-  WHERE tournament_id = $1
-  ORDER BY id;`;
+  const query = `SELECT group_id, team_1_name, team_2_name, winner FROM matches
+  WHERE tournament_id = $1;`;
   const values = [tournament_id];
   return db.query(query, values);
 };
