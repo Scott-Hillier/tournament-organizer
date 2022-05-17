@@ -3,7 +3,7 @@ import ScheduleGroupMatches from "./ScheduleGroupMatches";
 import { randomizeGroupMatches } from "../../../helpers/apiHelpers";
 import "../../../styles/Tournaments/Schedule/ScheduleGroups.scss";
 
-const ScheduleGroup = ({ group }) => {
+const ScheduleGroup = ({ group, tournament_id }) => {
   return (
     <section className="schedule-groups">
       <h2>Group Matches</h2>
@@ -14,7 +14,11 @@ const ScheduleGroup = ({ group }) => {
       <button
         onClick={(event) => {
           event.preventDefault();
-          randomizeGroupMatches(group.sort(() => Math.random() - 0.5));
+          randomizeGroupMatches(
+            tournament_id,
+            group[0].group_id,
+            group.sort(() => Math.random() - 0.5)
+          );
         }}
       >
         Randomize Matches

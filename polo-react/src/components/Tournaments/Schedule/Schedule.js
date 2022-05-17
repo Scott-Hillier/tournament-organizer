@@ -57,7 +57,13 @@ const Schedule = () => {
       {scheduleState === FULL && (
         <section className="tournament-page-teams">
           {tournamentMatchesState.map((group, i) => {
-            return <ScheduleGroups key={i} group={group} />;
+            return (
+              <ScheduleGroups
+                key={i}
+                group={group}
+                tournament_id={tournament_id}
+              />
+            );
           })}
         </section>
       )}
