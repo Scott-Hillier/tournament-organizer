@@ -1,4 +1,7 @@
 const express = require("express");
+const {
+  randomizeGroupMatches,
+} = require("../../polo-react/src/helpers/apiHelpers");
 const router = express.Router();
 
 const createSchedule = (db, tournament_id, group) => {
@@ -55,7 +58,7 @@ module.exports = (db) => {
 
   router.post("/:tournament_id/randomize", (req, res) => {
     console.log(req.body);
-    // deleteGroupMatches(db, req.params.tournament_id, req.body.group_id);
+
     // randomizeGroup(db, req.params.tournament_id, req.body);
     // .then((data) => {
     //   res.send(data.rows);
