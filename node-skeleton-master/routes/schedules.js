@@ -1,7 +1,4 @@
 const express = require("express");
-const {
-  randomizeGroupMatches,
-} = require("../../polo-react/src/helpers/apiHelpers");
 const router = express.Router();
 
 const createSchedule = (db, tournament_id, group) => {

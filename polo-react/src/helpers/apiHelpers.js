@@ -74,13 +74,13 @@ export function getTournamentSchedule(tournament_id) {
   return axios.get(`/schedules/${tournament_id}/matches`);
 }
 
-// export function randomizeGroupMatches(tournament_id, group_id, matches) {
-//   console.log(tournament_id, group_id, matches);
-//   // axios.post(`schedules/${tournament_id}/delete`);
-//   for (const match of matches) {
-//     axios.post(`schedules/${tournament_id}/randomize`, {
-//       match: match,
-//       group_id: group_id,
-//     });
-//   }
-// }
+export function randomizeGroupMatches(tournament_id, group_id, matches) {
+  console.log(tournament_id, group_id, matches);
+  // axios.post(`schedules/${tournament_id}/delete`);
+  for (const match of matches) {
+    axios.post(`schedules/${tournament_id}/randomize`, {
+      match: match,
+      group_id: group_id,
+    });
+  }
+}
