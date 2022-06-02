@@ -4,11 +4,12 @@ const router = express.Router();
 const createSchedule = (db, tournament_id, group) => {
   console.log(group);
   group.map((match) => {
-    const query = `INSERT INTO matches (tournament_id, group_id, team_1_name, team_1_id, team_2_name, team_2_id)
-      VALUES ($1, $2, $3, $4, $5, $6);`;
+    const query = `INSERT INTO matches (tournament_id, group_id, match_id, team_1_name, team_1_id, team_2_name, team_2_id)
+      VALUES ($1, $2, $3, $4, $5, $6, $7);`;
     const values = [
       tournament_id,
       match.group,
+      match.match_id,
       match.team1Name,
       match.team1ID,
       match.team2Name,
@@ -20,7 +21,8 @@ const createSchedule = (db, tournament_id, group) => {
 
 const getSchedule = (db, tournament_id) => {
   const query = `SELECT group_id, team_1_name, team_2_name, winner FROM matches
-  WHERE tournament_id = $1;`;
+  WHERE tournament_id = $1
+  ORDER BY match_id;`;
   const values = [tournament_id];
   return db.query(query, values);
 };
@@ -54,8 +56,6 @@ module.exports = (db) => {
   });
 
   router.post("/:tournament_id/randomize", (req, res) => {
-    console.log(req.body);
-
     // randomizeGroup(db, req.params.tournament_id, req.body);
     // .then((data) => {
     //   res.send(data.rows);

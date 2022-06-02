@@ -43,7 +43,6 @@ const Schedule = () => {
       })
       .then(() => {
         getTournamentSchedule(tournament_id).then((res) => {
-          console.log(res.data);
           res.data.length > 0
             ? setScheduleState(FULL)
             : setScheduleState(EMPTY);
@@ -52,7 +51,6 @@ const Schedule = () => {
       });
   }, []);
 
-  console.log(tournamentMatchesState);
   return (
     <section className="schedule-page">
       <h1>TOURNAMENT SCHEDULE</h1>
@@ -74,7 +72,7 @@ const Schedule = () => {
           onClick={(e) => {
             e.preventDefault();
             createSchedule(tournament_id, tournamentGroupState);
-            window.location.reload();
+            // window.location.reload();
           }}
         >
           Generate Schedule
