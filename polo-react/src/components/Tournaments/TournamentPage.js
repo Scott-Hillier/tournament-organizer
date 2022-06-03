@@ -51,6 +51,8 @@ const TournamentPage = () => {
       });
   }, []);
 
+  console.log(tournamentGroupsState);
+
   const startDate = new Date(tournamentState?.start_date);
   const endDate = new Date(tournamentState?.end_date);
 
