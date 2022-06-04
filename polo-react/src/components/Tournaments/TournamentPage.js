@@ -51,8 +51,6 @@ const TournamentPage = () => {
       });
   }, []);
 
-  console.log(tournamentGroupsState);
-
   const startDate = new Date(tournamentState?.start_date);
   const endDate = new Date(tournamentState?.end_date);
 
@@ -81,41 +79,54 @@ const TournamentPage = () => {
         </Link>
         <br />
       </section>
-      {tournamentState?.format === "Round Robin" && (
-        <section className="tournament-page-teams">
-          {tournamentGroupsState.map((group, i) => {
-            return <TournamentGroups key={i} group={group} />;
-          })}
-        </section>
-      )}
+      {tournamentState?.format === "Round Robin" &&
+        tournamentState?.number_of_groups > 0 && (
+          <>
+            <section className="tournament-page-teams">
+              {tournamentGroupsState.map((group, i) => {
+                return <TournamentGroups key={i} group={group} />;
+              })}
+            </section>
+            <section>
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  setPageState(ADD);
+                }}
+              >
+                Add Team
+              </button>
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  setPageState(GROUPS);
+                }}
+              >
+                Place Teams Into Groups
+              </button>
+            </section>
+          </>
+        )}
       {tournamentState?.format === "Swiss Rounds" && (
-        <section className="tournament-page-teams">
-          {tournamentTeamsState.map((team) => {
-            return <TournamentTeams key={team.id} team={team} />;
-          })}
-        </section>
+        <>
+          <section className="tournament-page-teams">
+            {tournamentTeamsState.map((team) => {
+              return <TournamentTeams key={team.id} team={team} />;
+            })}
+          </section>
+          <section>
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                setPageState(ADD);
+              }}
+            >
+              Add Team
+            </button>
+          </section>
+        </>
       )}
       <br />
-      {pageState === DEFAULT && (
-        <section>
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              setPageState(ADD);
-            }}
-          >
-            Add Team
-          </button>
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              setPageState(GROUPS);
-            }}
-          >
-            Place Teams Into Groups
-          </button>
-        </section>
-      )}
       {pageState === ADD && (
         <form
           onSubmit={(event) => {

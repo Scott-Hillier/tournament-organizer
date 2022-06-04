@@ -1,6 +1,7 @@
 import axios from "axios";
 import roundRobin from "./Logic/RoundRobin";
 import GroupsSchedule from "./Logic/GroupsSchedule";
+import swissSchedule from "./Logic/SwissSchedule";
 
 export function getAllTournaments() {
   return axios.get("/tournaments/all");
@@ -51,7 +52,6 @@ export function createGroups(
   random
 ) {
   const teams = roundRobin(teams_array, number_of_groups, random);
-  console.log(teams);
 
   axios.post(`/teams/${tournament_id}/groups`, teams);
 
@@ -60,15 +60,20 @@ export function createGroups(
   });
 }
 
-export function createSchedule(tournament_id, groups) {
+export function createGroupSchedule(tournament_id, groups) {
   const groupMatches = [];
   groups.map((group) => {
     groupMatches.push(GroupsSchedule(group));
   });
   for (const group of groupMatches) {
-    console.log(group);
     axios.post(`/schedules/${tournament_id}/create`, group);
   }
+}
+
+export function createSwissSchedule(tournament_id, teams, roundNumber) {
+  const matches = swissSchedule(teams, roundNumber);
+  console.log(matches);
+  return axios.post(`/schedules/${tournament_id}/create/swiss`, matches);
 }
 
 export function getTournamentSchedule(tournament_id) {

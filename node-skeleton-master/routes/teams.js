@@ -37,7 +37,6 @@ const addTeamToTournament = (db, tournament_id, team_id) => {
 
 const createGroups = (db, tournament_id, teams) => {
   teams.map((team) => {
-    console.log(team);
     const query = `UPDATE tournament_teams
     SET group_id = $1
     WHERE tournament_id = $2

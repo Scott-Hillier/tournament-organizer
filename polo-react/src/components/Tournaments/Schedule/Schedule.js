@@ -4,8 +4,8 @@ import {
   getTournamentInfo,
   getTournamentTeams,
   getTournamentSchedule,
-  createMatches,
-  createSchedule,
+  createGroupSchedule,
+  createSwissSchedule,
 } from "../../../helpers/apiHelpers";
 import splitGroups from "../../../helpers/Logic/splitGroups";
 import ScheduleGroups from "./ScheduleGroups";
@@ -71,7 +71,13 @@ const Schedule = () => {
         <button
           onClick={(e) => {
             e.preventDefault();
-            createSchedule(tournament_id, tournamentGroupState);
+            tournamentState.format === "Round Robin"
+              ? createGroupSchedule(tournament_id, tournamentGroupState)
+              : createSwissSchedule(
+                  tournament_id,
+                  tournamentTeamsState,
+                  tournamentState.round_number
+                );
             // window.location.reload();
           }}
         >

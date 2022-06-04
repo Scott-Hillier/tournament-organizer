@@ -8,5 +8,6 @@ CREATE TABLE tournaments (
   start_date DATE NOT NULL,
   end_date DATE NOT NULL,
   format VARCHAR(255),
-  number_of_groups INTEGER
+  number_of_groups INTEGER,
+  round_number INTEGER
 );

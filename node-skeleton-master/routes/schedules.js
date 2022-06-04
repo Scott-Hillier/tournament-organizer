@@ -1,14 +1,30 @@
 const express = require("express");
 const router = express.Router();
 
-const createSchedule = (db, tournament_id, group) => {
-  console.log(group);
+const createGroupSchedule = (db, tournament_id, group) => {
   group.map((match) => {
     const query = `INSERT INTO matches (tournament_id, group_id, match_id, team_1_name, team_1_id, team_2_name, team_2_id)
       VALUES ($1, $2, $3, $4, $5, $6, $7);`;
     const values = [
       tournament_id,
       match.group,
+      match.match_id,
+      match.team1Name,
+      match.team1ID,
+      match.team2Name,
+      match.team2ID,
+    ];
+    return db.query(query, values);
+  });
+};
+
+const createSwissSchedule = (db, tournament_id, matches) => {
+  matches.map((match) => {
+    const query = `INSERT INTO matches (tournament_id, round_id, match_id, team_1_name, team_1_id, team_2_name, team_2_id)
+      VALUES ($1, $2, $3, $4, $5, $6, $7);`;
+    const values = [
+      tournament_id,
+      match.round,
       match.match_id,
       match.team1Name,
       match.team1ID,
@@ -36,7 +52,18 @@ const deleteGroupMatches = (db, tournament_id, group_id, match) => {
 
 module.exports = (db) => {
   router.post("/:tournament_id/create", (req, res) => {
-    createSchedule(db, req.params.tournament_id, req.body);
+    createGroupSchedule(db, req.params.tournament_id, req.body);
+    // .then((data) => {
+    //   res.send(data.rows);
+    // })
+    // .catch((err) => {
+    //   res.status(500).json({ error: err.message });
+    // });
+  });
+
+  router.post("/:tournament_id/create/swiss", (req, res) => {
+    console.log(req.body);
+    createSwissSchedule(db, req.params.tournament_id, req.body);
     // .then((data) => {
     //   res.send(data.rows);
     // })
