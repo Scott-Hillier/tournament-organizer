@@ -9,6 +9,7 @@ import {
 } from "../../../helpers/apiHelpers";
 import splitGroups from "../../../helpers/Logic/splitGroups";
 import ScheduleGroups from "./ScheduleGroups";
+import ScheduleSwiss from "./ScheduleSwiss";
 import "../../../styles/Tournaments/Schedule/SchedulePage.scss";
 
 const EMPTY = "EMPTY";
@@ -19,12 +20,16 @@ const Schedule = () => {
   const [tournamentTeamsState, setTournamentTeamsState] = useState([]);
   const [tournamentGroupState, setTournamentGroupsState] = useState([]);
   const [tournamentScheduleState, setTournamentScheduleState] = useState([]);
-  const [tournamentMatchesState, setTournamentMatchesState] = useState([]);
+  const [tournamentGroupMatchesState, setTournamentGroupMatchesState] =
+    useState([]);
+  const [tournamentSwissMatchesState, setTournamentSwissMatchesState] =
+    useState([]);
   const [scheduleState, setScheduleState] = useState(EMPTY);
 
   const { tournament_id } = useParams();
   const groupsArray = [];
   const matchesArray = [];
+  let format = "";
 
   useEffect(() => {
     getTournamentInfo(tournament_id)
@@ -34,6 +39,7 @@ const Schedule = () => {
           groupsArray.push([]);
           matchesArray.push([]);
         }
+        format = res.data[0].format;
       })
       .then(() => {
         getTournamentTeams(tournament_id).then((response) => {
@@ -46,21 +52,38 @@ const Schedule = () => {
           res.data.length > 0
             ? setScheduleState(FULL)
             : setScheduleState(EMPTY);
-          setTournamentMatchesState(splitGroups(matchesArray, res.data));
+
+          setTournamentGroupMatchesState(splitGroups(matchesArray, res.data));
+          setTournamentSwissMatchesState(res.data);
         });
       });
   }, []);
 
+  console.log(tournamentSwissMatchesState);
+
   return (
     <section className="schedule-page">
       <h1>TOURNAMENT SCHEDULE</h1>
-      {scheduleState === FULL && (
+      {scheduleState === FULL && tournamentState.format === "Round Robin" && (
         <section className="tournament-page-teams">
-          {tournamentMatchesState.map((group, i) => {
+          {tournamentGroupMatchesState.map((group, i) => {
             return (
               <ScheduleGroups
                 key={i}
                 group={group}
+                tournament_id={tournament_id}
+              />
+            );
+          })}
+        </section>
+      )}
+      {scheduleState === FULL && tournamentState.format === "Swiss Rounds" && (
+        <section className="tournament-page-teams">
+          {tournamentGroupMatchesState.map((match, i) => {
+            return (
+              <ScheduleSwiss
+                key={i}
+                match={match}
                 tournament_id={tournament_id}
               />
             );
