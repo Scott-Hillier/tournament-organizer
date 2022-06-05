@@ -35,12 +35,20 @@ const createSwissSchedule = (db, tournament_id, matches) => {
   });
 };
 
-const getSchedule = (db, tournament_id) => {
-  const query = `SELECT group_id, team_1_name, team_2_name, winner FROM matches
-  WHERE tournament_id = $1
-  ORDER BY match_id;`;
-  const values = [tournament_id];
-  return db.query(query, values);
+const getSchedule = (db, tournament_id, format) => {
+  if (format === "Round Robin") {
+    const query = `SELECT group_id, team_1_name, team_1_id, team_2_name, team_2_id, winner FROM matches
+    WHERE tournament_id = $1
+    ORDER BY match_id;`;
+    const values = [tournament_id];
+    return db.query(query, values);
+  } else {
+    const query = `SELECT round_id, team_1_name, team_1_id, team_2_name, team_2_id, winner FROM matches
+    WHERE tournament_id = $1
+    ORDER BY match_id;`;
+    const values = [tournament_id];
+    return db.query(query, values);
+  }
 };
 
 const deleteGroupMatches = (db, tournament_id, group_id, match) => {
@@ -72,8 +80,8 @@ module.exports = (db) => {
     // });
   });
 
-  router.get("/:tournament_id/matches", (req, res) => {
-    getSchedule(db, req.params.tournament_id, req.body)
+  router.get("/:tournament_id/:format/matches", (req, res) => {
+    getSchedule(db, req.params.tournament_id, req.params.format)
       .then((data) => {
         res.send(data.rows);
       })

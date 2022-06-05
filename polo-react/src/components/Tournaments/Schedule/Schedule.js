@@ -48,7 +48,7 @@ const Schedule = () => {
         });
       })
       .then(() => {
-        getTournamentSchedule(tournament_id).then((res) => {
+        getTournamentSchedule(tournament_id, format).then((res) => {
           res.data.length > 0
             ? setScheduleState(FULL)
             : setScheduleState(EMPTY);
@@ -58,8 +58,6 @@ const Schedule = () => {
         });
       });
   }, []);
-
-  console.log(tournamentSwissMatchesState);
 
   return (
     <section className="schedule-page">
@@ -79,7 +77,8 @@ const Schedule = () => {
       )}
       {scheduleState === FULL && tournamentState.format === "Swiss Rounds" && (
         <section className="tournament-page-teams">
-          {tournamentGroupMatchesState.map((match, i) => {
+          {tournamentSwissMatchesState.map((match, i) => {
+            console.log(match);
             return (
               <ScheduleSwiss
                 key={i}

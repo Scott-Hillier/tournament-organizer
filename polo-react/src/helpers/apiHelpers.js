@@ -76,8 +76,8 @@ export function createSwissSchedule(tournament_id, teams, roundNumber) {
   return axios.post(`/schedules/${tournament_id}/create/swiss`, matches);
 }
 
-export function getTournamentSchedule(tournament_id) {
-  return axios.get(`/schedules/${tournament_id}/matches`);
+export function getTournamentSchedule(tournament_id, format) {
+  return axios.get(`/schedules/${tournament_id}/${format}/matches`);
 }
 
 export function randomizeGroupMatches(tournament_id, group_id, matches) {
