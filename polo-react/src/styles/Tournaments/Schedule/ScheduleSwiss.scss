@@ -1,0 +1,25 @@
+.swiss-match {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 3px solid green;
+  padding: 0.25em;
+  margin: 0.5em;
+}
+
+.winner-button {
+  background-color: transparent;
+  border: 2px solid grey;
+  border-radius: 8px;
+  padding: 0.25em;
+  margin: 0.25em;
+}
+
+.winner-button-clicked {
+  background-color: rgb(126, 207, 126);
+  border: 2px solid grey;
+  border-radius: 8px;
+  padding: 0.25em;
+  margin: 0.25em;
+}

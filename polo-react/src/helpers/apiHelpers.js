@@ -72,7 +72,6 @@ export function createGroupSchedule(tournament_id, groups) {
 
 export function createSwissSchedule(tournament_id, teams, roundNumber) {
   const matches = swissSchedule(teams, roundNumber);
-  console.log(matches);
   return axios.post(`/schedules/${tournament_id}/create/swiss`, matches);
 }
 
@@ -80,12 +79,17 @@ export function getTournamentSchedule(tournament_id, format) {
   return axios.get(`/schedules/${tournament_id}/${format}/matches`);
 }
 
-export function randomizeGroupMatches(tournament_id, group_id, matches) {
-  // axios.post(`schedules/${tournament_id}/delete`);
-  for (const match of matches) {
-    axios.post(`schedules/${tournament_id}/randomize`, {
-      match: match,
-      group_id: group_id,
-    });
-  }
+export function selectWinner(team_id, tournament_id, match_id) {
+  return axios.post(`/schedules/${tournament_id}/winner`, {
+    team_id: team_id,
+    match_id: match_id,
+  });
+}
+
+export function updateWins(tournament_id, matches) {
+  console.log("hit");
+  return axios.post(`/schedules/${tournament_id}/getWins`, {
+    matches: matches,
+  });
+  // axios.post(`/schedules/${tournament_id}/updateWins`, data);
 }

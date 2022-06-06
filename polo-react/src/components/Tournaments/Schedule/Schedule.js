@@ -6,10 +6,12 @@ import {
   getTournamentSchedule,
   createGroupSchedule,
   createSwissSchedule,
+  updateWins,
 } from "../../../helpers/apiHelpers";
+import swissSchedule from "../../../helpers/Logic/SwissSchedule";
 import splitGroups from "../../../helpers/Logic/splitGroups";
 import ScheduleGroups from "./ScheduleGroups";
-import ScheduleSwiss from "./ScheduleSwiss";
+import ScheduleSwissMatches from "./ScheduleSwissMatches";
 import "../../../styles/Tournaments/Schedule/SchedulePage.scss";
 
 const EMPTY = "EMPTY";
@@ -76,18 +78,27 @@ const Schedule = () => {
         </section>
       )}
       {scheduleState === FULL && tournamentState.format === "Swiss Rounds" && (
-        <section className="tournament-page-teams">
-          {tournamentSwissMatchesState.map((match, i) => {
-            console.log(match);
-            return (
-              <ScheduleSwiss
-                key={i}
-                match={match}
-                tournament_id={tournament_id}
-              />
-            );
-          })}
-        </section>
+        <>
+          <section className="tournament-page-teams">
+            {tournamentSwissMatchesState.map((match, i) => {
+              return (
+                <ScheduleSwissMatches
+                  key={i}
+                  match={match}
+                  tournament_id={tournament_id}
+                />
+              );
+            })}
+          </section>
+          <br />
+          <button
+            onClick={() => {
+              updateWins(tournament_id, tournamentSwissMatchesState);
+            }}
+          >
+            Generate Next Round
+          </button>
+        </>
       )}
       {scheduleState === EMPTY && (
         <button
@@ -100,7 +111,7 @@ const Schedule = () => {
                   tournamentTeamsState,
                   tournamentState.round_number
                 );
-            // window.location.reload();
+            window.location.reload();
           }}
         >
           Generate Schedule

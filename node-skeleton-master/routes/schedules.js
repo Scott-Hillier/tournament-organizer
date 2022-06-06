@@ -37,13 +37,13 @@ const createSwissSchedule = (db, tournament_id, matches) => {
 
 const getSchedule = (db, tournament_id, format) => {
   if (format === "Round Robin") {
-    const query = `SELECT group_id, team_1_name, team_1_id, team_2_name, team_2_id, winner FROM matches
+    const query = `SELECT group_id, match_id, team_1_name, team_1_id, team_2_name, team_2_id, winner FROM matches
     WHERE tournament_id = $1
     ORDER BY match_id;`;
     const values = [tournament_id];
     return db.query(query, values);
   } else {
-    const query = `SELECT round_id, team_1_name, team_1_id, team_2_name, team_2_id, winner FROM matches
+    const query = `SELECT round_id, match_id, team_1_name, team_1_id, team_2_name, team_2_id, winner FROM matches
     WHERE tournament_id = $1
     ORDER BY match_id;`;
     const values = [tournament_id];
@@ -51,11 +51,36 @@ const getSchedule = (db, tournament_id, format) => {
   }
 };
 
-const deleteGroupMatches = (db, tournament_id, group_id, match) => {
-  const query = `DELETE FROM matches
-  WHERE tournament_id = $1
-  AND group_id = $2;`;
+const selectWinner = (db, team_id, tournament_id, match_id) => {
+  const query = `UPDATE matches
+  SET winner = $1
+  WHERE tournament_id = $2
+  AND match_id = $3;`;
+  const values = [team_id, tournament_id, match_id];
   return db.query(query, values);
+};
+
+const updateWins = (db, tournament_id, teams, wins) => {
+  teams.map((team) => {
+    const query = `UPDATE tournament_teams
+    SET wins = $1
+    WHERE tournament_id = $2
+    AND team_id = $3;`;
+    const values = [team.wins + 1, tournament_id, team.team_id];
+    return db.query(query, values);
+  });
+};
+
+const getWins = (db, tournament_id, matches) => {
+  const winsArray = [];
+  matches.map((match) => {
+    const query = `SELECT wins FROM tournament_teams
+    WHERE tournament_id = $1
+    AND team_id = $2;`;
+    const values = [tournament_id, match.winner];
+    winsArray.push(db.query(query, values));
+  });
+  console.log(winsArray);
 };
 
 module.exports = (db) => {
@@ -70,9 +95,49 @@ module.exports = (db) => {
   });
 
   router.post("/:tournament_id/create/swiss", (req, res) => {
-    console.log(req.body);
     createSwissSchedule(db, req.params.tournament_id, req.body);
     // .then((data) => {
+    //   res.send(data.rows);
+    // })
+    // .catch((err) => {
+    //   res.status(500).json({ error: err.message });
+    // });
+  });
+
+  router.post("/:tournament_id/winner", (req, res) => {
+    selectWinner(
+      db,
+      req.body.team_id,
+      req.params.tournament_id,
+      req.body.match_id
+    );
+    // .then((data) => {
+    //   res.send(data.rows);
+    // })
+    // .catch((err) => {
+    //   res.status(500).json({ error: err.message });
+    // });
+  });
+
+  router.post("/:tournament_id/wins", (req, res) => {
+    // updateWins(
+    //   db,
+    //   req.body.team_id,
+    //   req.params.tournament_id,
+    //   req.body.match_id
+    // );
+    // .then((data) => {
+    //   res.send(data.rows);
+    // })
+    // .catch((err) => {
+    //   res.status(500).json({ error: err.message });
+    // });
+  });
+
+  router.post("/:tournament_id/getWins", (req, res) => {
+    getWins(db, req.params.tournament_id, req.body.matches);
+    // .then((data) => {
+    //   console.log(data.rows);
     //   res.send(data.rows);
     // })
     // .catch((err) => {
@@ -88,16 +153,6 @@ module.exports = (db) => {
       .catch((err) => {
         res.status(500).json({ error: err.message });
       });
-  });
-
-  router.post("/:tournament_id/randomize", (req, res) => {
-    // randomizeGroup(db, req.params.tournament_id, req.body);
-    // .then((data) => {
-    //   res.send(data.rows);
-    // })
-    // .catch((err) => {
-    //   res.status(500).json({ error: err.message });
-    // });
   });
 
   return router;

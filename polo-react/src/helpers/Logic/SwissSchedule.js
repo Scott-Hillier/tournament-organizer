@@ -1,4 +1,5 @@
 const swissSchedule = (teams, roundNumber) => {
+  console.log(teams, roundNumber);
   const groups = [];
   const matchesArray = [];
   let counter = 1;
