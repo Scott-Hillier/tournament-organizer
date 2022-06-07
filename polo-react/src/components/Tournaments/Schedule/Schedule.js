@@ -16,6 +16,8 @@ import "../../../styles/Tournaments/Schedule/SchedulePage.scss";
 
 const EMPTY = "EMPTY";
 const FULL = "FULL";
+const SAVE = "SAVE";
+const GENERATE = "GENERATE";
 
 const Schedule = () => {
   const [tournamentState, setTournamentState] = useState({});
@@ -27,6 +29,7 @@ const Schedule = () => {
   const [tournamentSwissMatchesState, setTournamentSwissMatchesState] =
     useState([]);
   const [scheduleState, setScheduleState] = useState(EMPTY);
+  const [saveRoundState, setSaveRoundState] = useState(SAVE);
 
   const { tournament_id } = useParams();
   const groupsArray = [];
@@ -86,18 +89,23 @@ const Schedule = () => {
                   key={i}
                   match={match}
                   tournament_id={tournament_id}
+                  saveRoundState={saveRoundState}
                 />
               );
             })}
           </section>
           <br />
-          <button
-            onClick={() => {
-              updateWins(tournament_id, tournamentSwissMatchesState);
-            }}
-          >
-            Generate Next Round
-          </button>
+          {saveRoundState === SAVE && (
+            <button
+              onClick={(event) => {
+                updateWins(tournament_id, tournamentSwissMatchesState);
+                setSaveRoundState(GENERATE);
+              }}
+            >
+              Save Round
+            </button>
+          )}
+          {saveRoundState === GENERATE && <button>Generate Next Round</button>}
         </>
       )}
       {scheduleState === EMPTY && (

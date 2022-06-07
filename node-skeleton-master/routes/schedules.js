@@ -60,7 +60,7 @@ const selectWinner = (db, team_id, tournament_id, match_id) => {
   return db.query(query, values);
 };
 
-const updateWins = (db, tournament_id, teams, wins) => {
+const updateWins = (db, tournament_id, teams) => {
   teams.map((team) => {
     const query = `UPDATE tournament_teams
     SET wins = $1
@@ -72,15 +72,10 @@ const updateWins = (db, tournament_id, teams, wins) => {
 };
 
 const getWins = (db, tournament_id, matches) => {
-  const winsArray = [];
-  matches.map((match) => {
-    const query = `SELECT wins FROM tournament_teams
-    WHERE tournament_id = $1
-    AND team_id = $2;`;
-    const values = [tournament_id, match.winner];
-    winsArray.push(db.query(query, values));
-  });
-  console.log(winsArray);
+  const query = `SELECT * FROM tournament_teams
+    WHERE tournament_id = $1;`;
+  const values = [tournament_id];
+  return db.query(query, values);
 };
 
 module.exports = (db) => {
@@ -134,15 +129,22 @@ module.exports = (db) => {
     // });
   });
 
-  router.post("/:tournament_id/getWins", (req, res) => {
-    getWins(db, req.params.tournament_id, req.body.matches);
-    // .then((data) => {
-    //   console.log(data.rows);
-    //   res.send(data.rows);
-    // })
-    // .catch((err) => {
-    //   res.status(500).json({ error: err.message });
-    // });
+  router.post("/:tournament_id/updateWins", (req, res) => {
+    getWins(db, req.params.tournament_id, req.body.matches)
+      .then((data) => {
+        const winnersArray = [];
+        req.body.matches.map((match) => {
+          for (const team of data.rows) {
+            if (team.team_id === match.winner) {
+              winnersArray.push(team);
+            }
+          }
+        });
+        updateWins(db, req.params.tournament_id, winnersArray);
+      })
+      .catch((err) => {
+        res.status(500).json({ error: err.message });
+      });
   });
 
   router.get("/:tournament_id/:format/matches", (req, res) => {
