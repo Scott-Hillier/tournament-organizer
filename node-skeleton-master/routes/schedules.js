@@ -71,7 +71,7 @@ const updateWins = (db, tournament_id, teams) => {
   });
 };
 
-const getWins = (db, tournament_id, matches) => {
+const getWins = (db, tournament_id) => {
   const query = `SELECT * FROM tournament_teams
     WHERE tournament_id = $1;`;
   const values = [tournament_id];
@@ -130,9 +130,10 @@ module.exports = (db) => {
   });
 
   router.post("/:tournament_id/updateWins", (req, res) => {
-    getWins(db, req.params.tournament_id, req.body.matches)
+    const winnersArray = [];
+    getWins(db, req.params.tournament_id)
       .then((data) => {
-        const winnersArray = [];
+        console.log(req.body.matches);
         req.body.matches.map((match) => {
           for (const team of data.rows) {
             if (team.team_id === match.winner) {
@@ -140,6 +141,8 @@ module.exports = (db) => {
             }
           }
         });
+      })
+      .then(() => {
         updateWins(db, req.params.tournament_id, winnersArray);
       })
       .catch((err) => {

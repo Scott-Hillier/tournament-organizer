@@ -11,18 +11,6 @@ const ScheduleGroup = ({ group, tournament_id }) => {
         return <ScheduleGroupMatches key={i} match={match} />;
       })}
       <br />
-      <button
-      // onClick={(event) => {
-      //   event.preventDefault();
-      //   randomizeGroupMatches(
-      //     tournament_id,
-      //     group[0].group_id,
-      //     group.sort(() => Math.random() - 0.5)
-      //   );
-      // }}
-      >
-        Randomize Matches
-      </button>
     </section>
   );
 };

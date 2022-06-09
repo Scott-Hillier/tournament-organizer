@@ -7,10 +7,12 @@ import {
   createGroupSchedule,
   createSwissSchedule,
   updateWins,
+  updateRoundNumber,
 } from "../../../helpers/apiHelpers";
-import swissSchedule from "../../../helpers/Logic/SwissSchedule";
+import swissRounds from "../../../helpers/Logic/SwissRounds";
 import splitGroups from "../../../helpers/Logic/splitGroups";
 import ScheduleGroups from "./ScheduleGroups";
+import ScheduleSwissRounds from "./ScheduleSwissRounds";
 import ScheduleSwissMatches from "./ScheduleSwissMatches";
 import "../../../styles/Tournaments/Schedule/SchedulePage.scss";
 
@@ -33,8 +35,9 @@ const Schedule = () => {
 
   const { tournament_id } = useParams();
   const groupsArray = [];
-  const matchesArray = [];
+  const roundsArray = [];
   let format = "";
+  let round = 0;
 
   useEffect(() => {
     getTournamentInfo(tournament_id)
@@ -42,9 +45,12 @@ const Schedule = () => {
         setTournamentState(res.data[0]);
         for (let i = 0; i < res.data[0].number_of_groups; i++) {
           groupsArray.push([]);
-          matchesArray.push([]);
+        }
+        for (let i = 0; i < res.data[0].round_number; i++) {
+          roundsArray.push([]);
         }
         format = res.data[0].format;
+        round = res.data[0].round_number;
       })
       .then(() => {
         getTournamentTeams(tournament_id).then((response) => {
@@ -57,12 +63,13 @@ const Schedule = () => {
           res.data.length > 0
             ? setScheduleState(FULL)
             : setScheduleState(EMPTY);
-
-          setTournamentGroupMatchesState(splitGroups(matchesArray, res.data));
-          setTournamentSwissMatchesState(res.data);
+          setTournamentGroupMatchesState(splitGroups(groupsArray, res.data));
+          setTournamentSwissMatchesState(swissRounds(res.data, round));
         });
       });
   }, []);
+
+  console.log(tournamentState.round_number);
 
   return (
     <section className="schedule-page">
@@ -83,29 +90,42 @@ const Schedule = () => {
       {scheduleState === FULL && tournamentState.format === "Swiss Rounds" && (
         <>
           <section className="tournament-page-teams">
-            {tournamentSwissMatchesState.map((match, i) => {
+            {tournamentSwissMatchesState.map((round, i) => {
               return (
-                <ScheduleSwissMatches
+                <ScheduleSwissRounds
                   key={i}
-                  match={match}
+                  round={round}
                   tournament_id={tournament_id}
-                  saveRoundState={saveRoundState}
                 />
               );
             })}
           </section>
           <br />
-          {saveRoundState === SAVE && (
+
+          <button
+            onClick={(event) => {
+              console.log("hit1");
+              updateWins(tournament_id, tournamentSwissMatchesState);
+              updateRoundNumber(tournament_id, tournamentState.round_number);
+            }}
+          >
+            Generate Next Round
+          </button>
+
+          {saveRoundState === GENERATE && (
             <button
               onClick={(event) => {
-                updateWins(tournament_id, tournamentSwissMatchesState);
-                setSaveRoundState(GENERATE);
+                console.log("hit1");
+                updateWins(
+                  tournament_id,
+                  tournamentSwissMatchesState[tournamentState.round_number - 1]
+                );
+                updateRoundNumber(tournament_id, tournamentState.round_number);
               }}
             >
-              Save Round
+              Generate Next Round
             </button>
           )}
-          {saveRoundState === GENERATE && <button>Generate Next Round</button>}
         </>
       )}
       {scheduleState === EMPTY && (

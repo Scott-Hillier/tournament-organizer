@@ -1,5 +1,5 @@
 const swissSchedule = (teams, roundNumber) => {
-  console.log(teams, roundNumber);
+  console.log("initial info", teams, roundNumber);
   const groups = [];
   const matchesArray = [];
   let counter = 1;
@@ -28,6 +28,8 @@ const swissSchedule = (teams, roundNumber) => {
     }
     groupCounter++;
   });
+
+  console.log("matchesArray", matchesArray);
 
   return matchesArray;
 };

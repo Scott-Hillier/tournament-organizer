@@ -56,6 +56,14 @@ const updateNumberOfGroups = (db, number_of_groups, tournament_id) => {
   return db.query(query, values);
 };
 
+const updateRoundNumber = (db, tournament_id, current_round) => {
+  const query = `UPDATE tournaments
+  SET round_number = $1
+  WHERE id = $2;`;
+  const values = [current_round + 1, tournament_id];
+  return db.query(query, values);
+};
+
 module.exports = (db) => {
   router.get("/all", (req, res) => {
     getAllTournaments(db)
@@ -113,6 +121,17 @@ module.exports = (db) => {
       req.body.number_of_groups,
       req.params.tournament_id
     )
+      .then((data) => {
+        res.send(data.rows);
+      })
+      .catch((err) => {
+        res.status(500).json({ error: err.message });
+      });
+  });
+
+  router.post("/:tournament_id/updateRound", (req, res) => {
+    console.log("req", req.body);
+    updateRoundNumber(db, req.params.tournament_id, req.body.currentRound)
       .then((data) => {
         res.send(data.rows);
       })

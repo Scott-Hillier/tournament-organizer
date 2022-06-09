@@ -71,7 +71,6 @@ export function createGroupSchedule(tournament_id, groups) {
 }
 
 export function createSwissSchedule(tournament_id, teams, roundNumber) {
-  console.log("hit");
   const matches = swissSchedule(teams, roundNumber);
   return axios.post(`/schedules/${tournament_id}/create/swiss`, matches);
 }
@@ -88,8 +87,14 @@ export function selectWinner(team_id, tournament_id, match_id) {
 }
 
 export function updateWins(tournament_id, matches) {
+  console.log("apiHelper", matches);
   return axios.post(`/schedules/${tournament_id}/updateWins`, {
     matches: matches,
   });
-  // axios.post(`/schedules/${tournament_id}/updateWins`, data);
+}
+
+export function updateRoundNumber(tournament_id, currentRound) {
+  return axios.post(`/tournaments/${tournament_id}/updateRound`, {
+    currentRound: currentRound,
+  });
 }
