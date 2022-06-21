@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import GroupsSchedule from "../../../helpers/Logic/GroupsSchedule";
 
 const TournamentGroupsSchedule = ({ group }) => {
+  console.log(group);
   const matchesArray = GroupsSchedule(group);
   return <section className="group-matches">Match Box</section>;
 };
