@@ -76,12 +76,6 @@ module.exports = (db) => {
 
   router.post("/:tournament_id/groups", (req, res) => {
     createGroups(db, req.params.tournament_id, req.body);
-    // .then((data) => {
-    //   res.send(data.rows);
-    // })
-    // .catch((err) => {
-    //   res.status(500).json({ error: err.message });
-    // });
   });
 
   return router;

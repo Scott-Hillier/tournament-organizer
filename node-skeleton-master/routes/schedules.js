@@ -91,12 +91,6 @@ module.exports = (db) => {
 
   router.post("/:tournament_id/create/swiss", (req, res) => {
     createSwissSchedule(db, req.params.tournament_id, req.body);
-    // .then((data) => {
-    //   res.send(data.rows);
-    // })
-    // .catch((err) => {
-    //   res.status(500).json({ error: err.message });
-    // });
   });
 
   router.post("/:tournament_id/winner", (req, res) => {
@@ -106,12 +100,6 @@ module.exports = (db) => {
       req.params.tournament_id,
       req.body.match_id
     );
-    // .then((data) => {
-    //   res.send(data.rows);
-    // })
-    // .catch((err) => {
-    //   res.status(500).json({ error: err.message });
-    // });
   });
 
   router.post("/:tournament_id/wins", (req, res) => {

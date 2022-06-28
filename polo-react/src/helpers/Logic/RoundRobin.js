@@ -13,7 +13,6 @@ const roundRobin = (teams, groupsNumber, random) => {
     }
     team.group_id = groupID;
     groupID++;
-    // grouped.push(teams.splice(0, Math.ceil(teams.length / i)));
   }
 
   return teams;
