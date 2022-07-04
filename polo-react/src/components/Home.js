@@ -5,7 +5,6 @@ import { searchTournaments } from "../helpers/apiHelpers";
 
 const Home = () => {
   const [searchState, setSearchState] = useState("");
-
   return (
     <main>
       <form className="search">
