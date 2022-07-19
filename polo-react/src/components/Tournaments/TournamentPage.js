@@ -2,18 +2,20 @@ import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import {
   addTeam,
-  getTournamentGroups,
   getTournamentInfo,
   getTournamentTeams,
   createGroups,
+  getTournamentSchedule,
+  createGroupSchedule,
+  createSwissSchedule,
 } from "../../helpers/apiHelpers";
-import Team from "./TournamentPage/Team";
-import TournamentGroups from "./TournamentGroups";
-import splitGroups from "../../helpers/Logic/splitGroups.js";
-import "../../styles/Tournaments/TournamentPage.scss";
 import Information from "./TournamentPage/Information";
 import Teams from "./TournamentPage/Teams";
 import Schedule from "./TournamentPage/Schedule";
+import swissRounds from "../../helpers/Logic/SwissRounds";
+import splitGroups from "../../helpers/Logic/splitGroups.js";
+
+import "../../styles/Tournaments/TournamentPage.scss";
 
 const DEFAULT = "DEFAULT";
 const ADD = "ADD";
@@ -42,7 +44,8 @@ const TournamentPage = () => {
   const [scheduleGeneratedState, setScheduleGeneratedState] = useState(EMPTY);
 
   const { tournament_id } = useParams();
-  const groupsArray = [];
+  const teamGroupsArray = [];
+  const scheduleGroupsArray = [];
   const roundsArray = [];
   let format = "";
   let round = 0;
@@ -52,7 +55,8 @@ const TournamentPage = () => {
       .then((res) => {
         setTournamentState(res.data[0]);
         for (let i = 0; i < res.data[0].number_of_groups; i++) {
-          groupsArray.push([]);
+          teamGroupsArray.push([]);
+          scheduleGroupsArray.push([]);
         }
         for (let i = 0; i < res.data[0].round_number; i++) {
           roundsArray.push([]);
@@ -63,16 +67,19 @@ const TournamentPage = () => {
       .then(() => {
         getTournamentTeams(tournament_id).then((response) => {
           setTournamentTeamsState(response.data);
-          setTournamentGroupsState(splitGroups(groupsArray, response.data));
+          setTournamentGroupsState(splitGroups(teamGroupsArray, response.data));
+        });
+      })
+      .then(() => {
+        getTournamentSchedule(tournament_id, format).then((res) => {
+          res.data.length > 0
+            ? setScheduleGeneratedState(FULL)
+            : setScheduleGeneratedState(EMPTY);
+          format === "Round Robin"
+            ? setScheduleState(splitGroups(scheduleGroupsArray, res.data))
+            : setScheduleState(swissRounds(res.data, round));
         });
       });
-    // .then(() => {
-    //   getTournamentSchedule(tournament_id, format).then((res) => {
-    //     res.data.length > 0
-    //       ? setScheduleGeneratedState(FULL)
-    //       : setScheduleGeneratedState(EMPTY);
-    //   });
-    // });
   }, []);
 
   const startDate = new Date(tournamentState?.start_date);
@@ -101,11 +108,31 @@ const TournamentPage = () => {
           format={tournamentState.format}
         />
       </section>
-      <Schedule
-        teams={tournamentTeamsState}
-        groups={tournamentGroupsState}
-        format={tournamentState.format}
-      />
+      {scheduleGeneratedState === FULL && (
+        <Schedule
+          schedule={scheduleState}
+          teams={tournamentTeamsState}
+          groups={tournamentGroupsState}
+          format={tournamentState.format}
+        />
+      )}
+      {scheduleGeneratedState === EMPTY && (
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            tournamentState.format === "Round Robin"
+              ? createGroupSchedule(tournament_id, tournamentGroupsState)
+              : createSwissSchedule(
+                  tournament_id,
+                  tournamentTeamsState,
+                  tournamentState.round_number
+                );
+            window.location.reload();
+          }}
+        >
+          Generate Schedule
+        </button>
+      )}
       {/* {tournamentState?.format === "Round Robin" &&
         tournamentState?.number_of_groups > 0 && (
           <>

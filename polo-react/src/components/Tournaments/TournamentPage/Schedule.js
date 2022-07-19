@@ -1,6 +1,7 @@
 import React from "react";
 
-const Schedule = ({ teams, groups, format }) => {
+const Schedule = ({ schedule, teams, groups, format }) => {
+  console.log(schedule);
   return (
     <section>
       <h1>SCHEDULE</h1>
