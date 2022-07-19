@@ -1,7 +1,6 @@
 import React from "react";
 
 const Schedule = ({ teams, groups, format }) => {
-  console.log(teams, groups, format);
   return (
     <section>
       <h1>SCHEDULE</h1>

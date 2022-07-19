@@ -38,10 +38,12 @@ const TournamentPage = () => {
     numberOfGroups: 0,
     random: false,
   });
+  const [scheduleState, setScheduleState] = useState();
+  const [scheduleGeneratedState, setScheduleGeneratedState] = useState(EMPTY);
 
   const { tournament_id } = useParams();
   const groupsArray = [];
-
+  const roundsArray = [];
   let format = "";
   let round = 0;
 
@@ -52,6 +54,11 @@ const TournamentPage = () => {
         for (let i = 0; i < res.data[0].number_of_groups; i++) {
           groupsArray.push([]);
         }
+        for (let i = 0; i < res.data[0].round_number; i++) {
+          roundsArray.push([]);
+        }
+        format = res.data[0].format;
+        round = res.data[0].round_number;
       })
       .then(() => {
         getTournamentTeams(tournament_id).then((response) => {
@@ -62,10 +69,8 @@ const TournamentPage = () => {
     // .then(() => {
     //   getTournamentSchedule(tournament_id, format).then((res) => {
     //     res.data.length > 0
-    //       ? setScheduleState(FULL)
-    //       : setScheduleState(EMPTY);
-    //     setTournamentGroupMatchesState(splitGroups(groupsArray, res.data));
-    //     setTournamentSwissMatchesState(swissRounds(res.data, round));
+    //       ? setScheduleGeneratedState(FULL)
+    //       : setScheduleGeneratedState(EMPTY);
     //   });
     // });
   }, []);

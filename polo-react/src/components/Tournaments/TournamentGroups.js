@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Team from "./TournamentPage/Team";
-import "../../styles/Tournaments/TournamentGroups.scss";
 
 const TournamentGroups = ({ group }) => {
   return (

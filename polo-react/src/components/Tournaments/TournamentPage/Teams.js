@@ -7,7 +7,8 @@ const Teams = ({ teams, groups, format }) => {
     ? groups.map((group) => {
         return (
           <section className="groups">
-            <Group key={group.id} group={group} />
+            <h1>GROUP {group[0].group_id}</h1>
+            <Group key={group[0].group_id} group={group} />
           </section>
         );
       })
