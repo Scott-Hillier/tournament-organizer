@@ -7,7 +7,7 @@ import {
   getTournamentTeams,
   createGroups,
 } from "../../helpers/apiHelpers";
-import TournamentTeams from "./TournamentTeams";
+import Team from "./TournamentPage/Team";
 import TournamentGroups from "./TournamentGroups";
 import splitGroups from "../../helpers/Logic/splitGroups.js";
 import "../../styles/Tournaments/TournamentPage.scss";
@@ -58,16 +58,16 @@ const TournamentPage = () => {
           setTournamentTeamsState(response.data);
           setTournamentGroupsState(splitGroups(groupsArray, response.data));
         });
-      })
-      .then(() => {
-        getTournamentSchedule(tournament_id, format).then((res) => {
-          res.data.length > 0
-            ? setScheduleState(FULL)
-            : setScheduleState(EMPTY);
-          setTournamentGroupMatchesState(splitGroups(groupsArray, res.data));
-          setTournamentSwissMatchesState(swissRounds(res.data, round));
-        });
       });
+    // .then(() => {
+    //   getTournamentSchedule(tournament_id, format).then((res) => {
+    //     res.data.length > 0
+    //       ? setScheduleState(FULL)
+    //       : setScheduleState(EMPTY);
+    //     setTournamentGroupMatchesState(splitGroups(groupsArray, res.data));
+    //     setTournamentSwissMatchesState(swissRounds(res.data, round));
+    //   });
+    // });
   }, []);
 
   const startDate = new Date(tournamentState?.start_date);
@@ -89,13 +89,17 @@ const TournamentPage = () => {
         </Link>
         <br />
       </section>
-      <Teams teams={tournamentTeamsState} format={tournamentState.format} />
+      <Teams
+        teams={tournamentTeamsState}
+        groups={tournamentGroupsState}
+        format={tournamentState.format}
+      />
       <Schedule
         teams={tournamentTeamsState}
         groups={tournamentGroupsState}
         format={tournamentState.format}
       />
-      {tournamentState?.format === "Round Robin" &&
+      {/* {tournamentState?.format === "Round Robin" &&
         tournamentState?.number_of_groups > 0 && (
           <>
             <section className="tournament-page-teams">
@@ -122,8 +126,8 @@ const TournamentPage = () => {
               </button>
             </section>
           </>
-        )}
-      {tournamentState?.format === "Swiss Rounds" && (
+        )} */}
+      {/* {tournamentState?.format === "Swiss Rounds" && (
         <>
           <section className="tournament-page-teams">
             {tournamentTeamsState.map((team) => {
@@ -141,7 +145,7 @@ const TournamentPage = () => {
             </button>
           </section>
         </>
-      )}
+      )} */}
       <br />
       {pageState === ADD && (
         <form

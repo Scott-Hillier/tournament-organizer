@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import TournamentTeams from "./TournamentTeams";
+import Team from "./TournamentPage/Team";
 import "../../styles/Tournaments/TournamentGroups.scss";
 
 const TournamentGroups = ({ group }) => {
@@ -8,7 +8,7 @@ const TournamentGroups = ({ group }) => {
       <h1>Group {group[0].group_id}</h1>
       <div className="group">
         {group.map((team) => {
-          return <TournamentTeams key={team.id} team={team} />;
+          return <Team key={team.id} team={team} />;
         })}
       </div>
     </div>

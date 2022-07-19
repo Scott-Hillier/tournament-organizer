@@ -1,7 +1,7 @@
 import React from "react";
-import "../../styles/Tournaments/TournamentTeams.scss";
+import "../../../styles/Tournaments/TournamentTeams.scss";
 
-const TournamentTeams = ({ team }) => {
+const Team = ({ team }) => {
   const {
     group_id,
     team_id,
@@ -31,4 +31,4 @@ const TournamentTeams = ({ team }) => {
   );
 };
 
-export default TournamentTeams;
+export default Team;
