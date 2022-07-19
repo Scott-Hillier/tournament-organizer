@@ -12,11 +12,22 @@
   align-items: center;
 }
 
-.tournament-page-teams {
+.teams {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  border: 2px solid blue;
+  border: 2px solid orange;
+}
+
+.groups {
+  display: flex;
+  flex-direction: row;
+  border: 2px solid red;
+}
+
+.team {
+  display: flex;
+  flex-direction: row;
+  border: 2px solid green;
 }

@@ -1,5 +1,4 @@
 import React from "react";
-import "../../../styles/Tournaments/TournamentTeams.scss";
 
 const Team = ({ team }) => {
   const {
@@ -15,7 +14,7 @@ const Team = ({ team }) => {
   } = team;
 
   return (
-    <section className="tournament-teams-card">
+    <section className="team-info">
       <h1>{team_name}</h1>
       <br />
       <h2>Slayers</h2>

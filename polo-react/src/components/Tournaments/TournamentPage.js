@@ -89,11 +89,13 @@ const TournamentPage = () => {
         </Link>
         <br />
       </section>
-      <Teams
-        teams={tournamentTeamsState}
-        groups={tournamentGroupsState}
-        format={tournamentState.format}
-      />
+      <section className="teams">
+        <Teams
+          teams={tournamentTeamsState}
+          groups={tournamentGroupsState}
+          format={tournamentState.format}
+        />
+      </section>
       <Schedule
         teams={tournamentTeamsState}
         groups={tournamentGroupsState}
