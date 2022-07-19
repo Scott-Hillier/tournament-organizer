@@ -11,10 +11,17 @@ import TournamentTeams from "./TournamentTeams";
 import TournamentGroups from "./TournamentGroups";
 import splitGroups from "../../helpers/Logic/splitGroups.js";
 import "../../styles/Tournaments/TournamentPage.scss";
+import Information from "./TournamentPage/Information";
+import Teams from "./TournamentPage/Teams";
+import Schedule from "./TournamentPage/Schedule";
 
 const DEFAULT = "DEFAULT";
 const ADD = "ADD";
 const GROUPS = "GROUPS";
+const EMPTY = "EMPTY";
+const FULL = "FULL";
+const SAVE = "SAVE";
+const GENERATE = "GENERATE";
 
 const TournamentPage = () => {
   const [tournamentState, setTournamentState] = useState({});
@@ -48,6 +55,15 @@ const TournamentPage = () => {
           setTournamentTeamsState(response.data);
           setTournamentGroupsState(splitGroups(groupsArray, response.data));
         });
+      })
+      .then(() => {
+        getTournamentSchedule(tournament_id, format).then((res) => {
+          res.data.length > 0
+            ? setScheduleState(FULL)
+            : setScheduleState(EMPTY);
+          setTournamentGroupMatchesState(splitGroups(groupsArray, res.data));
+          setTournamentSwissMatchesState(swissRounds(res.data, round));
+        });
       });
   }, []);
 
@@ -57,16 +73,7 @@ const TournamentPage = () => {
   return (
     <main className="tournament-page">
       <section className="tournament-page-info">
-        <br />
-        <h1>{tournamentState?.tournament_name}</h1>
-        <br />
-        <h3>{tournamentState?.location}</h3>
-        <h3>{tournamentState?.description}</h3>
-        <h3>{startDate.toDateString()}</h3>
-        <h3>{endDate.toDateString()}</h3>
-        <h3>{tournamentState?.format}</h3>
-        <h3>{tournamentState?.number_of_groups}</h3>
-        <br />
+        <Information tournament={tournamentState} />
         <Link
           to={{
             pathname: `/tournaments/${tournamentState.id}/schedule`,
@@ -79,6 +86,12 @@ const TournamentPage = () => {
         </Link>
         <br />
       </section>
+      <Teams teams={tournamentTeamsState} format={tournamentState.format} />
+      <Schedule
+        teams={tournamentTeamsState}
+        groups={tournamentGroupsState}
+        format={tournamentState.format}
+      />
       {tournamentState?.format === "Round Robin" &&
         tournamentState?.number_of_groups > 0 && (
           <>

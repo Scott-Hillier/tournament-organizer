@@ -69,8 +69,6 @@ const Schedule = () => {
       });
   }, []);
 
-  console.log(tournamentState.round_number);
-
   return (
     <section className="schedule-page">
       <h1>TOURNAMENT SCHEDULE</h1>
