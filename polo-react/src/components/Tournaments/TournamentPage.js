@@ -89,16 +89,6 @@ const TournamentPage = () => {
     <main className="tournament-page">
       <section className="tournament-page-info">
         <Information tournament={tournamentState} />
-        <Link
-          to={{
-            pathname: `/tournaments/${tournamentState.id}/schedule`,
-            props: { tournament_id: tournament_id },
-          }}
-          type={"button"}
-          className="organize-button"
-        >
-          Schedule
-        </Link>
         <br />
       </section>
       <section className="teams">
