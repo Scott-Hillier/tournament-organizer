@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Team from "./TournamentPage/Team";
+import Team from "./TournamentPage/Teams/Team";
 
 const TournamentGroups = ({ group }) => {
   return (

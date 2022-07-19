@@ -10,8 +10,8 @@ import {
   createSwissSchedule,
 } from "../../helpers/apiHelpers";
 import Information from "./TournamentPage/Information";
-import Teams from "./TournamentPage/Teams";
-import Schedule from "./TournamentPage/Schedule";
+import Teams from "./TournamentPage/Teams/Teams";
+import Schedule from "./TournamentPage/Schedule/Schedule";
 import swissRounds from "../../helpers/Logic/SwissRounds";
 import splitGroups from "../../helpers/Logic/splitGroups.js";
 
