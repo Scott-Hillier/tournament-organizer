@@ -42,6 +42,9 @@ const TournamentPage = () => {
   const { tournament_id } = useParams();
   const groupsArray = [];
 
+  let format = "";
+  let round = 0;
+
   useEffect(() => {
     getTournamentInfo(tournament_id)
       .then((res) => {
