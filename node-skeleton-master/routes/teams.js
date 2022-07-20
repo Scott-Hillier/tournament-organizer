@@ -35,6 +35,21 @@ const addTeamToTournament = (db, tournament_id, team_id) => {
   return db.query(query, values);
 };
 
+const removeTeam = (db, team_id) => {
+  const query = `DELETE FROM teams
+  WHERE team_id = $1;`;
+  const values = [team_id];
+  return db.query(query, values);
+};
+
+const removeTeamFromTournament = (db, tournament_id, team_id) => {
+  const query = `DELETE FROM tournament_teams
+  WHERE tournament_id = $1
+  AND team_id = $2;`;
+  const values = [tournament_id, team_id];
+  return db.query(query, values);
+};
+
 const createGroups = (db, tournament_id, teams) => {
   teams.map((team) => {
     const query = `UPDATE tournament_teams
@@ -69,6 +84,16 @@ module.exports = (db) => {
         });
         res.send(data.rows);
       })
+      .catch((err) => {
+        res.status(500).json({ error: err.message });
+      });
+  });
+
+  router.post("/:tournament_id/remove", (req, res) => {
+    removeTeamFromTournament(db, req.params.tournament_id, req.body.team_id)
+      // .then((data) => {
+      //   res.send(data.rows);
+      // })
       .catch((err) => {
         res.status(500).json({ error: err.message });
       });
