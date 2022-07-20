@@ -46,7 +46,6 @@ export function addTeam(tournament_id, team) {
 }
 
 export function removeTeam(tournament_id, team_id) {
-  console.log("HIT");
   return axios.post(`/teams/${tournament_id}/remove`, team_id);
 }
 

@@ -19,7 +19,8 @@ const Team = ({ team, tournament_id }) => {
       <header className="team-header">
         <h1>{team_name}</h1>
         <button
-          onClicK={() => {
+          onClick={(e) => {
+            e.preventDefault();
             removeTeam(tournament_id, team_id);
           }}
         >
