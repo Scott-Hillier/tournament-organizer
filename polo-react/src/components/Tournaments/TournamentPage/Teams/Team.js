@@ -1,6 +1,7 @@
 import React from "react";
+import { removeTeam } from "../../../../helpers/apiHelpers";
 
-const Team = ({ team }) => {
+const Team = ({ team, tournament_id }) => {
   const {
     group_id,
     team_id,
@@ -17,7 +18,13 @@ const Team = ({ team }) => {
     <section className="team-info">
       <header className="team-header">
         <h1>{team_name}</h1>
-        <button>X</button>
+        <button
+          onClicK={() => {
+            removeTeam(tournament_id, team_id);
+          }}
+        >
+          X
+        </button>
       </header>
       <br />
       <h2>Slayers</h2>

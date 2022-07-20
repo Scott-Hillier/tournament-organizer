@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import {
   addTeam,
+  removeTeam,
   getTournamentInfo,
   getTournamentTeams,
   createGroups,
@@ -97,6 +98,7 @@ const TournamentPage = () => {
           teams={tournamentTeamsState}
           groups={tournamentGroupsState}
           format={tournamentState.format}
+          tournament_id={tournament_id}
         />
       </section>
       {scheduleGeneratedState === FULL && (
