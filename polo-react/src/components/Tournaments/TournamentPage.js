@@ -11,6 +11,7 @@ import {
 } from "../../helpers/apiHelpers";
 import Information from "./TournamentPage/Information";
 import Teams from "./TournamentPage/Teams/Teams";
+import Add from "./TournamentPage/Teams/Add";
 import Schedule from "./TournamentPage/Schedule/Schedule";
 import swissRounds from "../../helpers/Logic/SwissRounds";
 import splitGroups from "../../helpers/Logic/splitGroups.js";
@@ -145,55 +146,12 @@ const TournamentPage = () => {
       )}
       <br />
       {pageState === ADD && (
-        <form
-          onSubmit={(event) => {
-            event.preventDefault();
-            addTeam(tournament_id, newTeamState);
-            window.location.reload();
-          }}
-        >
-          <input
-            placeholder="Team Name"
-            className="add-team"
-            onChange={(e) => {
-              setNewTeamState((prev) => {
-                return { ...prev, teamName: e.target.value };
-              });
-            }}
-            required
-          />
-          <input
-            placeholder="Player 1"
-            className="add-team"
-            onChange={(e) => {
-              setNewTeamState((prev) => {
-                return { ...prev, player1: e.target.value };
-              });
-            }}
-            required
-          />
-          <input
-            placeholder="Player 2"
-            className="add-team"
-            onChange={(e) => {
-              setNewTeamState((prev) => {
-                return { ...prev, player2: e.target.value };
-              });
-            }}
-            required
-          />
-          <input
-            placeholder="Player 3"
-            className="add-team"
-            onChange={(e) => {
-              setNewTeamState((prev) => {
-                return { ...prev, player3: e.target.value };
-              });
-            }}
-            required
-          />
-          <button type="Submit">Add Team</button>
-        </form>
+        <Add
+          tournament_id={tournament_id}
+          newTeamState={newTeamState}
+          setNewTeamState={setNewTeamState}
+          addTeam={addTeam}
+        />
       )}
       {pageState === GROUPS && (
         <form

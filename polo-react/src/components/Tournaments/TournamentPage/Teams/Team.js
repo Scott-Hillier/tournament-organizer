@@ -15,7 +15,10 @@ const Team = ({ team }) => {
 
   return (
     <section className="team-info">
-      <h1>{team_name}</h1>
+      <header className="team-header">
+        <h1>{team_name}</h1>
+        <button>X</button>
+      </header>
       <br />
       <h2>Slayers</h2>
       <h3>{player1}</h3>
