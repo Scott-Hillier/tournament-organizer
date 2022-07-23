@@ -29,8 +29,8 @@ const GENERATE = "GENERATE";
 
 const TournamentPage = () => {
   const [tournamentState, setTournamentState] = useState({});
-  const [tournamentTeamsState, setTournamentTeamsState] = useState([]);
-  const [tournamentGroupsState, setTournamentGroupsState] = useState([]);
+  const [teamsState, setTeamsState] = useState([]);
+  const [groupsState, setGroupsState] = useState([]);
   const [newTeamState, setNewTeamState] = useState({
     teamName: "",
     player1: "",
@@ -38,7 +38,7 @@ const TournamentPage = () => {
     player3: "",
   });
   const [pageState, setPageState] = useState(DEFAULT);
-  const [groupState, setGroupState] = useState({
+  const [updateGroupState, setUpdateGroupState] = useState({
     numberOfGroups: 0,
     random: false,
   });
@@ -68,8 +68,8 @@ const TournamentPage = () => {
       })
       .then(() => {
         getTournamentTeams(tournament_id).then((res) => {
-          setTournamentTeamsState(res.data);
-          setTournamentGroupsState(splitGroups(teamGroupsArray, res.data));
+          setTeamsState(res.data);
+          setGroupsState(splitGroups(teamGroupsArray, res.data));
         });
       })
       .then(() => {
@@ -95,8 +95,8 @@ const TournamentPage = () => {
       </section>
       <section className="teams">
         <Teams
-          teams={tournamentTeamsState}
-          groups={tournamentGroupsState}
+          teams={teamsState}
+          groups={groupsState}
           format={tournamentState.format}
           tournament_id={tournament_id}
         />
@@ -104,8 +104,8 @@ const TournamentPage = () => {
       {scheduleGeneratedState === FULL && (
         <Schedule
           schedule={scheduleState}
-          teams={tournamentTeamsState}
-          groups={tournamentGroupsState}
+          teams={teamsState}
+          groups={groupsState}
           format={tournamentState.format}
         />
       )}
@@ -133,10 +133,10 @@ const TournamentPage = () => {
             onClick={(e) => {
               e.preventDefault();
               tournamentState.format === "Round Robin"
-                ? createGroupSchedule(tournament_id, tournamentGroupsState)
+                ? createGroupSchedule(tournament_id, groupsState)
                 : createSwissSchedule(
                     tournament_id,
-                    tournamentTeamsState,
+                    teamsState,
                     tournamentState.round_number
                   );
               window.location.reload();
@@ -161,9 +161,9 @@ const TournamentPage = () => {
             e.preventDefault();
             createGroups(
               tournament_id,
-              tournamentTeamsState,
-              groupState.numberOfGroups,
-              groupState.random
+              teamsState,
+              updateGroupState.numberOfGroups,
+              updateGroupState.random
             );
             window.location.reload();
           }}
@@ -172,7 +172,7 @@ const TournamentPage = () => {
             placeholder="Number of Groups"
             type={"number"}
             onChange={(e) => {
-              setGroupState((prev) => {
+              setUpdateGroupState((prev) => {
                 return { ...prev, numberOfGroups: e.target.value };
               });
             }}
@@ -182,12 +182,12 @@ const TournamentPage = () => {
           <input
             type={"checkbox"}
             onChange={(e) => {
-              if (groupState.random === false) {
-                setGroupState((prev) => {
+              if (updateGroupState.random === false) {
+                setUpdateGroupState((prev) => {
                   return { ...prev, random: true };
                 });
               } else {
-                setGroupState((prev) => {
+                setUpdateGroupState((prev) => {
                   return { ...prev, random: false };
                 });
               }
