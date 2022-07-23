@@ -30,14 +30,14 @@ const getTeamID = (db, team) => {
 
 const addTeamToTournament = (db, tournament_id, team_id) => {
   const query = `INSERT INTO tournament_teams (tournament_id, team_id, group_id)
-  VALUES ($1, $2, 0)`;
-  const values = [tournament_id, team_id];
+  VALUES ($1, $2, $3)`;
+  const values = [tournament_id, team_id, 0];
   return db.query(query, values);
 };
 
 const removeTeam = (db, team_id) => {
   const query = `DELETE FROM teams
-  WHERE team_id = $1;`;
+  WHERE id = $1;`;
   const values = [team_id];
   return db.query(query, values);
 };
@@ -90,10 +90,11 @@ module.exports = (db) => {
   });
 
   router.post("/:tournament_id/remove", (req, res) => {
+    console.log(req.body);
     removeTeamFromTournament(db, req.params.tournament_id, req.body.team_id)
-      // .then((data) => {
-      //   res.send(data.rows);
-      // })
+      .then((data) => {
+        removeTeam(db, req.body.team_id);
+      })
       .catch((err) => {
         res.status(500).json({ error: err.message });
       });
