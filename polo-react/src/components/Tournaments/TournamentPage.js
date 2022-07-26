@@ -104,6 +104,7 @@ const TournamentPage = () => {
           teams={teamsState}
           groups={groupsState}
           format={tournamentState.format}
+          tournament_id={tournament_id}
         />
       )}
       {scheduleGeneratedState === EMPTY && (

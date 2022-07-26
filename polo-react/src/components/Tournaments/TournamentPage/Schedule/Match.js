@@ -1,11 +1,21 @@
 import React from "react";
+import { selectWinner } from "../../../../helpers/apiHelpers";
 
-const Match = ({ match }) => {
+const Match = ({ match, tournament_id }) => {
+  console.log(match);
   return (
     <section className="group-match">
       <div>Match {match.match_id}</div>
       <div>
-        {match.team_1_name} VS {match.team_2_name}
+        <button
+          onClick={() => {
+            selectWinner(match.team_1_id, tournament_id, match.match_id);
+          }}
+        >
+          {match.team_1_name}
+        </button>
+        VS
+        <button>{match.team_2_name}</button>
       </div>
     </section>
   );

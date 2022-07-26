@@ -91,7 +91,6 @@ export function selectWinner(team_id, tournament_id, match_id) {
 }
 
 export function updateWins(tournament_id, matches) {
-  console.log("apiHelper", matches);
   return axios.post(`/schedules/${tournament_id}/updateWins`, {
     matches: matches,
   });

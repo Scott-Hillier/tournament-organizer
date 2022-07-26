@@ -80,13 +80,13 @@ const getWins = (db, tournament_id) => {
 
 module.exports = (db) => {
   router.post("/:tournament_id/create", (req, res) => {
-    createGroupSchedule(db, req.params.tournament_id, req.body);
-    // .then((data) => {
-    //   res.send(data.rows);
-    // })
-    // .catch((err) => {
-    //   res.status(500).json({ error: err.message });
-    // });
+    createGroupSchedule(db, req.params.tournament_id, req.body)
+      // .then((data) => {
+      //   res.send(data.rows);
+      // })
+      .catch((err) => {
+        res.status(500).json({ error: err.message });
+      });
   });
 
   router.post("/:tournament_id/create/swiss", (req, res) => {
@@ -99,7 +99,9 @@ module.exports = (db) => {
       req.body.team_id,
       req.params.tournament_id,
       req.body.match_id
-    );
+    ).catch((err) => {
+      res.status(500).json({ error: err.message });
+    });
   });
 
   router.post("/:tournament_id/wins", (req, res) => {
