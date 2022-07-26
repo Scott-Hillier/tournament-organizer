@@ -2,7 +2,6 @@ import React from "react";
 import { selectWinner } from "../../../../helpers/apiHelpers";
 
 const Match = ({ match, tournament_id }) => {
-  console.log(match);
   return (
     <section className="group-match">
       <div>Match {match.match_id}</div>
