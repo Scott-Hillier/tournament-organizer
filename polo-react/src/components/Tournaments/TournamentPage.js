@@ -97,13 +97,15 @@ const TournamentPage = () => {
         />
       </section>
       {scheduleGeneratedState === FULL && (
-        <Schedule
-          schedule={scheduleState}
-          teams={teamsState}
-          groups={groupsState}
-          format={tournamentState.format}
-          tournament_id={tournament_id}
-        />
+        <section className="schedule">
+          <Schedule
+            schedule={scheduleState}
+            teams={teamsState}
+            groups={groupsState}
+            format={tournamentState.format}
+            tournament_id={tournament_id}
+          />
+        </section>
       )}
       {scheduleGeneratedState === EMPTY && (
         <section>

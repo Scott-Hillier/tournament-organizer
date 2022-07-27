@@ -12,31 +12,9 @@
   align-items: center;
 }
 
-.teams {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  width: 100%;
-  overflow: hidden;
-  border: 2px solid green;
-}
-
 .groups {
   display: flex;
   flex-direction: row;
   margin: 0.25em;
   border: 2px solid red;
-}
-
-.team {
-  display: flex;
-  flex-direction: row;
-  margin: 0.25em;
-  padding: 0.25em;
-  border: 2px solid black;
-}
-
-.team-header {
-  display: flex;
-  justify-content: space-between;
 }

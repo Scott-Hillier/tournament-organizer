@@ -1,8 +1,8 @@
 import React from "react";
 import Match from "./Match";
+import "../../../../styles/Tournaments/Schedule/Schedule.scss";
 
 const GroupMatches = ({ group, format, tournament_id }) => {
-  console.log(group);
   return (
     <section className="schedule-groups">
       {format === "Round Robin" ? (
