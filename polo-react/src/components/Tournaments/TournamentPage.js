@@ -84,7 +84,7 @@ const TournamentPage = () => {
 
   return (
     <main className="tournament-page">
-      <section className="tournament-page-info">
+      <section className="information">
         <Information tournament={tournamentState} />
         <br />
       </section>

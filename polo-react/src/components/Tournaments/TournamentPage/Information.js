@@ -8,7 +8,7 @@ const Information = ({ tournament }) => {
   const endDate = new Date(end_date);
 
   return (
-    <section>
+    <section className="information">
       <br />
       <h1>{tournament_name}</h1>
       <br />

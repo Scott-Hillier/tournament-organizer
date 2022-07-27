@@ -1,6 +1,5 @@
 import React from "react";
 import { selectWinner } from "../../../../helpers/apiHelpers";
-import "../../../../styles/Tournaments/Schedule/Match.scss";
 
 const Match = ({ match, tournament_id }) => {
   return (

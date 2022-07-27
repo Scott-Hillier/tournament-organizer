@@ -1,6 +1,5 @@
 import React from "react";
 import Match from "./Match";
-import "../../../../styles/Tournaments/Schedule/Schedule.scss";
 
 const GroupMatches = ({ group, format, tournament_id }) => {
   return (

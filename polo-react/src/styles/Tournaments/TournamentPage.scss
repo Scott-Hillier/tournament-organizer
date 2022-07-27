@@ -1,20 +1,34 @@
 .tournament-page {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
 }
 
-.tournament-page-info {
+.information {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  border: 2px solid red;
 }
 
-.groups {
+.teams {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 2px solid green;
+  .groups {
+    display: flex;
+    margin: 0.5em;
+    border: 2px solid blue;
+  }
+  .team {
+    margin: 0.5em;
+    border: 2px solid black;
+  }
+}
+
+.schedule {
   display: flex;
   flex-direction: row;
-  margin: 0.25em;
-  border: 2px solid red;
+  justify-content: center;
 }
