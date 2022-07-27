@@ -7,9 +7,11 @@ const Teams = ({ teams, groups, format, tournament_id }) => {
     ? groups.map((group, i) => {
         return (
           group.length > 0 && (
-            <section className="groups" key={i}>
+            <section className="groups-header" key={i}>
               <h1>GROUP {group[0].group_id}</h1>
-              <Group group={group} tournament_id={tournament_id} />
+              <div className="groups">
+                <Group group={group} tournament_id={tournament_id} />
+              </div>
             </section>
           )
         );

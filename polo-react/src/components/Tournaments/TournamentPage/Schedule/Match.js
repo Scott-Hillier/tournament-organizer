@@ -1,24 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { selectWinner } from "../../../../helpers/apiHelpers";
 
 const Match = ({ match, tournament_id }) => {
+  console.log(match);
+  const [winnerState, setWinnerState] = useState(match.winner);
+
+  useEffect(() => {}, []);
+
   return (
     <section className="match">
       <div>Match {match.match_id}</div>
-      <div className="teams">
+      <div className="match-teams">
         <button
-          className={`team ${match.winner === match.team_1_id ? `winner` : ``}`}
+          className={`match-team ${
+            winnerState === match.team_1_id ? `winner` : ``
+          }`}
           onClick={() => {
-            selectWinner(match.team_1_id, tournament_id, match.match_id);
+            selectWinner(match.team_1_id, tournament_id, match.id);
+            setWinnerState(match.team_1_id);
           }}
         >
           {match.team_1_name}
         </button>
         VS
         <button
-          className={`team ${match.winner === match.team_2_id ? `winner` : ``}`}
+          className={`match-team ${
+            winnerState === match.team_2_id ? `winner` : ``
+          }`}
           onClick={() => {
-            selectWinner(match.team_2_id, tournament_id, match.match_id);
+            selectWinner(match.team_2_id, tournament_id, match.id);
+            setWinnerState(match.team_2_id);
           }}
         >
           {match.team_2_name}

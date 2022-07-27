@@ -88,6 +88,7 @@ const TournamentPage = () => {
         <Information tournament={tournamentState} />
         <br />
       </section>
+      <h1>Teams</h1>
       <section className="teams">
         <Teams
           teams={teamsState}
@@ -97,15 +98,18 @@ const TournamentPage = () => {
         />
       </section>
       {scheduleGeneratedState === FULL && (
-        <section className="schedule">
-          <Schedule
-            schedule={scheduleState}
-            teams={teamsState}
-            groups={groupsState}
-            format={tournamentState.format}
-            tournament_id={tournament_id}
-          />
-        </section>
+        <>
+          <h1>Schedule</h1>
+          <section className="schedule">
+            <Schedule
+              schedule={scheduleState}
+              teams={teamsState}
+              groups={groupsState}
+              format={tournamentState.format}
+              tournament_id={tournament_id}
+            />
+          </section>
+        </>
       )}
       {scheduleGeneratedState === EMPTY && (
         <section>

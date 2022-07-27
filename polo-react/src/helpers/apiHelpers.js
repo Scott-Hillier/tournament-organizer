@@ -86,7 +86,7 @@ export function getTournamentSchedule(tournament_id, format) {
 export function selectWinner(team_id, tournament_id, match_id) {
   return axios.post(`/schedules/${tournament_id}/winner`, {
     team_id: team_id,
-    match_id: match_id,
+    id: match_id,
   });
 }
 

@@ -37,7 +37,7 @@ const createSwissSchedule = (db, tournament_id, matches) => {
 
 const getSchedule = (db, tournament_id, format) => {
   if (format === "Round Robin") {
-    const query = `SELECT group_id, match_id, team_1_name, team_1_id, team_2_name, team_2_id, winner FROM matches
+    const query = `SELECT id, group_id, match_id, team_1_name, team_1_id, team_2_name, team_2_id, winner FROM matches
     WHERE tournament_id = $1
     ORDER BY match_id;`;
     const values = [tournament_id];
@@ -51,12 +51,12 @@ const getSchedule = (db, tournament_id, format) => {
   }
 };
 
-const selectWinner = (db, team_id, tournament_id, match_id) => {
+const selectWinner = (db, team_id, tournament_id, id) => {
   const query = `UPDATE matches
   SET winner = $1
   WHERE tournament_id = $2
-  AND match_id = $3;`;
-  const values = [team_id, tournament_id, match_id];
+  AND id = $3;`;
+  const values = [team_id, tournament_id, id];
   return db.query(query, values);
 };
 
@@ -98,7 +98,7 @@ module.exports = (db) => {
       db,
       req.body.team_id,
       req.params.tournament_id,
-      req.body.match_id
+      req.body.id
     ).catch((err) => {
       res.status(500).json({ error: err.message });
     });
