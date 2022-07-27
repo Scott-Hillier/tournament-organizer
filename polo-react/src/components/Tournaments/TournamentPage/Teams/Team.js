@@ -1,6 +1,7 @@
 import React from "react";
+import { removeTeam } from "../../../../helpers/apiHelpers";
 
-const Team = ({ team, tournament_id, removeTeam }) => {
+const Team = ({ team, tournament_id }) => {
   const {
     group_id,
     team_id,
@@ -21,6 +22,7 @@ const Team = ({ team, tournament_id, removeTeam }) => {
           onClick={(e) => {
             e.preventDefault();
             removeTeam(tournament_id, team_id);
+            window.location.reload();
           }}
         >
           X
