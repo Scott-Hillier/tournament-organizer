@@ -1,7 +1,6 @@
 import React from "react";
-import { removeTeam } from "../../../../helpers/apiHelpers";
 
-const Team = ({ team, tournament_id }) => {
+const Team = ({ team, tournament_id, removeTeam }) => {
   const {
     group_id,
     team_id,

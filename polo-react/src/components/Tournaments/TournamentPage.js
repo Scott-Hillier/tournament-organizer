@@ -52,6 +52,14 @@ const TournamentPage = () => {
   let format = "";
   let round = 0;
 
+  // const removeTeamFromState = async (tournamentId, teamId) => {
+  //   const newTeams = teamsState.filter((team) => team.id !== teamId);
+  //   console.log(teamsState.filter((team) => team.id !== teamId));
+  //   setTeamsState(newTeams);
+  //   console.log(teamsState);
+  //   // removeTeam(tournamentId, teamId);
+  // };
+
   useEffect(() => {
     getTournamentInfo(tournament_id)
       .then((res) => {
@@ -71,8 +79,6 @@ const TournamentPage = () => {
           setTeamsState(res.data);
           setGroupsState(splitGroups(teamGroupsArray, res.data));
         });
-      })
-      .then(() => {
         getTournamentSchedule(tournament_id, format).then((res) => {
           res.data.length > 0
             ? setScheduleGeneratedState(FULL)
@@ -96,6 +102,7 @@ const TournamentPage = () => {
           groups={groupsState}
           format={tournamentState.format}
           tournament_id={tournament_id}
+          // removeTeam={removeTeamFromState}
         />
       </section>
       {scheduleGeneratedState === FULL && (
