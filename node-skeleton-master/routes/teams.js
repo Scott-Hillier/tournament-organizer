@@ -90,7 +90,6 @@ module.exports = (db) => {
   });
 
   router.post("/:tournament_id/remove", (req, res) => {
-    console.log(req.body);
     removeTeamFromTournament(db, req.params.tournament_id, req.body.team_id)
       .then((data) => {
         removeTeam(db, req.body.team_id);
