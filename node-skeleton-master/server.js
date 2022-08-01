@@ -49,6 +49,7 @@ const usersRoutes = require("./routes/users");
 const tournamentsRoutes = require("./routes/tournaments");
 const teamsRoutes = require("./routes/teams");
 const schedulesRoutes = require("./routes/schedules");
+const playersRoutes = require("./routes/players");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
@@ -56,6 +57,7 @@ app.use("/users", usersRoutes(db));
 app.use("/tournaments", tournamentsRoutes(db));
 app.use("/teams", teamsRoutes(db));
 app.use("/schedules", schedulesRoutes(db));
+app.use("/players", playersRoutes(db));
 
 // Note: mount other resources here, using the same pattern above
 

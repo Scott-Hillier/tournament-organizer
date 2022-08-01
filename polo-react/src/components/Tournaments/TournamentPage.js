@@ -5,6 +5,7 @@ import {
   removeTeam,
   getTournamentInfo,
   getTournamentTeams,
+  getTournamentPlayers,
   createGroups,
   getTournamentSchedule,
   createGroupSchedule,
@@ -30,6 +31,7 @@ const GENERATE = "GENERATE";
 
 const TournamentPage = () => {
   const [tournamentState, setTournamentState] = useState({});
+  const [playersState, setPlayersState] = useState([]);
   const [teamsState, setTeamsState] = useState([]);
   const [groupsState, setGroupsState] = useState([]);
   const [newTeamState, setNewTeamState] = useState({
@@ -72,6 +74,9 @@ const TournamentPage = () => {
           setTeamsState(res.data);
           setGroupsState(splitGroups(teamGroupsArray, res.data));
         });
+        getTournamentPlayers(tournament_id).then((res) => {
+          setPlayersState(res.data);
+        });
         getTournamentSchedule(tournament_id, format).then((res) => {
           res.data.length > 0
             ? setScheduleGeneratedState(FULL)
@@ -84,8 +89,9 @@ const TournamentPage = () => {
               setScheduleState(swissRounds(res.data, round));
               break;
             case "Mixer":
-              console.log(res.data);
-              setScheduleState(mixerRound(res.data, round));
+              getTournamentPlayers(tournament_id).then((res) => {
+                setScheduleState(mixerRound(res.data, round));
+              });
           }
         });
       });
@@ -99,15 +105,31 @@ const TournamentPage = () => {
         <Information tournament={tournamentState} />
         <br />
       </section>
-      <h1>Teams</h1>
-      <section className="teams">
-        <Teams
-          teams={teamsState}
-          groups={groupsState}
-          format={tournamentState.format}
-          tournament_id={tournament_id}
-        />
-      </section>
+      {tournamentState.format !== "Mixer" ? (
+        <>
+          <h1>Teams</h1>
+          <section className="teams">
+            <Teams
+              teams={teamsState}
+              groups={groupsState}
+              format={tournamentState.format}
+              tournament_id={tournament_id}
+            />
+          </section>
+        </>
+      ) : (
+        <>
+          <h1>Players</h1>
+          <section className="teams">
+            <Teams
+              teams={teamsState}
+              groups={groupsState}
+              format={tournamentState.format}
+              tournament_id={tournament_id}
+            />
+          </section>
+        </>
+      )}
       {scheduleGeneratedState === FULL && (
         <>
           <h1>Schedule</h1>
@@ -145,13 +167,21 @@ const TournamentPage = () => {
           <button
             onClick={(e) => {
               e.preventDefault();
-              tournamentState.format === "Round Robin"
-                ? createGroupSchedule(tournament_id, groupsState)
-                : createSwissSchedule(
+              switch (format) {
+                case "Round Robin":
+                  createGroupSchedule(tournament_id, groupsState);
+                  break;
+                case "Swiss Rounds":
+                  createSwissSchedule(
                     tournament_id,
                     teamsState,
                     tournamentState.round_number
                   );
+                  break;
+                case "Mixer":
+                  console.log("createMixerSchedule");
+                // createMixerSchedule()
+              }
               window.location.reload();
             }}
           >

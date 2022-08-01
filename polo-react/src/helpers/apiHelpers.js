@@ -41,6 +41,10 @@ export function getTournamentTeams(tournament_id) {
   return axios.get(`/teams/${tournament_id}`);
 }
 
+export function getTournamentPlayers(tournament_id) {
+  return axios.get(`/players/${tournament_id}`);
+}
+
 export function addTeam(tournament_id, team) {
   return axios.post(`/teams/${tournament_id}/add`, team);
 }
