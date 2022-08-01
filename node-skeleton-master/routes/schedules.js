@@ -35,6 +35,13 @@ const createSwissSchedule = (db, tournament_id, matches) => {
   });
 };
 
+const createMixerSchedule = (db, tournament_id, matches) => {
+  matches.map((match) => {
+    const team1 = match[0];
+    const team2 = match[1];
+  });
+};
+
 const getSchedule = (db, tournament_id, format) => {
   if (format === "Round Robin") {
     const query = `SELECT id, group_id, match_id, team_1_name, team_1_id, team_2_name, team_2_id, winner FROM matches
@@ -91,6 +98,10 @@ module.exports = (db) => {
 
   router.post("/:tournament_id/create/swiss", (req, res) => {
     createSwissSchedule(db, req.params.tournament_id, req.body);
+  });
+
+  router.post("/:tournament_id/create/mixer", (req, res) => {
+    createMixerSchedule(db, req.params.tournament_id, req.body.matches);
   });
 
   router.post("/:tournament_id/winner", (req, res) => {

@@ -10,6 +10,7 @@ import {
   getTournamentSchedule,
   createGroupSchedule,
   createSwissSchedule,
+  createMixerSchedule,
 } from "../../helpers/apiHelpers";
 import Information from "./TournamentPage/Information";
 import Teams from "./TournamentPage/Teams/Teams";
@@ -90,14 +91,12 @@ const TournamentPage = () => {
               break;
             case "Mixer":
               getTournamentPlayers(tournament_id).then((res) => {
-                setScheduleState(mixerRound(res.data, round));
+                setScheduleState(res.data);
               });
           }
         });
       });
   }, []);
-
-  console.log(scheduleState);
 
   return (
     <main className="tournament-page">
@@ -167,7 +166,7 @@ const TournamentPage = () => {
           <button
             onClick={(e) => {
               e.preventDefault();
-              switch (format) {
+              switch (tournamentState.format) {
                 case "Round Robin":
                   createGroupSchedule(tournament_id, groupsState);
                   break;
@@ -180,9 +179,13 @@ const TournamentPage = () => {
                   break;
                 case "Mixer":
                   console.log("createMixerSchedule");
-                // createMixerSchedule()
+                  createMixerSchedule(
+                    tournament_id,
+                    playersState,
+                    tournamentState.round_number
+                  );
               }
-              window.location.reload();
+              // window.location.reload();
             }}
           >
             Generate Schedule

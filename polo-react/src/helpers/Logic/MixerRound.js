@@ -1,7 +1,6 @@
 import React from "react";
 
 const mixerRound = (players, round) => {
-  console.log(players);
   round === 1
     ? players.sort(function (a, b) {
         return 0.5 - Math.random();

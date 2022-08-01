@@ -2,6 +2,7 @@ import axios from "axios";
 import roundRobin from "./Logic/RoundRobin";
 import GroupsSchedule from "./Logic/GroupsSchedule";
 import swissSchedule from "./Logic/SwissSchedule";
+import mixerRound from "./Logic/MixerRound";
 
 export function getAllTournaments() {
   return axios.get("/tournaments/all");
@@ -81,6 +82,14 @@ export function createGroupSchedule(tournament_id, groups) {
 export function createSwissSchedule(tournament_id, teams, roundNumber) {
   const matches = swissSchedule(teams, roundNumber);
   return axios.post(`/schedules/${tournament_id}/create/swiss`, matches);
+}
+
+export function createMixerSchedule(tournament_id, players, roundNumber) {
+  console.log("hit");
+  const matches = mixerRound(players, roundNumber);
+  return axios.post(`/schedules/${tournament_id}/create/mixer`, {
+    matches: matches,
+  });
 }
 
 export function getTournamentSchedule(tournament_id, format) {
