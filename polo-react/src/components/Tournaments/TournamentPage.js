@@ -75,12 +75,21 @@ const TournamentPage = () => {
           res.data.length > 0
             ? setScheduleGeneratedState(FULL)
             : setScheduleGeneratedState(EMPTY);
-          format === "Round Robin"
-            ? setScheduleState(splitGroups(scheduleGroupsArray, res.data))
-            : setScheduleState(swissRounds(res.data, round));
+          switch (format) {
+            case "Round Robin":
+              setScheduleState(splitGroups(scheduleGroupsArray, res.data));
+              break;
+            case "Swiss Rounds":
+              setScheduleState(swissRounds(res.data, round));
+              break;
+            case "Mixer":
+              setScheduleState(res.data);
+          }
         });
       });
   }, []);
+
+  console.log(scheduleState);
 
   return (
     <main className="tournament-page">

@@ -1,0 +1,20 @@
+INSERT INTO players (name, club)
+  VALUES
+  ('John', 'MTL'),
+  ('Sarah', 'OTT'),
+  ('Alex', 'CGY'),
+  ('John', 'MTL'),
+  ('Sarah', 'OTT'),
+  ('Alex', 'CGY'),
+  ('John', 'MTL'),
+  ('Sarah', 'OTT'),
+  ('Alex', 'CGY'),
+  ('John', 'MTL'),
+  ('Sarah', 'OTT'),
+  ('Alex', 'CGY'),
+  ('John', 'MTL'),
+  ('Sarah', 'OTT'),
+  ('Alex', 'CGY'),
+  ('John', 'MTL'),
+  ('Sarah', 'OTT'),
+  ('Alex', 'CGY');

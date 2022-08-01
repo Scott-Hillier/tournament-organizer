@@ -12,10 +12,13 @@ const NewMixerRound = (players, round) => {
   for (let i = 0; i < players.length / 3; i++) {
     teams.push([]);
   }
+
+  let counter = 0;
+
   for (let i = 0; i < players.length; i++) {
-    for (let j = 0; j < players.length / 3; j++) {
-      teams[j].push(players[i]);
-    }
+    teams[counter].push(players[i]);
+    counter++;
+    counter === players.length / 3 && (counter = 0);
   }
   return teams;
 };
