@@ -16,6 +16,7 @@ import Add from "./TournamentPage/Teams/Add";
 import Schedule from "./TournamentPage/Schedule/Schedule";
 import swissRounds from "../../helpers/Logic/SwissRounds";
 import splitGroups from "../../helpers/Logic/splitGroups.js";
+import mixerRound from "../../helpers/Logic/MixerRound";
 
 import "../../styles/Tournaments/TournamentPage.scss";
 
@@ -83,7 +84,8 @@ const TournamentPage = () => {
               setScheduleState(swissRounds(res.data, round));
               break;
             case "Mixer":
-              setScheduleState(res.data);
+              console.log(res.data);
+              setScheduleState(mixerRound(res.data, round));
           }
         });
       });

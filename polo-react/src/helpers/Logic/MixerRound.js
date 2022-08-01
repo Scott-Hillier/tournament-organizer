@@ -1,7 +1,7 @@
 import React from "react";
 
-const NewMixerRound = (players, round) => {
-  round === 0
+const mixerRound = (players, round) => {
+  round === 1
     ? players.sort(function (a, b) {
         return 0.5 - Math.random();
       })
@@ -23,4 +23,4 @@ const NewMixerRound = (players, round) => {
   return teams;
 };
 
-export default NewMixerRound;
+export default mixerRound;
