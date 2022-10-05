@@ -6,7 +6,7 @@ import {
   getTournamentInfo,
   getTournamentTeams,
   getTournamentPlayers,
-  createGroups,
+  // createGroups,
   getTournamentSchedule,
   createGroupSchedule,
   createSwissSchedule,
@@ -14,7 +14,8 @@ import {
 } from "../../helpers/apiHelpers";
 import Information from "./TournamentPage/Information";
 import Teams from "./TournamentPage/Teams/Teams";
-import Add from "./TournamentPage/Teams/Add";
+import AddTeam from "./TournamentPage/Options/AddTeam";
+import CreateGroups from "./TournamentPage/Options/CreateGroups";
 import Schedule from "./TournamentPage/Schedule/Schedule";
 import swissRounds from "../../helpers/Logic/SwissRounds";
 import splitGroups from "../../helpers/Logic/splitGroups.js";
@@ -178,7 +179,7 @@ const TournamentPage = () => {
       )}
       <br />
       {pageState === ADD && (
-        <Add
+        <AddTeam
           tournament_id={tournament_id}
           newTeamState={newTeamState}
           setNewTeamState={setNewTeamState}
@@ -186,45 +187,7 @@ const TournamentPage = () => {
         />
       )}
       {pageState === GROUPS && (
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            createGroups(
-              tournament_id,
-              teamsState,
-              updateGroupState.numberOfGroups,
-              updateGroupState.random
-            );
-            window.location.reload();
-          }}
-        >
-          <input
-            placeholder="Number of Groups"
-            type={"number"}
-            onChange={(e) => {
-              setUpdateGroupState((prev) => {
-                return { ...prev, numberOfGroups: e.target.value };
-              });
-            }}
-            required
-          />
-          <p>Random?</p>
-          <input
-            type={"checkbox"}
-            onChange={(e) => {
-              if (updateGroupState.random === false) {
-                setUpdateGroupState((prev) => {
-                  return { ...prev, random: true };
-                });
-              } else {
-                setUpdateGroupState((prev) => {
-                  return { ...prev, random: false };
-                });
-              }
-            }}
-          ></input>
-          <button>Make Groups</button>
-        </form>
+        <CreateGroups tournament_id={tournament_id} teamsState={teamsState} />
       )}
     </main>
   );

@@ -54,7 +54,7 @@ export function removeTeam(tournament_id, team_id) {
   return axios.post(`/teams/${tournament_id}/remove`, { team_id: team_id });
 }
 
-export function createGroups(
+export function makeGroups(
   tournament_id,
   teams_array,
   number_of_groups,

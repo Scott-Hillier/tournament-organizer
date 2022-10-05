@@ -10,17 +10,7 @@ const Teams = ({ teams, groups, format, tournament_id }) => {
             <section className="groups-header" key={i}>
               <h1>GROUP {group[0].group_id}</h1>
               <div className="groups">
-                {group.map((team, i) => {
-                  return (
-                    <section className="team" key={i}>
-                      <Team
-                        team={team}
-                        tournament_id={tournament_id}
-                        // removeTeam={removeTeam}
-                      />
-                    </section>
-                  );
-                })}
+                <Group group={group} tournament_id={tournament_id} />
               </div>
             </section>
           )
