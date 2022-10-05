@@ -104,31 +104,16 @@ const TournamentPage = () => {
         <Information tournament={tournamentState} />
         <br />
       </section>
-      {tournamentState.format !== "Mixer" ? (
-        <>
-          <h1>Teams</h1>
-          <section className="teams">
-            <Teams
-              teams={teamsState}
-              groups={groupsState}
-              format={tournamentState.format}
-              tournament_id={tournament_id}
-            />
-          </section>
-        </>
-      ) : (
-        <>
-          <h1>Players</h1>
-          <section className="teams">
-            <Teams
-              teams={teamsState}
-              groups={groupsState}
-              format={tournamentState.format}
-              tournament_id={tournament_id}
-            />
-          </section>
-        </>
-      )}
+      <section className="teams">
+        <h1>Teams</h1>
+        <Teams
+          teams={teamsState}
+          groupsState={groupsState}
+          numberOfGroups={tournamentState.number_of_groups}
+          format={tournamentState.format}
+          tournament_id={tournament_id}
+        />
+      </section>
       {scheduleGeneratedState === FULL && (
         <>
           <h1>Schedule</h1>
@@ -185,7 +170,7 @@ const TournamentPage = () => {
                     tournamentState.round_number
                   );
               }
-              // window.location.reload();
+              window.location.reload();
             }}
           >
             Generate Schedule
