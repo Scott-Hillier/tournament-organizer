@@ -108,8 +108,7 @@ const TournamentPage = () => {
         <h1>Teams</h1>
         <Teams
           teams={teamsState}
-          groupsState={groupsState}
-          numberOfGroups={tournamentState.number_of_groups}
+          groups={groupsState}
           format={tournamentState.format}
           tournament_id={tournament_id}
         />
