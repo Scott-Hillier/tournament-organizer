@@ -1,6 +1,17 @@
 import React from "react";
 
-const Add = ({ tournament_id, newTeamState, setNewTeamState, addTeam }) => {
+const AddTeam = ({
+  tournament_id,
+  newTeamState,
+  setNewTeamState,
+  addTeam,
+  format,
+  numberOfGroups,
+}) => {
+  const groups = [];
+  for (let i = 1; i <= numberOfGroups; i++) {
+    groups.push(i);
+  }
   return (
     <form
       onSubmit={(event) => {
@@ -49,9 +60,19 @@ const Add = ({ tournament_id, newTeamState, setNewTeamState, addTeam }) => {
         }}
         required
       />
+      <select name="group">
+        <option value={""}>Please Select A Group</option>
+        {groups.map((group, i) => {
+          return (
+            <option value={group} key={i}>
+              {group}
+            </option>
+          );
+        })}
+      </select>
       <button type="Submit">Add Team</button>
     </form>
   );
 };
 
-export default Add;
+export default AddTeam;

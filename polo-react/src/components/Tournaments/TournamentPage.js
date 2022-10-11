@@ -184,6 +184,8 @@ const TournamentPage = () => {
           newTeamState={newTeamState}
           setNewTeamState={setNewTeamState}
           addTeam={addTeam}
+          format={tournamentState.format}
+          numberOfGroups={tournamentState.number_of_groups}
         />
       )}
       {pageState === GROUPS && (

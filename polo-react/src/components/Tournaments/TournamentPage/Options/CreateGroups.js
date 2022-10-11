@@ -14,7 +14,7 @@ const CreateGroups = ({ tournament_id, teamsState }) => {
           updateGroupState.numberOfGroups,
           updateGroupState.random
         );
-        // window.location.reload();
+        window.location.reload();
       }}
     >
       <input
