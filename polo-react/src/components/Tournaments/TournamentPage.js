@@ -41,6 +41,7 @@ const TournamentPage = () => {
     player1: "",
     player2: "",
     player3: "",
+    group: 0,
   });
   const [pageState, setPageState] = useState(DEFAULT);
   const [updateGroupState, setUpdateGroupState] = useState({

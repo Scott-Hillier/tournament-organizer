@@ -60,16 +60,25 @@ const AddTeam = ({
         }}
         required
       />
-      <select name="group">
-        <option value={""}>Please Select A Group</option>
-        {groups.map((group, i) => {
-          return (
-            <option value={group} key={i}>
-              {group}
-            </option>
-          );
-        })}
-      </select>
+      {format === "Round Robin" && (
+        <select
+          name="group"
+          onChange={(e) => {
+            setNewTeamState((prev) => {
+              return { ...prev, group: e.target.value };
+            });
+          }}
+        >
+          <option value={""}>Please Select A Group</option>
+          {groups.map((group, i) => {
+            return (
+              <option value={group} key={i}>
+                {group}
+              </option>
+            );
+          })}
+        </select>
+      )}
       <button type="Submit">Add Team</button>
     </form>
   );

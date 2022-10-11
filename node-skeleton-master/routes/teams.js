@@ -28,10 +28,10 @@ const getTeamID = (db, team) => {
   return db.query(query, values);
 };
 
-const addTeamToTournament = (db, tournament_id, team_id) => {
+const addTeamToTournament = (db, tournament_id, team_id, group_id) => {
   const query = `INSERT INTO tournament_teams (tournament_id, team_id, group_id)
   VALUES ($1, $2, $3)`;
-  const values = [tournament_id, team_id, 0];
+  const values = [tournament_id, team_id, group_id];
   return db.query(query, values);
 };
 
@@ -76,10 +76,12 @@ module.exports = (db) => {
     addTeam(db, req.body)
       .then((data) => {
         getTeamID(db, req.body).then((ID) => {
+          console.log(req.body);
           addTeamToTournament(
             db,
             req.params.tournament_id,
-            ID.rows[ID.rows.length - 1].id
+            ID.rows[ID.rows.length - 1].id,
+            req.body.group
           );
         });
         res.send(data.rows);
