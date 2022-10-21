@@ -1,14 +1,16 @@
 const GroupsSchedule = (group) => {
-  const matchesPerTeam = group.length - 1;
-  const matchesArray = [];
-
   if (group.length % 2 !== 0) {
     group.push({ id: group.length + 1, team_name: "BYE" });
   }
 
+  const matchesPerTeam = group.length - 1;
+  const matchesArray = [];
+
   const group1 = group.slice(0, group.length / 2);
   const group2 = group.slice(group.length / 2);
   let counter = 1;
+
+  console.log("group", group, "matchesPerTeam", matchesPerTeam);
 
   for (let i = 0; i < matchesPerTeam; i++) {
     for (let j = 0; j < group2.length; j++) {
