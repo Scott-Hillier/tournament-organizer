@@ -173,6 +173,7 @@ const TournamentPage = () => {
           <CreateGroups tournament_id={tournament_id} teamsState={teamsState} />
         )}
       </section>
+      <br />
     </main>
   );
 };
