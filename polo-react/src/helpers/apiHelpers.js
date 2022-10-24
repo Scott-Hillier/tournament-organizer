@@ -85,14 +85,13 @@ export function createSwissSchedule(tournament_id, teams, roundNumber) {
 }
 
 export function createMixerSchedule(tournament_id, players, roundNumber) {
-  console.log("hit");
   const matches = mixerRound(players, roundNumber);
   return axios.post(`/schedules/${tournament_id}/create/mixer`, {
     matches: matches,
   });
 }
 
-export function getTournamentSchedule(tournament_id, format) {
+export function getTournamentMatches(tournament_id, format) {
   return axios.get(`/schedules/${tournament_id}/${format}/matches`);
 }
 

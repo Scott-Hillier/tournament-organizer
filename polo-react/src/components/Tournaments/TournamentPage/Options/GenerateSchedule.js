@@ -26,7 +26,7 @@ const GenerateSchedule = ({
           case "Mixer":
             createMixerSchedule(tournament_id, playersState, round_number);
         }
-        window.location.reload();
+        // window.location.reload();
       }}
     >
       Generate Schedule

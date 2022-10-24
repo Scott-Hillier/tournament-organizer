@@ -43,19 +43,11 @@ const createMixerSchedule = (db, tournament_id, matches) => {
 };
 
 const getSchedule = (db, tournament_id, format) => {
-  if (format === "Round Robin") {
-    const query = `SELECT id, group_id, match_id, team_1_name, team_1_id, team_2_name, team_2_id, winner FROM matches
+  const query = `SELECT * FROM matches
     WHERE tournament_id = $1
     ORDER BY match_id;`;
-    const values = [tournament_id];
-    return db.query(query, values);
-  } else {
-    const query = `SELECT round_id, match_id, team_1_name, team_1_id, team_2_name, team_2_id, winner FROM matches
-    WHERE tournament_id = $1
-    ORDER BY match_id;`;
-    const values = [tournament_id];
-    return db.query(query, values);
-  }
+  const values = [tournament_id];
+  return db.query(query, values);
 };
 
 const selectWinner = (db, team_id, tournament_id, id) => {
@@ -87,13 +79,7 @@ const getWins = (db, tournament_id) => {
 
 module.exports = (db) => {
   router.post("/:tournament_id/create", (req, res) => {
-    createGroupSchedule(db, req.params.tournament_id, req.body)
-      // .then((data) => {
-      //   res.send(data.rows);
-      // })
-      .catch((err) => {
-        res.status(500).json({ error: err.message });
-      });
+    createGroupSchedule(db, req.params.tournament_id, req.body);
   });
 
   router.post("/:tournament_id/create/swiss", (req, res) => {
@@ -134,7 +120,6 @@ module.exports = (db) => {
     const winnersArray = [];
     getWins(db, req.params.tournament_id)
       .then((data) => {
-        console.log(req.body.matches);
         req.body.matches.map((match) => {
           for (const team of data.rows) {
             if (team.team_id === match.winner) {

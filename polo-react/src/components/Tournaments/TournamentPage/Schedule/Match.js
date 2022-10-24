@@ -4,8 +4,6 @@ import { selectWinner } from "../../../../helpers/apiHelpers";
 const Match = ({ match, tournament_id }) => {
   const [winnerState, setWinnerState] = useState(match.winner);
 
-  useEffect(() => {}, []);
-
   return (
     <section className="match">
       <div>Match {match.match_id}</div>

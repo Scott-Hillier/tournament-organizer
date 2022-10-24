@@ -10,8 +10,6 @@ const GroupsSchedule = (group) => {
   const group2 = group.slice(group.length / 2);
   let counter = 1;
 
-  console.log("group", group, "matchesPerTeam", matchesPerTeam);
-
   for (let i = 0; i < matchesPerTeam; i++) {
     for (let j = 0; j < group2.length; j++) {
       const match = {

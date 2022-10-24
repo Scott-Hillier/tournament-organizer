@@ -130,7 +130,6 @@ module.exports = (db) => {
   });
 
   router.post("/:tournament_id/updateRound", (req, res) => {
-    console.log("req", req.body);
     updateRoundNumber(db, req.params.tournament_id, req.body.currentRound)
       .then((data) => {
         res.send(data.rows);

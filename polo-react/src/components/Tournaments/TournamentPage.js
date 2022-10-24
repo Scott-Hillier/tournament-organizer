@@ -1,33 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import {
   addTeam,
-  removeTeam,
   getTournamentInfo,
   getTournamentTeams,
   getTournamentPlayers,
-  // createGroups,
-  getTournamentSchedule,
 } from "../../helpers/apiHelpers";
 import Information from "./TournamentPage/Information";
 import Teams from "./TournamentPage/Teams/Teams";
 import AddTeam from "./TournamentPage/Options/AddTeam";
 import CreateGroups from "./TournamentPage/Options/CreateGroups";
 import Schedule from "./TournamentPage/Schedule/Schedule";
-import swissRounds from "../../helpers/Logic/SwissRounds";
 import splitGroups from "../../helpers/Logic/splitGroups.js";
-import mixerRound from "../../helpers/Logic/MixerRound";
+import GenerateSchedule from "./TournamentPage/Options/GenerateSchedule";
 
 import "../../styles/Tournaments/TournamentPage.scss";
-import GenerateSchedule from "./TournamentPage/Options/GenerateSchedule";
 
 const DEFAULT = "DEFAULT";
 const ADD = "ADD";
 const GROUPS = "GROUPS";
-const EMPTY = "EMPTY";
-const FULL = "FULL";
-const SAVE = "SAVE";
-const GENERATE = "GENERATE";
 
 const TournamentPage = () => {
   const [tournamentState, setTournamentState] = useState({});
@@ -42,12 +33,6 @@ const TournamentPage = () => {
     group: 0,
   });
   const [pageState, setPageState] = useState(DEFAULT);
-  const [updateGroupState, setUpdateGroupState] = useState({
-    numberOfGroups: 0,
-    random: false,
-  });
-  const [scheduleState, setScheduleState] = useState([]);
-  const [scheduleGeneratedState, setScheduleGeneratedState] = useState(EMPTY);
 
   const { tournament_id } = useParams();
   const teamGroupsArray = [];
@@ -78,23 +63,6 @@ const TournamentPage = () => {
         getTournamentPlayers(tournament_id).then((res) => {
           setPlayersState(res.data);
         });
-        getTournamentSchedule(tournament_id, format).then((res) => {
-          res.data.length > 0
-            ? setScheduleGeneratedState(FULL)
-            : setScheduleGeneratedState(EMPTY);
-          switch (format) {
-            case "Round Robin":
-              setScheduleState(splitGroups(scheduleGroupsArray, res.data));
-              break;
-            case "Swiss Rounds":
-              setScheduleState(swissRounds(res.data, round));
-              break;
-            case "Mixer":
-              getTournamentPlayers(tournament_id).then((res) => {
-                setScheduleState(res.data);
-              });
-          }
-        });
       });
   }, []);
 
@@ -113,51 +81,48 @@ const TournamentPage = () => {
           tournament_id={tournament_id}
         />
       </section>
-      {scheduleGeneratedState === FULL && (
-        <section>
-          <h1>Schedule</h1>
-          <div className="schedule">
-            <Schedule
-              schedule={scheduleState}
-              teams={teamsState}
-              groups={groupsState}
-              format={tournamentState.format}
-              tournament_id={tournament_id}
-            />
-          </div>
-        </section>
-      )}
+      <section>
+        <h1>Schedule</h1>
+        <div className="schedule">
+          <Schedule
+            teams={teamsState}
+            groups={groupsState}
+            format={tournamentState.format}
+            tournament_id={tournament_id}
+            numberOfGroups={tournamentState.number_of_groups}
+          />
+        </div>
+      </section>
       <section className="tournament-edit">
-        {scheduleGeneratedState === EMPTY && (
-          <section>
+        <section>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              setPageState(ADD);
+            }}
+          >
+            Add Team
+          </button>
+          {tournamentState.format === "Round Robin" && (
             <button
               onClick={(e) => {
                 e.preventDefault();
-                setPageState(ADD);
+                setPageState(GROUPS);
               }}
             >
-              Add Team
+              Place Teams Into Groups
             </button>
-            {tournamentState.format === "Round Robin" && (
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  setPageState(GROUPS);
-                }}
-              >
-                Place Teams Into Groups
-              </button>
-            )}
-            <GenerateSchedule
-              tournament_id={tournament_id}
-              format={tournamentState.format}
-              groupsState={groupsState}
-              round_number={tournamentState.round_number}
-              teamsState={teamsState}
-              playersState={playersState}
-            />
-          </section>
-        )}
+          )}
+          <GenerateSchedule
+            tournament_id={tournament_id}
+            format={tournamentState.format}
+            groupsState={groupsState}
+            round_number={tournamentState.round_number}
+            teamsState={teamsState}
+            playersState={playersState}
+          />
+        </section>
+
         <br />
         {pageState === ADD && (
           <AddTeam

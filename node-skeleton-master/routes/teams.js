@@ -76,7 +76,6 @@ module.exports = (db) => {
     addTeam(db, req.body)
       .then((data) => {
         getTeamID(db, req.body).then((ID) => {
-          console.log(req.body);
           addTeamToTournament(
             db,
             req.params.tournament_id,

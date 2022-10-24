@@ -31,7 +31,6 @@ const mixerRound = (players, round) => {
     counter === teams.length / 2 && (counter = 0);
   }
 
-  console.log("return", matches);
   return matches;
 };
 
