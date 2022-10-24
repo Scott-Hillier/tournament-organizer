@@ -83,15 +83,13 @@ const TournamentPage = () => {
       </section>
       <section>
         <h1>Schedule</h1>
-        <div className="schedule">
-          <Schedule
-            teams={teamsState}
-            groups={groupsState}
-            format={tournamentState.format}
-            tournament_id={tournament_id}
-            numberOfGroups={tournamentState.number_of_groups}
-          />
-        </div>
+        <Schedule
+          teams={teamsState}
+          groups={groupsState}
+          format={tournamentState.format}
+          tournament_id={tournament_id}
+          numberOfGroups={tournamentState.number_of_groups}
+        />
       </section>
       <section className="tournament-edit">
         <section>
@@ -113,14 +111,6 @@ const TournamentPage = () => {
               Place Teams Into Groups
             </button>
           )}
-          <GenerateSchedule
-            tournament_id={tournament_id}
-            format={tournamentState.format}
-            groupsState={groupsState}
-            round_number={tournamentState.round_number}
-            teamsState={teamsState}
-            playersState={playersState}
-          />
         </section>
 
         <br />

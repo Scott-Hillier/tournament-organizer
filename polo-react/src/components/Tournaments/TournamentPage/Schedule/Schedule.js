@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import GenerateSchedule from "../Options/GenerateSchedule";
 import GroupMatches from "./GroupMatches";
 import splitGroups from "../../../../helpers/Logic/splitGroups";
 import swissRounds from "../../../../helpers/Logic/SwissRounds";
@@ -33,21 +34,29 @@ const Schedule = ({ teams, groups, format, tournament_id, numberOfGroups }) => {
     });
   }, [format]);
 
-  return schedule.map((group, i) => {
-    return (
-      <>
-        {scheduleGeneratedState === FULL && (
-          <section className="group" key={i}>
-            <GroupMatches
-              group={group}
-              format={format}
-              tournament_id={tournament_id}
-            />
-          </section>
-        )}
-      </>
-    );
-  });
+  return (
+    <div className="schedule">
+      {scheduleGeneratedState === FULL &&
+        schedule.map((group, i) => {
+          return (
+            <section className="group" key={i}>
+              <GroupMatches
+                group={group}
+                format={format}
+                tournament_id={tournament_id}
+              />
+            </section>
+          );
+        })}
+      {scheduleGeneratedState === EMPTY && (
+        <GenerateSchedule
+          tournament_id={tournament_id}
+          format={format}
+          groups={groups}
+        />
+      )}
+    </div>
+  );
 };
 
 export default Schedule;
