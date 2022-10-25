@@ -1,7 +1,7 @@
 import {
   createGroupSchedule,
-  createSwissSchedule,
-  createMixerSchedule,
+  // createSwissSchedule,
+  // createMixerSchedule,
 } from "../../../../helpers/apiHelpers";
 
 const GenerateSchedule = ({ tournament_id, format, groups }) => {
