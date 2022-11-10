@@ -7,7 +7,7 @@ import {
   getTournamentPlayers,
 } from "../../helpers/apiHelpers";
 import Information from "./TournamentPage/Information";
-import Teams from "./TournamentPage/Teams/Teams";
+import Groups from "./TournamentPage/Groups/Groups";
 import AddTeam from "./TournamentPage/Options/AddTeam";
 import CreateGroups from "./TournamentPage/Options/CreateGroups";
 import Schedule from "./TournamentPage/Schedule/Schedule";
@@ -74,7 +74,7 @@ const TournamentPage = () => {
       </section>
       <section className="teams">
         <h1>Teams</h1>
-        <Teams
+        <Groups
           teams={teamsState}
           groups={groupsState}
           format={tournamentState.format}
