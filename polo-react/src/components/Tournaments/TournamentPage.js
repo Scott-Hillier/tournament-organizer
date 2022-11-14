@@ -13,7 +13,7 @@ import CreateGroups from "./TournamentPage/Options/CreateGroups";
 import Schedule from "./TournamentPage/Schedule/Schedule";
 import splitGroups from "../../helpers/Logic/splitGroups.js";
 import GenerateSchedule from "./TournamentPage/Options/GenerateSchedule";
-
+import { DragDropContext } from "react-beautiful-dnd";
 import "../../styles/Tournaments/TournamentPage.scss";
 
 const DEFAULT = "DEFAULT";
