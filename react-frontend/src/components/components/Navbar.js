@@ -3,7 +3,7 @@ import { FaBars } from "react-icons/fa";
 import Sidebar from "./components/Sidebar";
 
 const Navbar = () => {
-  const [sidebar, setSidebar] = useState(false);
+  const [sidebar, setSidebar] = useState(true);
   return (
     <>
       <div className="top64 h-24 flex justify-between items-center px-6 bg-sky-900 text-white">

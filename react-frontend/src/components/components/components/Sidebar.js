@@ -5,11 +5,20 @@ const Sidebar = ({ sidebar, setSidebar }) => {
     <>
       <div
         className={classNames(
-          "z-10 absolute top-0 left-0 w-2/5 max-w-sm h-full bg-sky-900 text-white duration-700",
+          "z-10 absolute top-0 left-0 w-2/5 max-w-sm h-full",
+          "bg-sky-900 text-white",
+          "duration-700",
+          "flex justify-center",
           { "-ml-96": !sidebar }
         )}
       >
-        <p>MENU</p>
+        <div className="text-center">
+          <p className="text-xl font-bold border-b-2">MENU</p>
+          <ul>
+            <li>Home</li>
+            <li>Organize</li>
+          </ul>
+        </div>
       </div>
       <div
         className={classNames(
