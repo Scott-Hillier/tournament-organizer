@@ -17,22 +17,27 @@ const TournamentCard = ({ tournament }) => {
 
   return (
     <>
-      <div
+      <a
         className={classNames(
-          "w-2/3",
+          "w-4/5 max-w-4xl",
           "flex",
-          "border-2 border-sky-900 rounded-md",
+          "sm:flex-col",
+          "border-2 border-sky-900 rounded-lg",
           "p-2 m-4"
         )}
+        href={`/${id}`}
       >
-        <div>
-          <img src={placeholder} className="max-w-52 max-h-52 rounded-lg" />
+        <div className="sm:flex sm:justify-center">
+          <img
+            src={placeholder}
+            className="max-w-52 max-h-52 rounded-lg content-center"
+          />
         </div>
         <div className="w-full">
           <div className="flex justify-center">
             <p className="w-2/3 text-center font-bold border-b-2">{name}</p>
           </div>
-          <div className="flex justify-between p-4">
+          <div className="flex sm:flex-col justify-between p-4">
             <div className="items-center text-center">
               <p>{location}</p>
               <p>
@@ -57,12 +62,13 @@ const TournamentCard = ({ tournament }) => {
             </div>
             <div className="text-center">
               <p>{format}</p>
+              <p>Teams: {number_of_teams}</p>
               <p>{squad ? "lame" : "not lame"}</p>
               <p></p>
             </div>
           </div>
         </div>
-      </div>
+      </a>
     </>
   );
 };

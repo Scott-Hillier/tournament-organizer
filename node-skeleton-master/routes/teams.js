@@ -2,67 +2,16 @@ const express = require("express");
 const router = express.Router();
 
 const getTournamentTeams = (db, tournament_id) => {
-  const query = `SELECT * FROM teams
-  JOIN tournament_teams
-  ON teams.id = tournament_teams.team_id
+  const query = `SELECT *
+  FROM teams
   WHERE tournament_id = $1;`;
   const values = [tournament_id];
   return db.query(query, values);
 };
 
-const addTeam = (db, team) => {
-  const query = `INSERT INTO teams (team_name, player1, player2, player3)
-  VALUES ($1, $2, $3, $4);`;
-  const values = [team.teamName, team.player1, team.player2, team.player3];
-  return db.query(query, values);
-};
-
-const getTeamID = (db, team) => {
-  const query = `SELECT id
-  FROM teams
-  WHERE team_name = $1
-  AND player1 = $2
-  AND player2 = $3
-  AND player3 = $4;`;
-  values = [team.teamName, team.player1, team.player2, team.player3];
-  return db.query(query, values);
-};
-
-const addTeamToTournament = (db, tournament_id, team_id, group_id) => {
-  const query = `INSERT INTO tournament_teams (tournament_id, team_id, group_id)
-  VALUES ($1, $2, $3)`;
-  const values = [tournament_id, team_id, group_id];
-  return db.query(query, values);
-};
-
-const removeTeam = (db, team_id) => {
-  const query = `DELETE FROM teams
-  WHERE id = $1;`;
-  const values = [team_id];
-  return db.query(query, values);
-};
-
-const removeTeamFromTournament = (db, tournament_id, team_id) => {
-  const query = `DELETE FROM tournament_teams
-  WHERE tournament_id = $1
-  AND team_id = $2;`;
-  const values = [tournament_id, team_id];
-  return db.query(query, values);
-};
-
-const createGroups = (db, tournament_id, teams) => {
-  teams.map((team) => {
-    const query = `UPDATE tournament_teams
-    SET group_id = $1
-    WHERE tournament_id = $2
-    AND team_id = $3;`;
-    const values = [team.group_id, tournament_id, team.team_id];
-    return db.query(query, values);
-  });
-};
-
 module.exports = (db) => {
   router.get("/:tournament_id", (req, res) => {
+    console.log("REQ", req.params.tournament_id);
     getTournamentTeams(db, req.params.tournament_id)
       .then((data) => {
         res.send(data.rows);

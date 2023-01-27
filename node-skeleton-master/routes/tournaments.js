@@ -6,8 +6,10 @@ const getAllTournaments = (db) => {
   return db.query(query);
 };
 
-const getTournamentInfo = (db, tournament_id) => {
-  const query = `SELECT * FROM tournaments WHERE id=$1;`;
+const getTournament = (db, tournament_id) => {
+  const query = `SELECT *
+  FROM tournaments
+  WHERE id = $1;`;
   const values = [tournament_id];
   return db.query(query, values);
 };
@@ -39,31 +41,6 @@ const createTournament = (
   return db.query(query, values);
 };
 
-const getTournamentId = (db, tournament_name, start_date) => {
-  const query = `SELECT id
-    FROM tournaments
-    WHERE tournament_name = $1
-    AND start_date = $2;`;
-  const values = [tournament_name, start_date];
-  return db.query(query, values);
-};
-
-const updateNumberOfGroups = (db, number_of_groups, tournament_id) => {
-  const query = `UPDATE tournaments
-  SET number_of_groups = $1
-  WHERE id = $2`;
-  const values = [number_of_groups, tournament_id];
-  return db.query(query, values);
-};
-
-const updateRoundNumber = (db, tournament_id, current_round) => {
-  const query = `UPDATE tournaments
-  SET round_number = $1
-  WHERE id = $2;`;
-  const values = [current_round + 1, tournament_id];
-  return db.query(query, values);
-};
-
 module.exports = (db) => {
   router.get("/all", (req, res) => {
     getAllTournaments(db)
@@ -76,7 +53,7 @@ module.exports = (db) => {
   });
 
   router.get("/:tournament_id", (req, res) => {
-    getTournamentInfo(db, req.params.tournament_id)
+    getTournament(db, req.params.tournament_id)
       .then((data) => {
         res.send(data.rows);
       })
@@ -99,40 +76,6 @@ module.exports = (db) => {
     )
       .then((data) => {
         res.send(data);
-      })
-      .catch((err) => {
-        res.status(500).json({ error: err.message });
-      });
-  });
-
-  router.get("/:tournament_name/:start_date", (req, res) => {
-    getTournamentId(db, req.params.tournament_name, req.params.start_date)
-      .then((data) => {
-        res.send(data.rows);
-      })
-      .catch((err) => {
-        res.status(500).json({ error: err.message });
-      });
-  });
-
-  router.post("/:tournament_id/numberOfGroups", (req, res) => {
-    updateNumberOfGroups(
-      db,
-      req.body.number_of_groups,
-      req.params.tournament_id
-    )
-      .then((data) => {
-        res.send(data.rows);
-      })
-      .catch((err) => {
-        res.status(500).json({ error: err.message });
-      });
-  });
-
-  router.post("/:tournament_id/updateRound", (req, res) => {
-    updateRoundNumber(db, req.params.tournament_id, req.body.currentRound)
-      .then((data) => {
-        res.send(data.rows);
       })
       .catch((err) => {
         res.status(500).json({ error: err.message });

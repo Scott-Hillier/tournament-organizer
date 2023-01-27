@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState } from "react";
 import { getTournaments } from "../../routes/apiHelpers";
 import TournamentCard from "./components/TournamentCard";
 
@@ -13,8 +13,8 @@ const Home = () => {
 
   return (
     <>
-      <div className="min-h-screen bg-slate-200 overscroll-none">
-        <div className="pt-24 pb-8 flex-col justify-center">
+      <div className="min-h-screen bg-slate-200 overscroll-none justify-center">
+        <div className="pt-24 pb-8 flex flex-col items-center">
           {tournaments.map((tournament) => (
             <TournamentCard key={tournament.id} tournament={tournament} />
           ))}
