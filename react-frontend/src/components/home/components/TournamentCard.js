@@ -20,10 +20,11 @@ const TournamentCard = ({ tournament }) => {
       <a
         className={classNames(
           "w-4/5 max-w-4xl",
-          "flex",
-          "sm:flex-col",
-          "border-2 border-sky-900 rounded-lg",
-          "p-2 m-4"
+          "z-1 flex",
+          "bg-slate-100 shadow-xl",
+          "border border-sky-900 rounded-lg",
+          "p-2 m-4",
+          "sm:flex-col"
         )}
         href={`/${id}`}
       >

@@ -15,7 +15,5 @@ export async function getTournament(id) {
 }
 
 const formatTournament = (info, teams) => {
-  const information = info;
-  const tournament = { info: information, teams: teams };
-  return tournament;
+  return { info: info, teams: teams };
 };

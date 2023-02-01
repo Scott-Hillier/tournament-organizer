@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getTournament } from "../../routes/apiHelpers";
+import Information from "./components/Information";
+import Teams from "./components/Teams";
+import Groups from "./components/Groups";
 
 const Tournament = () => {
   const [tournament, setTournament] = useState({});
@@ -12,38 +15,20 @@ const Tournament = () => {
     });
   }, []);
 
-  const { info, teams } = tournament;
-
   return (
     <>
-      <div className="min-h-screen bg-slate-200 overscroll-none justify-center">
+      <div className="min-h-screen bg-slate-50">
         {tournament.info && (
-          <div className="pt-24 pb-8">
-            <div className="flex flex-col items-center">
-              <p>{info.name}</p>
-              <p>{info.location}</p>
-              <p>
-                {new Date(info.start_date).toLocaleDateString("en-US", {
-                  weekday: "long",
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })}
-              </p>
-              <p>
-                {new Date(info.end_date).toLocaleDateString("en-US", {
-                  weekday: "long",
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })}
-              </p>
-              <p>{info.description}</p>
-              <p>Format: {info.format}</p>
-              <p>Teams: {info.squad ? "Squad" : "3v3"}</p>
-            </div>
+          <div>
+            <Information info={tournament.info} />
+            {tournament.teams[0].group_id ? (
+              <Groups teams={tournament.teams} />
+            ) : (
+              <Teams teams={tournament.teams} />
+            )}
           </div>
         )}
+        <br />
       </div>
     </>
   );
