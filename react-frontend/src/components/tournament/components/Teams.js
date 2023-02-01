@@ -4,9 +4,9 @@ const Teams = ({ teams }) => {
   console.log(teams);
   return (
     <>
-      <div className="flex-col items-center">
+      <div className="flex flex-col items-center">
         <p>Teams</p>
-        <div className="flex flex-wrap">
+        <div className="flex flex-wrap w-5/6 justify-between">
           {teams.map((team) => {
             return <Team team={team} key={team.id} />;
           })}

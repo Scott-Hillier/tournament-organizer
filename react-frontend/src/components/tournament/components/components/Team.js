@@ -5,7 +5,7 @@ const Team = ({ team }) => {
         <p>{team.team_name}</p>
         <div className="flex">
           <p>{team.player1}</p>
-          <p>{team.player2}</p>
+          <p className="px-2">{team.player2}</p>
           <p>{team.player3}</p>
         </div>
       </div>
