@@ -17,3 +17,7 @@ export async function getTournament(id) {
 const formatTournament = (info, teams) => {
   return { info: info, teams: teams };
 };
+
+export function setGroups(tournament_id, teams) {
+  return axios.post(`/teams/${tournament_id}/groups`, teams);
+}

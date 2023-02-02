@@ -9,9 +9,19 @@ const getTournamentTeams = (db, tournament_id) => {
   return db.query(query, values);
 };
 
+const setGroups = (db, tournament_id, teams) => {
+  teams.map((team) => {
+    const query = `UPDATE teams
+    SET group_id = $1
+    WHERE id = $2
+    AND tournament_id = $3`;
+    const values = [team.group_id, team.id, tournament_id];
+    return db.query(query, values);
+  });
+};
+
 module.exports = (db) => {
   router.get("/:tournament_id", (req, res) => {
-    console.log("REQ", req.params.tournament_id);
     getTournamentTeams(db, req.params.tournament_id)
       .then((data) => {
         res.send(data.rows);
@@ -50,7 +60,8 @@ module.exports = (db) => {
   });
 
   router.post("/:tournament_id/groups", (req, res) => {
-    createGroups(db, req.params.tournament_id, req.body);
+    console.log(req.params.tournament_id, req.body);
+    setGroups(db, req.params.tournament_id, req.body);
   });
 
   return router;

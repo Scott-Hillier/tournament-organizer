@@ -4,6 +4,7 @@ import { getTournament } from "../../routes/apiHelpers";
 import Information from "./components/Information";
 import Teams from "./components/Teams";
 import Groups from "./components/Groups";
+import CreateGroups from "./components/CreateGroups";
 
 const Tournament = () => {
   const [tournament, setTournament] = useState({});
@@ -19,13 +20,21 @@ const Tournament = () => {
     <>
       <div className="min-h-screen bg-slate-50">
         {tournament.info && (
-          <div>
+          <div className="flex flex-col items-center">
             <Information info={tournament.info} />
-            {tournament.teams[0].group_id ? (
-              <Groups teams={tournament.teams} />
+            {tournament.teams[1].group_id ? (
+              <Groups
+                teams={tournament.teams}
+                numberOfGroups={tournament.info.number_of_groups}
+              />
             ) : (
               <Teams teams={tournament.teams} />
             )}
+            <CreateGroups
+              tournament_id={tournament_id}
+              teams={tournament.teams}
+              number_of_groups={tournament.info.number_of_groups}
+            />
           </div>
         )}
         <br />
