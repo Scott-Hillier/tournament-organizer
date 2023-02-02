@@ -14,7 +14,7 @@ const Tournament = () => {
     getTournament(tournament_id).then((res) => {
       setTournament(res);
     });
-  }, []);
+  }, [tournament_id]);
 
   return (
     <>
