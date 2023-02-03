@@ -1,7 +1,7 @@
 const Information = ({ info }) => {
   return (
     <>
-      <div className="pt-24 pb-8">
+      <div className="pt-24 pb-8 text-center">
         <div className="flex flex-col items-center">
           <p>{info.name}</p>
           <p>{info.location}</p>

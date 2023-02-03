@@ -3,8 +3,7 @@ import { useParams } from "react-router-dom";
 import { getTournament } from "../../routes/apiHelpers";
 import Information from "./components/Information";
 import Teams from "./components/Teams";
-import Groups from "./components/Groups";
-import CreateGroups from "./components/CreateGroups";
+import Schedule from "./components/Schedule";
 
 const Tournament = () => {
   const [tournament, setTournament] = useState({});
@@ -16,23 +15,23 @@ const Tournament = () => {
     });
   }, [tournament_id]);
 
+  console.log(tournament);
+
   return (
     <>
       <div className="min-h-screen bg-slate-50">
         {tournament.info && (
           <div className="flex flex-col items-center">
             <Information info={tournament.info} />
-            {tournament.teams[1].group_id ? (
-              <Groups
-                teams={tournament.teams}
-                numberOfGroups={tournament.info.number_of_groups}
-              />
-            ) : (
-              <Teams teams={tournament.teams} />
-            )}
-            <CreateGroups
+            <Teams
               tournament_id={tournament_id}
               teams={tournament.teams}
+              number_of_groups={tournament.info.number_of_groups}
+            />
+            <Schedule
+              tournament_id={tournament_id}
+              teams={tournament.teams}
+              matches={tournament.matches}
               number_of_groups={tournament.info.number_of_groups}
             />
           </div>

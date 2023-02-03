@@ -60,7 +60,6 @@ module.exports = (db) => {
   });
 
   router.post("/:tournament_id/groups", (req, res) => {
-    console.log(req.params.tournament_id, req.body);
     setGroups(db, req.params.tournament_id, req.body);
   });
 
