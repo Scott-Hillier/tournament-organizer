@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import { Link } from "react-router-dom";
 
 const Sidebar = ({ sidebar, setSidebar }) => {
   return (
@@ -12,11 +13,24 @@ const Sidebar = ({ sidebar, setSidebar }) => {
           { "-ml-96": !sidebar }
         )}
       >
-        <div className="text-center">
-          <p className="text-xl font-bold border-b-2">MENU</p>
+        <div className="mt-4 font-mono font-bold text-xl text-center">
           <ul>
-            <li>Home</li>
-            <li>Organize</li>
+            <li className="m-4">
+              <Link
+                to={"/"}
+                onClick={() => (sidebar ? setSidebar(false) : setSidebar(true))}
+              >
+                Home
+              </Link>
+            </li>
+            <li className="m-4">
+              <Link
+                to={"/organize"}
+                onClick={() => (sidebar ? setSidebar(false) : setSidebar(true))}
+              >
+                Organize
+              </Link>
+            </li>
           </ul>
         </div>
       </div>

@@ -16,6 +16,7 @@ const Schedule = ({ tournament_id, teams, matches, number_of_groups }) => {
           className="mt-4 border-2 p-1 rounded"
           onClick={() => {
             createSchedule(tournament_id, createGroupRoundRobin(groups));
+            window.location.reload();
           }}
         >
           Create Schedule

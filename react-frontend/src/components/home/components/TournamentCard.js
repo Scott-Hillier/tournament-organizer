@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import placeholder from "../../../images/PoloPlaceholder.png";
+import { Link } from "react-router-dom";
 
 const TournamentCard = ({ tournament }) => {
   const {
@@ -17,7 +18,8 @@ const TournamentCard = ({ tournament }) => {
 
   return (
     <>
-      <a
+      <Link
+        to={`/${id}`}
         className={classNames(
           "w-4/5 max-w-4xl",
           "z-1 flex",
@@ -26,7 +28,6 @@ const TournamentCard = ({ tournament }) => {
           "p-2 m-4",
           "sm:flex-col"
         )}
-        href={`/${id}`}
       >
         <div className="sm:flex sm:justify-center">
           <img
@@ -69,7 +70,7 @@ const TournamentCard = ({ tournament }) => {
             </div>
           </div>
         </div>
-      </a>
+      </Link>
     </>
   );
 };

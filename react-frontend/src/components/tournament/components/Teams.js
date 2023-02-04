@@ -24,7 +24,10 @@ const Teams = ({ tournament_id, teams, number_of_groups }) => {
         <div className="flex flex-wrap w-full max-w-7xl justify-around">
           {groups.map((group, i) => {
             return (
-              <div className="flex flex-col w-96 m-4 border-2" key={i}>
+              <div
+                className="flex flex-col w-96 m-4 border-2 items-center"
+                key={i}
+              >
                 <p>Group {i + 1}</p>
                 <div className="flex flex-wrap justify-center">
                   {group.map((team) => {

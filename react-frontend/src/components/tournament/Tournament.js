@@ -15,11 +15,9 @@ const Tournament = () => {
     });
   }, [tournament_id]);
 
-  console.log(tournament);
-
   return (
     <>
-      <div className="min-h-screen bg-slate-50">
+      <div className="min-h-screen bg-slate-50 pt-24 pb-8">
         {tournament.info && (
           <div className="flex flex-col items-center">
             <Information info={tournament.info} />

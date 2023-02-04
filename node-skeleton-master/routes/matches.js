@@ -41,7 +41,6 @@ module.exports = (db) => {
   });
 
   router.post("/:tournament_id/create", (req, res) => {
-    console.log(req.body);
     createSchedule(db, req.params.tournament_id, req.body);
   });
 
