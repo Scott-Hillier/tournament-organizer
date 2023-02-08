@@ -1,7 +1,7 @@
 import createGroupRoundRobin from "../../../logic/createGroupRoundRobin";
 import createGroupsArray from "../../../logic/createGroupsArray";
 import createMatchesArray from "../../../logic/createMatchesArray";
-import createSchedule from "../../../routes/apiHelpers";
+import { createSchedule } from "../../../routes/apiHelpers";
 import Match from "./components/Match";
 
 const Schedule = ({ tournament_id, teams, matches, number_of_groups }) => {
@@ -22,7 +22,7 @@ const Schedule = ({ tournament_id, teams, matches, number_of_groups }) => {
           Create Schedule
         </button>
       )}
-      {matches.length && (
+      {matches.length > 0 && (
         <div className="flex flex-col items-center w-full">
           <p>Schedule</p>
           <div className="flex flex-wrap w-full max-w-7xl justify-around">

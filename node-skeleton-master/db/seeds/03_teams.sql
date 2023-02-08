@@ -11,8 +11,4 @@ VALUES
   (1, null, 'TEAM9', 'Chris', 'Tom', 'Sarah', null, null, null),
   (1, null, 'TEAM10', 'Alice', 'Kira', 'Chris', null, null, null),
   (1, null, 'TEAM11', 'Alice', 'Kira', 'Chris', null, null, null),
-  (1, null, 'TEAM12', 'Alice', 'Kira', 'Chris', null, null, null),
-  (1, null, 'TEAM13', 'Alice', 'Kira', 'Chris', null, null, null),
-  (1, null, 'TEAM14', 'Alice', 'Kira', 'Chris', null, null, null),
-  (1, null, 'TEAM15', 'Alice', 'Kira', 'Chris', null, null, null),
-  (1, null, 'TEAM16', 'Chris', 'Tom', 'Sarah', null, null, null);
+  (1, null, 'TEAM12', 'Alice', 'Kira', 'Chris', null, null, null);

@@ -14,30 +14,43 @@ const getTournament = (db, tournament_id) => {
   return db.query(query, values);
 };
 
-const createTournament = (
-  db,
-  tournament_name,
-  location,
-  description,
-  number_of_teams,
-  start_date,
-  end_date,
-  format,
-  number_of_groups
-) => {
-  const query = `INSERT INTO tournaments
-    (tournament_name, location, description, number_of_teams, start_date, end_date, format, number_of_groups)
-    VALUES ($1, $2, $3, $4, $5, $6, $7, $8);`;
-  const values = [
-    tournament_name,
+const createTournament = (db, organize) => {
+  const {
+    name,
     location,
     description,
-    number_of_teams,
-    start_date,
-    end_date,
+    numberOfTeams,
+    startDate,
+    endDate,
     format,
-    number_of_groups,
+    teamSize,
+    numberOfGroups,
+  } = organize;
+  const query = `INSERT INTO tournaments
+    (name, location, description, number_of_teams,
+    start_date, end_date, format, team_size, number_of_groups)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);`;
+  const values = [
+    name,
+    location,
+    description,
+    numberOfTeams,
+    startDate,
+    endDate,
+    format,
+    teamSize,
+    numberOfGroups,
   ];
+  return db.query(query, values);
+};
+
+const getTournamentId = (db, organize) => {
+  const { name, startDate } = organize;
+  const query = `SELECT id
+  FROM tournaments
+  WHERE name = $1
+  AND start_date = $2;`;
+  const values = [name, startDate];
   return db.query(query, values);
 };
 
@@ -63,19 +76,11 @@ module.exports = (db) => {
   });
 
   router.post("/create", (req, res) => {
-    createTournament(
-      db,
-      req.body.tournament_name,
-      req.body.location,
-      req.body.description,
-      req.body.number_of_teams,
-      req.body.start_date,
-      req.body.end_date,
-      req.body.format,
-      req.body.number_of_groups
-    )
+    createTournament(db, req.body)
       .then((data) => {
-        res.send(data);
+        getTournamentId(db, req.body).then((data) => {
+          res.send(data.rows);
+        });
       })
       .catch((err) => {
         res.status(500).json({ error: err.message });

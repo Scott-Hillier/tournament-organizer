@@ -7,6 +7,7 @@ module.exports = {
       sm: { max: "800px" },
       lg: { min: "801px" },
     },
+    button: ["border-2", "p-1", "mx-1", "rounded"],
   },
   plugins: [],
 };

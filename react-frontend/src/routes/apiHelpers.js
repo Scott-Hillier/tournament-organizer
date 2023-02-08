@@ -26,6 +26,32 @@ export function setGroups(tournament_id, teams) {
   return axios.post(`/teams/${tournament_id}/groups`, teams);
 }
 
-export default function createSchedule(tournament_id, groupsMatches) {
+export function createSchedule(tournament_id, groupsMatches) {
   return axios.post(`/matches/${tournament_id}/create`, groupsMatches);
+}
+
+export function createTournament(organize) {
+  const {
+    name,
+    location,
+    description,
+    numberOfTeams,
+    startDate,
+    endDate,
+    format,
+    teamSize,
+    numberOfGroups,
+  } = organize;
+  console.log(
+    name,
+    location,
+    description,
+    numberOfTeams,
+    startDate,
+    endDate,
+    format,
+    teamSize,
+    numberOfGroups
+  );
+  return axios.post("/tournaments/create", organize);
 }

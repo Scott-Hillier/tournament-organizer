@@ -1,5 +1,4 @@
 const Match = ({ match }) => {
-  console.log(match);
   return (
     <>
       <div className="flex flex-col my-1">
