@@ -1,7 +1,7 @@
 const Information = ({ info }) => {
   return (
     <>
-      <div className="text-center">
+      <div className="text-center mb-4">
         <div className="flex flex-col items-center">
           <p>{info.name}</p>
           <p>{info.location}</p>
@@ -22,8 +22,8 @@ const Information = ({ info }) => {
             })}
           </p>
           <p>{info.description}</p>
-          <p>Format: {info.format}</p>
-          <p>Teams: {info.squad ? "Squad" : "3v3"}</p>
+          <p>{info.format}</p>
+          <p>{info.squad ? "Squad" : "3v3"}</p>
         </div>
       </div>
     </>

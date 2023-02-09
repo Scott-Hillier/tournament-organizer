@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import Team from "./components/Team";
 import createGroupsArray from "../../../logic/createGroupsArray";
 import { setGroups } from "../../../routes/apiHelpers";
@@ -20,19 +21,25 @@ const Teams = ({ tournament_id, teams, number_of_groups }) => {
   return (
     <>
       <div className="flex flex-col items-center w-full">
-        <p>Teams</p>
+        {teams[1].group_id === 0 && <p>Teams</p>}
         <div className="flex flex-wrap w-full max-w-7xl justify-around">
           {groups.map((group, i) => {
             return (
-              <div
-                className="flex flex-col w-96 m-4 border-2 items-center"
-                key={i}
-              >
-                <p>Group {i + 1}</p>
-                <div className="flex flex-wrap justify-center">
-                  {group.map((team) => {
-                    return <Team team={team} key={team.id} />;
-                  })}
+              <div className="flex flex-col items-center">
+                <p className="font-bold">GROUP {i + 1}</p>
+                <div
+                  className={classNames(
+                    "flex flex-col w-96 my-2 items-center",
+                    "border border-black rounded-lg",
+                    "bg-slate-100"
+                  )}
+                  key={i}
+                >
+                  <div className="flex flex-wrap justify-center">
+                    {group.map((team) => {
+                      return <Team team={team} key={team.id} />;
+                    })}
+                  </div>
                 </div>
               </div>
             );

@@ -30,7 +30,7 @@ const Tournament = () => {
                 number_of_groups={tournament.info.number_of_groups}
               />
             )}
-            {tournament.matches.length > 0 && (
+            {tournament.teams[1].id > 0 && (
               <Schedule
                 tournament_id={tournament_id}
                 teams={tournament.teams}
