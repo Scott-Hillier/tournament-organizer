@@ -19,7 +19,31 @@ export async function getTournament(id) {
 }
 
 const formatTournament = (info, teams, matches) => {
-  return { info: info, teams: teams, matches: matches };
+  const tournament = {
+    info: info,
+    teams: {},
+    groups: {},
+    groupOrder: [],
+    matches: matches,
+  };
+  for (let i = 0; i < info.number_of_groups; i++) {
+    tournament.groups[`group-${teams[i].group_id}`] = {
+      id: `group-${teams[i].group_id}`,
+      teamIds: [],
+    };
+    tournament.groupOrder.push(`group-${teams[i].group_id}`);
+  }
+  teams.forEach((team) => {
+    tournament.teams[`team-${team.id}`] = {
+      id: team.id,
+      name: team.team_name,
+      player1: team.player1,
+      player2: team.player2,
+      player3: team.player3,
+    };
+    tournament.groups[`group-${team.group_id}`].teamIds.push(`team-${team.id}`);
+  });
+  return tournament;
 };
 
 export function setGroups(tournament_id, teams) {
