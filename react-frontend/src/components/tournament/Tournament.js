@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { DragDropContext } from "react-beautiful-dnd";
 import { getTournament } from "../../routes/apiHelpers";
 import Information from "./components/Information";
 import Teams from "./components/Teams";
@@ -15,6 +16,10 @@ const Tournament = () => {
       setTournament(res);
     });
   }, [tournament_id]);
+
+  const onDragEnd = () => {
+    console.log("yes");
+  };
 
   console.log(tournament);
 
@@ -32,15 +37,21 @@ const Tournament = () => {
                 number_of_groups={tournament.info.number_of_groups}
               />
             ) : (
-              tournament.groupOrder.map((groupId) => {
-                const group = tournament.groups[groupId];
-                const groupTeams = group.teamIds.map(
-                  (teamId) => tournament.teams[teamId]
-                );
-                return (
-                  <Group key={group.id} teamIds={groupTeams} group={group} />
-                );
-              })
+              <DragDropContext onDragEnd={onDragEnd}>
+                {tournament.groupOrder.map((groupId) => {
+                  const group = tournament.groups[groupId];
+                  const groupTeams = group.teamIds.map(
+                    (teamId) => tournament.teams[teamId]
+                  );
+                  return (
+                    <Group
+                      key={group.id}
+                      group={group}
+                      groupTeams={groupTeams}
+                    />
+                  );
+                })}
+              </DragDropContext>
             )}
             {/* {tournament.teams[1].id > 0 && (
               <Schedule
