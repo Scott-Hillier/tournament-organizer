@@ -22,7 +22,7 @@ const Teams = ({ tournament_id, teams, number_of_groups }) => {
       <div className="flex flex-col items-center w-full">
         <div className="flex flex-wrap w-full max-w-7xl justify-around">
           {Object.keys(teams).map((team) => (
-            <Team key={teams[team].id} team={teams[team]} />
+            <Team key={teams[team].id} team={teams[team]} draggable={false} />
           ))}
         </div>
       </div>

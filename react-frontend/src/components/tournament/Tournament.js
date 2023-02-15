@@ -17,11 +17,72 @@ const Tournament = () => {
     });
   }, [tournament_id]);
 
-  const onDragEnd = () => {
-    console.log("yes");
-  };
+  const onDragEnd = (result) => {
+    const { destination, source, draggableId } = result;
 
-  console.log(tournament);
+    if (!destination) {
+      return;
+    }
+
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    ) {
+      return;
+    }
+
+    const start = tournament.groups[source.droppableId];
+    const finish = tournament.groups[destination.droppableId];
+
+    if (start === finish) {
+      const newTeamIds = Array.from(start.teamIds);
+
+      newTeamIds.splice(source.index, 1);
+      newTeamIds.splice(destination.index, 0, draggableId);
+
+      const newGroup = {
+        ...start,
+        teamIds: newTeamIds,
+      };
+
+      const newTournament = {
+        ...tournament,
+        groups: {
+          ...tournament.groups,
+          [newGroup.id]: newGroup,
+        },
+      };
+
+      setTournament(newTournament);
+
+      return;
+    }
+
+    const startTeamIds = Array.from(start.teamIds);
+    startTeamIds.splice(source.index, 1);
+    const newStart = {
+      ...start,
+      teamIds: startTeamIds,
+    };
+
+    const finishTeamIds = Array.from(finish.teamIds);
+    finishTeamIds.splice(destination.index, 0, draggableId);
+    const newFinish = {
+      ...finish,
+      teamIds: finishTeamIds,
+    };
+
+    const newState = {
+      ...tournament,
+      groups: {
+        ...tournament.groups,
+        [newStart.id]: newStart,
+        [newFinish.id]: newFinish,
+      },
+    };
+
+    setTournament(newState);
+  };
 
   return (
     <>
@@ -37,21 +98,23 @@ const Tournament = () => {
                 number_of_groups={tournament.info.number_of_groups}
               />
             ) : (
-              <DragDropContext onDragEnd={onDragEnd}>
-                {tournament.groupOrder.map((groupId) => {
-                  const group = tournament.groups[groupId];
-                  const groupTeams = group.teamIds.map(
-                    (teamId) => tournament.teams[teamId]
-                  );
-                  return (
-                    <Group
-                      key={group.id}
-                      group={group}
-                      groupTeams={groupTeams}
-                    />
-                  );
-                })}
-              </DragDropContext>
+              <div className="flex">
+                <DragDropContext onDragEnd={onDragEnd}>
+                  {tournament.groupOrder.map((groupId) => {
+                    const group = tournament.groups[groupId];
+                    const groupTeams = group.teamIds.map(
+                      (teamId) => tournament.teams[teamId]
+                    );
+                    return (
+                      <Group
+                        key={group.id}
+                        group={group}
+                        groupTeams={groupTeams}
+                      />
+                    );
+                  })}
+                </DragDropContext>
+              </div>
             )}
             {/* {tournament.teams[1].id > 0 && (
               <Schedule

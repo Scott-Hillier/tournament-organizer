@@ -11,7 +11,6 @@ const getTournamentTeams = (db, tournament_id) => {
 
 const setGroups = (db, tournament_id, teams) => {
   teams.map((team) => {
-    console.log(team);
     const query = `UPDATE teams
     SET group_id = $1
     WHERE id = $2
