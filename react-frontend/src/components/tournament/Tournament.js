@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { DragDropContext } from "react-beautiful-dnd";
-import { getTournament } from "../../routes/apiHelpers";
+import { getTournament, createSchedule } from "../../routes/apiHelpers";
 import Information from "./components/Information";
 import Teams from "./components/Teams";
 import Group from "./components/Group";
@@ -84,6 +84,8 @@ const Tournament = () => {
     setTournament(newState);
   };
 
+  console.log(tournament);
+
   return (
     <>
       <div className="min-h-screen bg-slate-50 pt-24 pb-8">
@@ -98,32 +100,42 @@ const Tournament = () => {
                 number_of_groups={tournament.info.number_of_groups}
               />
             ) : (
-              <div className="flex">
-                <DragDropContext onDragEnd={onDragEnd}>
-                  {tournament.groupOrder.map((groupId) => {
-                    const group = tournament.groups[groupId];
-                    const groupTeams = group.teamIds.map(
-                      (teamId) => tournament.teams[teamId]
-                    );
-                    return (
-                      <Group
-                        key={group.id}
-                        group={group}
-                        groupTeams={groupTeams}
-                      />
-                    );
-                  })}
-                </DragDropContext>
-              </div>
+              <>
+                <div className="flex flex-wrap justify-center">
+                  <DragDropContext onDragEnd={onDragEnd}>
+                    {tournament.groupOrder.map((groupId) => {
+                      const group = tournament.groups[groupId];
+                      const groupTeams = group.teamIds.map(
+                        (teamId) => tournament.teams[teamId]
+                      );
+                      return (
+                        <Group
+                          key={group.id}
+                          group={group}
+                          groupTeams={groupTeams}
+                        />
+                      );
+                    })}
+                  </DragDropContext>
+                </div>
+                {tournament.groups["group-0"].teamIds.length ===
+                  tournament.groups["group-1"].teamIds.length &&
+                  tournament.matches.length === 0 && (
+                    <button
+                      className="mt-4 border-2 p-1 rounded"
+                      onClick={() => {
+                        createSchedule(tournament_id, tournament.groups);
+                        window.location.reload();
+                      }}
+                    >
+                      Create Schedule
+                    </button>
+                  )}
+              </>
             )}
-            {/* {tournament.teams[1].id > 0 && (
-              <Schedule
-                tournament_id={tournament_id}
-                teams={tournament.teams}
-                matches={tournament.matches}
-                number_of_groups={tournament.info.number_of_groups}
-              />
-            )} */}
+            {tournament.matches["group-0"].length > 0 && (
+              <Schedule teams={tournament.teams} matches={tournament.matches} />
+            )}
           </div>
         )}
       </div>

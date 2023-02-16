@@ -1,53 +1,18 @@
-import createGroupRoundRobin from "../../../logic/createGroupRoundRobin";
-import createGroupsArray from "../../../logic/createGroupsArray";
-import createMatchesArray from "../../../logic/createMatchesArray";
-import { createSchedule } from "../../../routes/apiHelpers";
-import Match from "./components/Match";
-
-const Schedule = ({ tournament_id, teams, matches, number_of_groups }) => {
-  const groups = createGroupsArray(teams, number_of_groups);
-
-  const groupsMatches = createMatchesArray(matches, number_of_groups);
-
+const Schedule = ({ teams, matches }) => {
   return (
-    <>
-      {teams[1].group_id && !matches.length && (
-        <button
-          className="mt-4 border-2 p-1 rounded"
-          onClick={() => {
-            createSchedule(tournament_id, createGroupRoundRobin(groups));
-            window.location.reload();
-          }}
-        >
-          Create Schedule
-        </button>
-      )}
-      {matches.length > 0 && (
-        <div className="flex flex-col items-center w-full">
-          <div className="flex flex-wrap w-full max-w-7xl justify-around">
-            {groupsMatches.map((groupMatches, i) => {
-              return (
-                <div key={i} className="w-96 m-4 border-2 text-center">
-                  {groupMatches.map((match, i) => {
-                    if (i % (groups.length + 1) === 0) {
-                      return (
-                        <div key={match.match_id}>
-                          <p className="font-bold w-1/5">
-                            Round {i / (groups.length + 1) + 1}
-                          </p>
-                          <Match match={match} />
-                        </div>
-                      );
-                    }
-                    return <Match key={match.match_id} match={match} />;
-                  })}
-                </div>
-              );
-            })}
-          </div>
+    <div className="flex flex-wrap justify-center">
+      {Object.values(matches).map((group, i) => (
+        <div key={i} className="border-2">
+          {group.map((match) => (
+            <div key={match.id} className="flex flex-wrap w-72 justify-center">
+              <p>{teams[match.team_1_id].name}</p>
+              <p className="mx-2">V</p>
+              <p>{teams[match.team_2_id].name}</p>
+            </div>
+          ))}
         </div>
-      )}
-    </>
+      ))}
+    </div>
   );
 };
 

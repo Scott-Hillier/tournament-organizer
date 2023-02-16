@@ -1,32 +1,33 @@
 const express = require("express");
 const router = express.Router();
 
-const createSchedule = (db, tournament_id, groupsMatches) => {
-  groupsMatches.forEach((group) => {
+const getSchedule = (db, tournament_id) => {
+  const query = `SELECT id, group_id, match_id, team_1_id, team_2_id FROM matches
+  WHERE tournament_id = $1
+  ORDER BY match_id;`;
+  const values = [tournament_id];
+  return db.query(query, values);
+};
+
+const createSchedule = (db, tournament_id, matches) => {
+  Object.values(matches).map((group) => {
     group.map((match) => {
       const query = `INSERT INTO matches
-        (tournament_id, group_id, match_id, team_1_id, team_2_id, team_1_name, team_2_name)
-        VALUES ($1, $2, $3, $4, $5, $6, $7);`;
+        (tournament_id, group_id, match_id, team_1_id, team_2_id)
+        VALUES ($1, $2, $3, $4, $5);`;
       const values = [
         tournament_id,
-        match.group_id,
-        match.match_id,
-        match.team1ID,
-        match.team2ID,
-        match.team1Name,
-        match.team2Name,
+        match.groupId,
+        match.matchId,
+        match.team1Id,
+        match.team2Id,
       ];
+      if (match.team1Id === "bye" || match.team2Id === "bye") {
+        return;
+      }
       return db.query(query, values);
     });
   });
-};
-
-const getSchedule = (db, tournament_id) => {
-  const query = `SELECT * FROM matches
-    WHERE tournament_id = $1
-    ORDER BY match_id;`;
-  const values = [tournament_id];
-  return db.query(query, values);
 };
 
 module.exports = (db) => {

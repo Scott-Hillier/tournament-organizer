@@ -1,4 +1,5 @@
 import axios from "axios";
+import createGroupRoundRobinMatches from "../logic/createGroupRoundRobinMatches";
 
 export function getTournaments() {
   return axios.get("/tournaments/all");
@@ -24,7 +25,7 @@ const formatTournament = (info, teams, matches) => {
     teams: {},
     groups: {},
     groupOrder: [],
-    matches: matches,
+    matches: {},
   };
   for (let i = 0; i < info.number_of_groups; i++) {
     tournament.groups[`group-${teams[i].group_id}`] = {
@@ -34,14 +35,21 @@ const formatTournament = (info, teams, matches) => {
     tournament.groupOrder.push(`group-${teams[i].group_id}`);
   }
   teams.forEach((team) => {
-    tournament.teams[`team-${team.id}`] = {
+    tournament.teams[`${team.id}`] = {
       id: team.id,
       name: team.team_name,
       player1: team.player1,
       player2: team.player2,
       player3: team.player3,
     };
-    tournament.groups[`group-${team.group_id}`].teamIds.push(`team-${team.id}`);
+    tournament.groups[`group-${team.group_id}`].teamIds.push(`${team.id}`);
+  });
+  matches.forEach((match) => {
+    if (!tournament.matches[`group-${match.group_id}`]) {
+      tournament.matches[`group-${match.group_id}`] = [match];
+    } else {
+      tournament.matches[`group-${match.group_id}`].push(match);
+    }
   });
   return tournament;
 };
@@ -50,32 +58,12 @@ export function setGroups(tournament_id, teams) {
   return axios.post(`/teams/${tournament_id}/groups`, teams);
 }
 
-export function createSchedule(tournament_id, groupsMatches) {
-  return axios.post(`/matches/${tournament_id}/create`, groupsMatches);
+export function createSchedule(tournament_id, groups) {
+  const matches = createGroupRoundRobinMatches(groups);
+
+  return axios.post(`/matches/${tournament_id}/create`, matches);
 }
 
 export function createTournament(organize) {
-  const {
-    name,
-    location,
-    description,
-    numberOfTeams,
-    startDate,
-    endDate,
-    format,
-    teamSize,
-    numberOfGroups,
-  } = organize;
-  console.log(
-    name,
-    location,
-    description,
-    numberOfTeams,
-    startDate,
-    endDate,
-    format,
-    teamSize,
-    numberOfGroups
-  );
   return axios.post("/tournaments/create", organize);
 }

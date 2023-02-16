@@ -5,11 +5,11 @@ const Team = ({ team, index, draggable }) => {
   return (
     <>
       {draggable ? (
-        <Draggable draggableId={`team-${team.id}`} index={index}>
+        <Draggable draggableId={`${team.id}`} index={index}>
           {(provided, snapshot) => (
             <div
               className={classNames(
-                "flex flex-col w-96 my-2 items-center",
+                "flex flex-col w-72 my-2 items-center",
                 "border border-black rounded-lg",
                 "bg-slate-100",
                 { "bg-green-200": snapshot.isDragging }
