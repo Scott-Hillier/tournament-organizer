@@ -6,8 +6,8 @@ const Sidebar = ({ sidebar, setSidebar }) => {
     <>
       <div
         className={classNames(
-          "z-10 absolute top-0 left-0 w-2/5 max-w-sm h-full",
-          "bg-sky-900 text-white",
+          "z-10 fixed top-0 left-0 w-2/5 max-w-sm h-full",
+          "bg-cyan-800 text-white",
           "duration-500",
           "flex justify-center",
           { "-ml-96": !sidebar }
@@ -35,7 +35,7 @@ const Sidebar = ({ sidebar, setSidebar }) => {
         </div>
       </div>
       <div
-        className={classNames("z-9 absolute top-0 left-0 w-full h-full", {
+        className={classNames("z-9 fixed top-0 left-0 w-full h-full", {
           hidden: !sidebar,
         })}
         onClick={() => (sidebar ? setSidebar(false) : setSidebar(true))}

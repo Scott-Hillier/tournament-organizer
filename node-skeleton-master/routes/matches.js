@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const getSchedule = (db, tournament_id) => {
-  const query = `SELECT id, group_id, match_id, team_1_id, team_2_id FROM matches
+  const query = `SELECT id, group_id, match_id, team_1_id, team_2_id, winner FROM matches
   WHERE tournament_id = $1
   ORDER BY match_id;`;
   const values = [tournament_id];
@@ -30,6 +30,19 @@ const createSchedule = (db, tournament_id, matches) => {
   });
 };
 
+const updateWinners = (db, tournament_id, matches) => {
+  Object.values(matches).map((group) => {
+    group.map((match) => {
+      console.log(match);
+      const query = `UPDATE matches
+        SET winner = $1
+        WHERE match_id = $2;`;
+      const values = [match.winner, match.id];
+      return db.query(query, values);
+    });
+  });
+};
+
 module.exports = (db) => {
   router.get("/:tournament_id", (req, res) => {
     getSchedule(db, req.params.tournament_id)
@@ -43,6 +56,10 @@ module.exports = (db) => {
 
   router.post("/:tournament_id/create", (req, res) => {
     createSchedule(db, req.params.tournament_id, req.body);
+  });
+
+  router.post("/:tournament_id/updatewins", (req, res) => {
+    updateWinners(db, req.params.tournament_id, req.body);
   });
 
   return router;

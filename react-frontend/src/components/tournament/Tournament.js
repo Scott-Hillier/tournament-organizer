@@ -118,9 +118,9 @@ const Tournament = () => {
                     })}
                   </DragDropContext>
                 </div>
-                {tournament.groups["group-0"].teamIds.length ===
-                  tournament.groups["group-1"].teamIds.length &&
-                  tournament.matches.length === 0 && (
+                {!tournament.matches["group-0"] &&
+                  tournament.groups["group-0"].teamIds.length ===
+                    tournament.groups["group-1"].teamIds.length && (
                     <button
                       className="mt-4 border-2 p-1 rounded"
                       onClick={() => {
@@ -133,8 +133,8 @@ const Tournament = () => {
                   )}
               </>
             )}
-            {tournament.matches["group-0"].length > 0 && (
-              <Schedule teams={tournament.teams} matches={tournament.matches} />
+            {tournament.matches["group-0"] && (
+              <Schedule tournament={tournament} setTournament={setTournament} />
             )}
           </div>
         )}

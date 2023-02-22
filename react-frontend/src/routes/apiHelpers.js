@@ -42,7 +42,9 @@ const formatTournament = (info, teams, matches) => {
       player2: team.player2,
       player3: team.player3,
     };
-    tournament.groups[`group-${team.group_id}`].teamIds.push(`${team.id}`);
+    if (tournament.groups[`group-${team.group_id}`]) {
+      tournament.groups[`group-${team.group_id}`].teamIds.push(`${team.id}`);
+    }
   });
   matches.forEach((match) => {
     if (!tournament.matches[`group-${match.group_id}`]) {
@@ -66,4 +68,9 @@ export function createSchedule(tournament_id, groups) {
 
 export function createTournament(organize) {
   return axios.post("/tournaments/create", organize);
+}
+
+export function updateWinners(tournament_id, matches) {
+  console.log(matches);
+  // return axios.post(`/matches/${tournament_id}/updatewins`, matches);
 }
