@@ -30,16 +30,13 @@ const createSchedule = (db, tournament_id, matches) => {
   });
 };
 
-const updateWinners = (db, tournament_id, matches) => {
-  Object.values(matches).map((group) => {
-    group.map((match) => {
-      console.log(match);
-      const query = `UPDATE matches
-        SET winner = $1
-        WHERE match_id = $2;`;
-      const values = [match.winner, match.id];
-      return db.query(query, values);
-    });
+const updateWinners = (db, matches) => {
+  Object.keys(matches).map((matchId) => {
+    const query = `UPDATE matches
+    SET winner = $1
+    WHERE id = $2;`;
+    const values = [matches[matchId], matchId];
+    return db.query(query, values);
   });
 };
 
@@ -58,8 +55,8 @@ module.exports = (db) => {
     createSchedule(db, req.params.tournament_id, req.body);
   });
 
-  router.post("/:tournament_id/updatewins", (req, res) => {
-    updateWinners(db, req.params.tournament_id, req.body);
+  router.post("/:tournament_id/updatewinners", (req, res) => {
+    updateWinners(db, req.body);
   });
 
   return router;

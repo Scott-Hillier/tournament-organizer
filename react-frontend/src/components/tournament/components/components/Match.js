@@ -3,18 +3,20 @@ import classNames from "classnames";
 const Match = ({ match, teams, index, winners, setWinners }) => {
   return (
     <>
-      <div className="text-center">Match {match.match_id}</div>
+      <div className="text-center font-bold">Match {match.match_id}</div>
       <div
         className={classNames(
           "justify-center text-center items-center",
-          "m-2 p-2 border border-black rounded"
+          "mb-4  border-black rounded"
         )}
       >
         <p
-          className={classNames("p-1 border-2 rounded", {
-            "bg-green-100":
-              match.winner === match.team_1_id ||
+          className={classNames("p-1 mb-1 border-2 rounded-xl cursor-pointer", {
+            "bg-red-900 text-white opacity-50":
               winners[match.id] === match.team_1_id,
+            "bg-cyan-900 text-white":
+              match.winner === match.team_1_id ||
+              winners[match.team_1_id] === match.team_1_id,
           })}
           onClick={() =>
             setWinners({ ...winners, [match.id]: match.team_1_id })
@@ -22,11 +24,10 @@ const Match = ({ match, teams, index, winners, setWinners }) => {
         >
           {teams[match.team_1_id].name}
         </p>
-        <p className="mx-2">V</p>
         <p
-          className={classNames("p-1 border-2 rounded", {
-            "bg-green-100":
-              match.winner === match.team_2_id ||
+          className={classNames("p-1 mb-4 border-2 rounded-xl cursor-pointer", {
+            "bg-cyan-900 text-white": match.winner === match.team_2_id,
+            "bg-red-900 text-white opacity-50":
               winners[match.id] === match.team_2_id,
           })}
           onClick={() =>
@@ -35,6 +36,7 @@ const Match = ({ match, teams, index, winners, setWinners }) => {
         >
           {teams[match.team_2_id].name}
         </p>
+        <div className="border-b-2 border-black" />
       </div>
     </>
   );

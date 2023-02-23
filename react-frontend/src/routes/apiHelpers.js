@@ -70,7 +70,6 @@ export function createTournament(organize) {
   return axios.post("/tournaments/create", organize);
 }
 
-export function updateWinners(tournament_id, matches) {
-  console.log(matches);
-  // return axios.post(`/matches/${tournament_id}/updatewins`, matches);
+export function updateWinners(tournament_id, winners) {
+  return axios.post(`/matches/${tournament_id}/updatewinners`, winners);
 }

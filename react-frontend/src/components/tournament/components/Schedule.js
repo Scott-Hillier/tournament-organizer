@@ -5,13 +5,12 @@ import Match from "./components/Match";
 
 const Schedule = ({ tournament, setTournament }) => {
   const [winners, setWinners] = useState({});
-  console.log(winners);
   return (
     <>
       <div className="flex flex-wrap w-full justify-center">
-        {Object.values(tournament.matches).map((group, i) => (
-          <div key={i} className="w-72 m-4 p-2">
-            {group.map((match, index) => (
+        {tournament.groupOrder.map((group, i) => (
+          <div key={i} className="w-72 mx-14 p-2">
+            {tournament.matches[group].map((match, index) => (
               <Match
                 key={match.id}
                 match={match}
@@ -33,7 +32,15 @@ const Schedule = ({ tournament, setTournament }) => {
           { "-mb-24": Object.keys(winners).length === 0 }
         )}
       >
-        <p className="p-1 border rounded">Submit</p>
+        <p
+          className="p-1 border rounded cursor-pointer"
+          onClick={() => {
+            updateWinners(tournament.info.id, winners);
+            window.location.reload();
+          }}
+        >
+          Submit
+        </p>
       </div>
     </>
   );

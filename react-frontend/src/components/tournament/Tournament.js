@@ -5,6 +5,7 @@ import { getTournament, createSchedule } from "../../routes/apiHelpers";
 import Information from "./components/Information";
 import Teams from "./components/Teams";
 import Group from "./components/Group";
+import Standings from "./components/Standings";
 import Schedule from "./components/Schedule";
 
 const Tournament = () => {
@@ -88,7 +89,7 @@ const Tournament = () => {
 
   return (
     <>
-      <div className="min-h-screen bg-slate-50 pt-24 pb-8">
+      <div className="min-h-screen bg-slate-50 pt-24 pb-14">
         {tournament.info && (
           <div className="flex flex-col items-center">
             <Information info={tournament.info} />
@@ -100,41 +101,52 @@ const Tournament = () => {
                 number_of_groups={tournament.info.number_of_groups}
               />
             ) : (
-              <>
-                <div className="flex flex-wrap justify-center">
-                  <DragDropContext onDragEnd={onDragEnd}>
-                    {tournament.groupOrder.map((groupId) => {
-                      const group = tournament.groups[groupId];
-                      const groupTeams = group.teamIds.map(
-                        (teamId) => tournament.teams[teamId]
-                      );
-                      return (
-                        <Group
-                          key={group.id}
-                          group={group}
-                          groupTeams={groupTeams}
-                        />
-                      );
-                    })}
-                  </DragDropContext>
-                </div>
-                {!tournament.matches["group-0"] &&
-                  tournament.groups["group-0"].teamIds.length ===
-                    tournament.groups["group-1"].teamIds.length && (
-                    <button
-                      className="mt-4 border-2 p-1 rounded"
-                      onClick={() => {
-                        createSchedule(tournament_id, tournament.groups);
-                        window.location.reload();
-                      }}
-                    >
-                      Create Schedule
-                    </button>
-                  )}
-              </>
+              <div className="flex flex-wrap justify-center">
+                {tournament.matches["group-0"] ? (
+                  <div></div>
+                ) : (
+                  <div className="flex flex-col justify-center">
+                    <div className="flex flex-wrap justify-center">
+                      <DragDropContext onDragEnd={onDragEnd}>
+                        {tournament.groupOrder.map((groupId) => {
+                          const group = tournament.groups[groupId];
+                          const groupTeams = group.teamIds.map(
+                            (teamId) => tournament.teams[teamId]
+                          );
+                          return (
+                            <Group
+                              key={group.id}
+                              group={group}
+                              groupTeams={groupTeams}
+                            />
+                          );
+                        })}
+                      </DragDropContext>
+                    </div>
+                    {tournament.groups["group-0"].teamIds.length ===
+                      tournament.groups["group-1"].teamIds.length && (
+                      <button
+                        className="mt-4 border-2 p-1 rounded"
+                        onClick={() => {
+                          createSchedule(tournament_id, tournament.groups);
+                          window.location.reload();
+                        }}
+                      >
+                        Create Schedule
+                      </button>
+                    )}
+                  </div>
+                )}
+              </div>
             )}
             {tournament.matches["group-0"] && (
-              <Schedule tournament={tournament} setTournament={setTournament} />
+              <>
+                <Standings />
+                <Schedule
+                  tournament={tournament}
+                  setTournament={setTournament}
+                />
+              </>
             )}
           </div>
         )}
