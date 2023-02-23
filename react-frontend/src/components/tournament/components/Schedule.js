@@ -3,8 +3,9 @@ import { useState } from "react";
 import { updateWinners } from "../../../routes/apiHelpers";
 import Match from "./components/Match";
 
-const Schedule = ({ tournament, setTournament }) => {
+const Schedule = ({ tournament }) => {
   const [winners, setWinners] = useState({});
+  console.log(winners);
   return (
     <>
       <div className="flex flex-wrap w-full justify-center">

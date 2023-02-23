@@ -141,11 +141,12 @@ const Tournament = () => {
             )}
             {tournament.matches["group-0"] && (
               <>
-                <Standings />
-                <Schedule
-                  tournament={tournament}
-                  setTournament={setTournament}
+                <Standings
+                  teams={tournament.teams}
+                  groupOrder={tournament.groupOrder}
+                  groups={tournament.groups}
                 />
+                <Schedule tournament={tournament} />
               </>
             )}
           </div>

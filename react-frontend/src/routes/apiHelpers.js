@@ -38,9 +38,11 @@ const formatTournament = (info, teams, matches) => {
     tournament.teams[`${team.id}`] = {
       id: team.id,
       name: team.team_name,
+      groupId: team.group_id,
       player1: team.player1,
       player2: team.player2,
       player3: team.player3,
+      wins: 0,
     };
     if (tournament.groups[`group-${team.group_id}`]) {
       tournament.groups[`group-${team.group_id}`].teamIds.push(`${team.id}`);
@@ -51,6 +53,9 @@ const formatTournament = (info, teams, matches) => {
       tournament.matches[`group-${match.group_id}`] = [match];
     } else {
       tournament.matches[`group-${match.group_id}`].push(match);
+    }
+    if (match.winner) {
+      tournament.teams[match.winner].wins += 1;
     }
   });
   return tournament;
