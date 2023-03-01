@@ -1,11 +1,10 @@
 import classNames from "classnames";
 import { useState } from "react";
-import { updateWinners } from "../../../routes/apiHelpers";
+import { updateMatchResults } from "../../../routes/apiHelpers";
 import Match from "./components/Match";
 
 const Schedule = ({ tournament }) => {
-  const [winners, setWinners] = useState({});
-  console.log(winners);
+  const [matchResults, setMatchResults] = useState({});
   return (
     <>
       <div className="flex flex-wrap w-full justify-center">
@@ -17,8 +16,8 @@ const Schedule = ({ tournament }) => {
                 match={match}
                 teams={tournament.teams}
                 index={index}
-                winners={winners}
-                setWinners={setWinners}
+                matchResults={matchResults}
+                setMatchResults={setMatchResults}
               />
             ))}
           </div>
@@ -30,13 +29,13 @@ const Schedule = ({ tournament }) => {
           "flex justify-center items-center",
           "bg-cyan-800 text-white",
           "duration-500",
-          { "-mb-24": Object.keys(winners).length === 0 }
+          { "-mb-24": Object.keys(matchResults).length === 0 }
         )}
       >
         <p
           className="p-1 border rounded cursor-pointer"
           onClick={() => {
-            updateWinners(tournament.info.id, winners);
+            updateMatchResults(tournament.info.id, matchResults);
             window.location.reload();
           }}
         >

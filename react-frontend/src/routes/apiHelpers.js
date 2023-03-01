@@ -21,7 +21,7 @@ export async function getTournament(id) {
 
 const formatTournament = (info, teams, matches) => {
   const tournament = {
-    info: info,
+    info: { ...info, groupsCompleted: true },
     teams: {},
     groups: {},
     groupOrder: [],
@@ -43,6 +43,7 @@ const formatTournament = (info, teams, matches) => {
       player2: team.player2,
       player3: team.player3,
       wins: 0,
+      delta: 0,
     };
     if (tournament.groups[`group-${team.group_id}`]) {
       tournament.groups[`group-${team.group_id}`].teamIds.push(`${team.id}`);
@@ -56,6 +57,12 @@ const formatTournament = (info, teams, matches) => {
     }
     if (match.winner) {
       tournament.teams[match.winner].wins += 1;
+    }
+    if (match.team_1_score && match.team_2_score) {
+      tournament.teams[match.team_1_id].delta +=
+        match.team_1_score - match.team_2_score;
+      tournament.teams[match.team_2_id].delta +=
+        match.team_2_score - match.team_1_score;
     }
   });
   return tournament;
@@ -75,6 +82,6 @@ export function createTournament(organize) {
   return axios.post("/tournaments/create", organize);
 }
 
-export function updateWinners(tournament_id, winners) {
-  return axios.post(`/matches/${tournament_id}/updatewinners`, winners);
+export function updateMatchResults(tournament_id, results) {
+  return axios.post(`/matches/${tournament_id}/updateResults`, results);
 }

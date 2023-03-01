@@ -8,17 +8,22 @@ const Standings = ({ groupOrder, teams, groups }) => {
         return (
           <div
             key={groupId}
-            className="flex flex-col w-64 mx-20 m-2 p-1 border-2 border-black rounded"
+            className="flex flex-col w-80 m-2 border-2 border-black rounded shadow-lg items-center text-center"
           >
-            <div className="flex justify-between p-1 border-b border-black font-bold">
-              <p>Team</p>
-              <p>Wins</p>
+            <div className="flex font-bold my-1">
+              <p className="w-40">Team</p>
+              <p className="w-20">Wins</p>
+              <p className="w-20">Δ</p>
             </div>
             {groups[groupId].teamIds.sort(sortByWins).map((teamId) => {
               return (
-                <div className="flex justify-between p-1 break-all border-b">
-                  <p className="w-40">{teams[teamId].name}</p>
-                  <p>{teams[teamId].wins}</p>
+                <div
+                  key={teamId}
+                  className="flex border-t border-black break-all items-center text-center"
+                >
+                  <p className="w-40 p-1">{teams[teamId].name}</p>
+                  <p className="w-20">{teams[teamId].wins}</p>
+                  <p className="w-20">{teams[teamId].delta}</p>
                 </div>
               );
             })}
